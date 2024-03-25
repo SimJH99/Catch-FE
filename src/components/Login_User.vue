@@ -29,7 +29,6 @@
 <script>
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
-// import { EventSourcePolyfill } from 'event-source-polyfill';
 export default {
     data(){
         return{
@@ -78,6 +77,9 @@ export default {
           alert("응~ 못찾아~(ಠ‿↼)");
         }
     },
+    mounted() {
+
+    }
 }
 </script>
 
