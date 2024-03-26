@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-gray-800 py-4 mt-8">
+  <footer class="bg-gray-800 py-4">
     <div class="container mx-auto text-center text-white">
       <p>여기는 Footer입니다.</p>
       <p>&copy; 2024. All rights reserved.</p>

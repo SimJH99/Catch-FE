@@ -1,6 +1,6 @@
 <template>
-    <div>
-        test
+    <div class="bg-slate-100">
+        <a href="/login">login</a>
     </div>
 </template>
 
