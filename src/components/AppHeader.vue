@@ -1,12 +1,8 @@
 <template>
-    <header class="bg-white py-4">
-      <div class="container mx-auto flex justify-between items-center">
-        <img src="@/assets/logo.png" class="h-[60px]">
+    <header class="bg-white py-4 text-base md:text-xl">
+      <div class="container mx-auto flex justify-end items-center">
         <nav class="space-x-4">
-          <a href="#" class="text-black hover:text-gray-300">홈</a>
-          <a href="#" class="text-black hover:text-gray-300">서비스</a>
-          <a href="#" class="text-black hover:text-gray-300">소개</a>
-          <a href="#" class="text-black hover:text-gray-300">문의</a>
+          <a href="/login" class="text-black hover:text-gray-300">Login</a>
         </nav>
       </div>
     </header>
