@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-slate-100">
+    <div class="bg-gray-100">
         <a href="/login">login</a>
     </div>
 </template>
