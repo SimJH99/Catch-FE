@@ -1,8 +1,8 @@
 <template>
-    <header class="bg-white py-4 text-base md:text-xl">
+    <header class="bg-white py-4 text-base md:text-xl" v-if="showHeader">
       <div class="container mx-auto flex justify-end items-center">
         <nav class="space-x-4">
-          <a href="/login" class="text-black hover:text-gray-300">Login</a>
+
         </nav>
       </div>
     </header>
@@ -10,7 +10,13 @@
   
   <script>
   export default {
-  };
+  props: {
+    showHeader: {
+      type: Boolean,
+      default: true
+    }
+  }
+}
   </script>
   
   <style scoped>
