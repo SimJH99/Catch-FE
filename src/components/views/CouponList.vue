@@ -51,7 +51,7 @@
                     </tr>
                 </tbody>
             </table>
-            <button class="bg-custom-F5A742 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded" style="width: 200px; text-align: center; margin-left: calc(100% - 220px); margin-bottom: 10px;">검색</button>
+            <button class="bg-custom-F5A742 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded" style="width: 200px; text-align: center; margin-left: calc(100% - 200px); margin-bottom: 10px;">검색</button>
         </div>
 
         
