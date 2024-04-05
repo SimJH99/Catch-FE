@@ -3,12 +3,16 @@ import LoginAdmin from '@/components/LoginAdmin.vue';
 import DashBorad from '@/components/views/DashBoard.vue';
 import PostList from '@/components/views/PostList.vue';
 import UserList from '@/components/views/UserList.vue';
+import CouponList from '@/components/views/CouponList.vue';
+import CouponCreate from '@/components/views/CouponCreate.vue';
 
 const routes = [
   { path: '/', name: 'LOGIN', component: LoginAdmin },
   { path: '/dashBoard', name: 'DashBorad', component: DashBorad },
   { path: '/postList', name: 'PostList', component: PostList },
   { path: '/userList', name: 'UserList', component: UserList },
+  {path:'/couponList', name: 'CouponList', component: CouponList},
+  {path:'/couponCreate', name: 'CouponCreate', component: CouponCreate},
 ];
 
 const router = createRouter({
