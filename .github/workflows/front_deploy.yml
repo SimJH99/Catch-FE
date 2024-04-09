@@ -17,11 +17,11 @@ jobs:
         node-version: '20'
 
     - name: npm install
-      working-directory: ./Catch_FE
+      working-directory: ./
       run: npm install
 
     - name: npm run build
-      working-directory: ./Catch_FE
+      working-directory: ./
       run: npm run build
 
     - name: setup aws cli
