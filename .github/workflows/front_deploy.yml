@@ -33,7 +33,7 @@ jobs:
 
     - name: deploy to s3
       run: |
-        aws s3 cp ./Catch_FE/dist s3://catchteam/ --recursive
+        aws s3 cp ./dist s3://catchteam/ --recursive
 
 
 
