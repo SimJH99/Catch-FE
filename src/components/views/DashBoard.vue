@@ -31,25 +31,77 @@
 </template>
 
 <script>
+  import axios from 'axios';
   import Chart from 'chart.js/auto';
   
   export default {
+    data() {
+      return{
+        gradeInfo: {},
+        grades: [],
+        gradeCount: [],
+        genderInfo: {},
+        genders: [],
+        genderCount: [],
+        ageInfo: {},
+        ages: [],
+        ageCount: [],
+      };
+    },
+    created() {
+        
+    },
     mounted() {
-      this.gradeChart();
-      this.genderChart();
-      this.ageChart();
-      this.loginChart();
+      this.fetchGradeInfo();
     },
     methods: {
+      async fetchGradeInfo() {
+            try {
+                const token = localStorage.getItem('access_token');
+                const headers = { Authorization: `Bearer ${token}`} ;
+                const gradeResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/grade`, { headers });
+                this.gradeInfo = gradeResponse.data.result.data;
+
+                const genderResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/gender`, { headers });
+                this.genderInfo = genderResponse.data.result.data;
+
+                const ageResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/age`, { headers });
+                this.ageInfo = ageResponse.data.result.data;
+
+                console.log(this.ageResponse);
+                
+                for(var i = 0; i < this.gradeInfo.length; i++){
+                    this.grades.push(this.gradeInfo[i].grade);
+                    this.gradeCount.push(this.gradeInfo[i].count);
+                }
+
+                for(var j = 0; j < this.genderInfo.length; j++){
+                    this.genders.push(this.genderInfo[j].gender);
+                    this.genderCount.push(this.genderInfo[j].count);
+                }
+
+                for(var k = 0; k < this.ageInfo.length; k++){
+                    this.ages.push(this.ageInfo[k].ageGroup);
+                    this.ageCount.push(this.ageInfo[k].count);
+                }
+
+                this.gradeChart();
+                this.genderChart();
+                this.ageChart();
+                this.loginChart();
+            } catch (error) {
+                console.log(error);
+            }
+        },
         gradeChart() {
         const ctx = document.getElementById('gradeChart').getContext('2d');
         new Chart(ctx, {
           type: 'bar',
           data: {
-            labels: ['SLIVER', 'GOLD', 'VIP', 'VVIP'],
+            labels: [this.grades[1], this.grades[0], this.grades[2], this.grades[3]],
             datasets: [{
               label: '고객 수 ',
-              data: [5470, 3287, 543, 125],
+              data: [this.gradeCount[1], this.gradeCount[0], this.gradeCount[2], this.gradeCount[3]],
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(255, 206, 86, 0.2)',
@@ -93,16 +145,16 @@
         new Chart(ctx, {
           type: 'pie',
           data: {
-            labels: ['남성', '여성'],
+            labels: this.genders,
             datasets: [{
-              data: [19, 12],
+              data: this.genderCount,
               backgroundColor: [
+                'rgba(255, 99, 132, 0.5)',
                   'rgba(54, 162, 235, 0.5)',
-                  'rgba(255, 99, 132, 0.5)',
               ],
               borderColor: [
+                'rgba(255, 99, 132, 1)',
                   'rgba(54, 162, 235, 1)',
-                  'rgba(255, 99, 132, 1)',
               ],
               borderWidth: 1
             }]
@@ -111,13 +163,13 @@
             maintainAspectRatio: false,
             aspectRatio: 1,
             scales: {
-                xAxes: [{ 
+                x: { 
                     display: false // x축의 선을 숨김
-                }],
-                yAxes: [{ 
+                },
+                y: { 
                     beginAtZero: true,
                     display: false // y축의 선을 숨김
-                }],
+                },
             },
             plugins: {
                 legend: {
@@ -131,10 +183,10 @@
         new Chart(ctx, {
           type: 'bar',
           data: {
-            labels: ['10', '20', '30', '40', '50', '60', '70', '80'],
+            labels: this.ages,
             datasets: [{
               label: ' 연령 대 ',
-              data: [60,36,27,15,13,14,7,3,1],
+              data: this.ageCount,
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(245, 124, 0, 0.2)',
@@ -201,13 +253,9 @@
             maintainAspectRatio: false,
             aspectRatio: 1,
             scales: {
-                xAxes: [{ // x축에 대한 설정
-                    display: false // x축의 선을 숨김
-                }],
-                yAxes: [{ // y축에 대한 설정
-                    beginAtZero: true,
-                    display: false // y축의 선을 숨김
-                }],
+                y: { // y축에 대한 설정
+                    beginAtZero: true
+                },
             },
             plugins: {
                 legend: {
