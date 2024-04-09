@@ -5,6 +5,7 @@ import PostList from '@/components/views/PostList.vue';
 import UserList from '@/components/views/UserList.vue';
 import CouponList from '@/components/views/CouponList.vue';
 import CouponCreate from '@/components/views/CouponCreate.vue';
+import CouponReceive from '@/components/views/CouponReceive.vue';
 import MarketerCsCreate from '@/components/views/MarketerCsCreate.vue';
 import AdminList from '@/components/views/AdminList.vue';
 
@@ -15,6 +16,7 @@ const routes = [
   { path: '/userList', name: 'UserList', component: UserList },
   {path:'/couponList', name: 'CouponList', component: CouponList},
   {path:'/couponCreate', name: 'CouponCreate', component: CouponCreate},
+  {path:'/couponReceive', name: 'CouponReceive', component: CouponReceive},
   { path:'/marketerCsCreate', name:'MarketerCsCreate', component: MarketerCsCreate},
   { path:'/adminList', name:'AdminList', component: AdminList},
 ];

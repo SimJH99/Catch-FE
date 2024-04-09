@@ -36,7 +36,7 @@
                     </tr>                    
                     <tr>
                         <td colspan="2" class="px-4 py-2 text-right">
-                            <button @click="newCoupon" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded" style="width: 200px; text-align: center; background-color: #F5A742;">생성</button>
+                            <button @click="couponCreate" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded" style="width: 200px; text-align: center; background-color: #F5A742;">생성</button>
                         </td>
                     </tr>
                 </tbody>
@@ -59,7 +59,7 @@ export default {
         }
     },
     methods: {
-        async newCoupon(){
+        async couponCreate(){
             try{
                 const access_token = localStorage.getItem('access_token');
                 const headers = access_token ? { Authorization: `Bearer ${access_token}`} : {};
@@ -77,7 +77,7 @@ export default {
             }catch(error){
                 console.log(error);
             }
-            // location.reload();
+            this.$router.push("/couponList");
         },
     },
     setup () {
