@@ -5,7 +5,7 @@
         </div>
         
         <div class="container mb-4" style="width: calc(100% - 40px); margin: 10px; border-bottom: 1px solid #ccc;">
-            <table class="table border border-gray-200 border-2" style="width: calc(100% - 20px); margin: 10px;"> 
+            <table class="table border-gray-200 border-2" style="width: calc(100% - 20px); margin: 10px;"> 
                 <tbody>
                     <tr>
                         <th class="py-2 border border-gray-300" style="background-color: #F5A742; width: 20%; color: white;" >쿠폰명</th>
