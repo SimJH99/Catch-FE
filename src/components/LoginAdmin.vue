@@ -123,7 +123,7 @@ export default {
 
     async sendCode() {
       try {
-        await axios.post("http://localhost:8001/mailSend", {
+        await axios.post(`${process.env.VUE_APP_API_BASE_URL}/mailSend`, {
           employeeNumber: this.employeeNumber,
         });
       } catch (error) {
