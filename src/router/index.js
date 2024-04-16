@@ -1,22 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginAdmin from '@/components/LoginAdmin.vue';
-import DashBorad from '@/components/views/DashBoard.vue';
-import PostList from '@/components/views/PostList.vue';
-import UserList from '@/components/views/UserList.vue';
-import CouponList from '@/components/views/CouponList.vue';
-import CouponCreate from '@/components/views/CouponCreate.vue';
-import CouponReceive from '@/components/views/CouponReceive.vue';
-import MarketerCsCreate from '@/components/views/MarketerCsCreate.vue';
-import AdminList from '@/components/views/AdminList.vue';
+import DashBorad from '@/views/DashBoard.vue';
+import ComplaintList from '@/views/ComplaintList.vue';
+import ComplaintDetail from '@/views/ComplaintDetail.vue';
+import UserList from '@/views/UserList.vue';
+import CouponList from '@/views/CouponList.vue';
+import CouponCreate from '@/views/CouponCreate.vue';
+import CouponReceive from '@/views/CouponReceive.vue';
+import MarketerCsCreate from '@/views/MarketerCsCreate.vue';
+import AdminList from '@/views/AdminList.vue';
 
 const routes = [
   { path: '/', name: 'LOGIN', component: LoginAdmin },
   { path: '/dashBoard', name: 'DashBorad', component: DashBorad },
-  { path: '/postList', name: 'PostList', component: PostList },
+  { path: '/complaintList', name: 'ComplaintList', component: ComplaintList },
+  { path:'/complaintDetail', name:'ComplaintDetail', component: ComplaintDetail},
   { path: '/userList', name: 'UserList', component: UserList },
-  {path:'/couponList', name: 'CouponList', component: CouponList},
-  {path:'/couponCreate', name: 'CouponCreate', component: CouponCreate},
-  {path:'/couponReceive', name: 'CouponReceive', component: CouponReceive},
+  { path:'/couponList', name: 'CouponList', component: CouponList},
+  { path:'/couponCreate', name: 'CouponCreate', component: CouponCreate},
+  { path:'/couponReceive', name: 'CouponReceive', component: CouponReceive},
   { path:'/marketerCsCreate', name:'MarketerCsCreate', component: MarketerCsCreate},
   { path:'/adminList', name:'AdminList', component: AdminList},
 ];
