@@ -10,6 +10,9 @@ import CouponReceive from '@/views/CouponReceive.vue';
 import MarketerCsCreate from '@/views/MarketerCsCreate.vue';
 import AdminList from '@/views/AdminList.vue';
 
+import MyPage from '@/views/MyPage.vue';
+
+
 const routes = [
   { path: '/', name: 'LOGIN', component: LoginAdmin },
   { path: '/dashBoard', name: 'DashBorad', component: DashBorad },
@@ -21,6 +24,7 @@ const routes = [
   { path:'/couponReceive', name: 'CouponReceive', component: CouponReceive},
   { path:'/marketerCsCreate', name:'MarketerCsCreate', component: MarketerCsCreate},
   { path:'/adminList', name:'AdminList', component: AdminList},
+  { path:'/mypage', name:'MyPage', component: MyPage},
 ];
 
 const router = createRouter({
