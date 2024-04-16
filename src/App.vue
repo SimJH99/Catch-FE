@@ -1,16 +1,13 @@
 <template>
   <div>
-    <div class="flex md:flex-row flex-col bg-gray-100">
-      <AppSideBar
-        v-if="isChecked && !isLoginPage"
-        class="min-w-[250px] w-1/6 h-screen"
-      ></AppSideBar>
-      <div class="w-full">
-        <AppHeader v-if="showHeader" class="w-full"></AppHeader>
-        <router-view class="min-h-[800px]" />
+    <div class="bg-gray-100">
+      <AppHeader v-if="showHeader"></AppHeader>
+      <div class="flex w-auto">
+        <AppSideBar v-if="isChecked && !isLoginPage" class="min-w-[250px] w-1/6 h-auto"></AppSideBar>
+        <router-view class="w-5/6 min-h-[800px]"/>
       </div>
     </div>
-    <AppFooter v-if="isChecked && !isLoginPage" class="w-full"></AppFooter>
+    <AppFooter v-if="isChecked && !isLoginPage"></AppFooter>
   </div>
 </template>
 
