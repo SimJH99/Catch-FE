@@ -1,113 +1,74 @@
 <template>
-  <div class="min-h-screen flex flex-col items-center">
-    <div
-      class="text-white font-bold text-center mb-4"
-      style="color: #f5a742; font-size: 3rem; margin-top: 50px"
-    >
+  <div class="container mb-4 border border-gray-300 bg-white" style="width: calc(100% - 40px); margin: 10px; border-color: #CCCCCC;">
+    <div class="text-white font-bold text-center mb-4" style="color: #f5a742; font-size: 3rem; margin-top: 50px">
       계정 조회
     </div>
 
-    <div
-      class="container mb-4"
-      style="
-        width: calc(100% - 40px);
-        margin: 10px;
-        border-bottom: 1px solid #ccc;
-      "
-    >
-      <table
-        class="table border border-gray-200 border-2"
-        style="width: calc(100% - 20px); margin: 10px"
-      >
+    <div class="container mb-4" style="width: calc(100% - 40px); margin: 10px;">
+      <table class="table border border-gray-200 border-2" style="width: calc(100% - 20px); margin: 10px">
         <tbody>
           <tr>
-            <th
-              class="py-2 border border-gray-300"
-              style="background-color: #f5a742; width: 20%; color: white"
-            >
+            <th class="py-2 border border-gray-300 bg-gray-200" style="background-color: #f5a742; width: 20%; color: white">
               이름
             </th>
-            <td class="px-4 border border-gray-300" style="width: 80%">
-              <input
-                type="text"
-                id="nameInput"
-                name="nameInput"
-                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-32 shadow-sm sm:text-sm border-gray-300 rounded-md"
-              />
+            <td class="px-4 border-t border-gray-300" style="width: 80%;">
+              <input type="text" v-model="searchValue" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-48 px-3 py-1.5 rounded-md border-gray-300 shadow-sm sm:text-sm" style="background-color: #DDDDDD; height: 2rem; width:50%; margin-top: 0.5rem; margin-bottom: 0.5rem;">
             </td>
           </tr>
           <tr>
-            <th
-              class="py-2 border border-gray-300"
-              style="background-color: #f5a742; width: 20%; color: white"
-            >
+            <th class="py-2 border border-gray-300 bg-gray-200" style="background-color: #f5a742; width: 20%; color: white">
               사원번호
             </th>
-            <td class="px-4 border border-gray-300" style="width: 80%">
-              <input
-                type="text"
-                id="employeeIdInput"
-                name="employeeIdInput"
-                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-32 shadow-sm sm:text-sm border-gray-300 rounded-md"
-              />
+            <td class="px-4 border-t border-gray-300" style="width: 80%;">
+              <input type="text" v-model="searchValue" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-48 px-3 py-1.5 rounded-md border-gray-300 shadow-sm sm:text-sm" style="background-color: #DDDDDD; height: 2rem; width:50%; margin-top: 0.5rem; margin-bottom: 0.5rem;">
             </td>
           </tr>
           <tr>
-            <th
-              class="py-2 border border-gray-300"
-              style="background-color: #f5a742; width: 20%; color: white"
-            >
+            <th class="py-2 border border-gray-300 bg-gray-200" style="background-color: #f5a742; width: 20%; color: white">
               이메일
             </th>
-            <td class="px-4 border border-gray-300" style="width: 80%">
-              <input
-                type="email"
-                id="emailInput"
-                name="emailInput"
-                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-32 shadow-sm sm:text-sm border-gray-300 rounded-md"
-              />
+            <td class="px-4 border-t border-gray-300" style="width: 80%;">
+              <input type="text" v-model="searchValue" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-48 px-3 py-1.5 rounded-md border-gray-300 shadow-sm sm:text-sm" style="background-color: #DDDDDD; height: 2rem; width:50%; margin-top: 0.5rem; margin-bottom: 0.5rem;">
             </td>
           </tr>
           <tr>
-            <th
-              class="py-2 border border-gray-300"
-              style="background-color: #f5a742; width: 20%; color: white"
-            >
+            <th class="py-2 border border-gray-300 bg-gray-200" style="background-color: #f5a742; width: 20%; color: white">
               권한(역할)
             </th>
-            <td class="px-4 border border-gray-300" style="width: 80%">
+            <td class="px-4 border-t border-gray-300" style="width: 80%;">
               <select
                 id="roleSelect"
                 name="roleSelect"
                 v-model="selectedRole"
-                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-32 shadow-sm sm:text-sm border-gray-300 rounded-md"
+                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block px-3 py-1 rounded-md border-gray-300 shadow-sm sm:text-sm"
+                style="background-color: #dddddd; height: 2rem; width: 25%; margin-top: 0.5rem; margin-bottom: 0.5rem;"
               >
-                <option value="마케터">마케터</option>
+                <option value="마케터" selected>마케터</option>
                 <option value="CS 담당자">CS 담당자</option>
               </select>
             </td>
           </tr>
         </tbody>
       </table>
-      <button
-        @click="loadAccounts"
-        class="bg-custom-F5A742 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded"
-        style="
-          width: 200px;
-          text-align: center;
-          margin-left: calc(100% - 200px);
-          margin-bottom: 10px;
-        "
-      >
-        검색
-      </button>
+      <div class="flex justify-between">
+        <div style="margin-left: 10px; margin-top: 30px">
+          <span>페이지 크기:</span>
+          <select v-model="pageSize" @change="changePageSize">
+            <option v-for="size in pageSizeOptions" :key="size" :value="size">{{ size }}</option>
+          </select>
+        </div>
+        <button
+          @click="loadAccounts"
+          class="bg-custom-F5A742 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded"
+          style="width: 200px; text-align: center; margin-bottom: 10px;"
+        >
+          검색
+        </button>
+      </div>
     </div>
 
-    <div class="container mb-4" style="width: calc(100% - 40px); margin: 10px">
-      <table
-        class="divide-y divide-gray-200"
-        style="width: calc(100% - 20px); margin: 10px"
-      >
+    <div class="container mb-4 border border-gray-300 bg-white" style="width: calc(100% - 40px); margin: 10px; border-color: #CCCCCC;">
+      <table class="divide-y divide-gray-200" style="width: calc(100% - 20px); margin: 10px">
         <thead class="bg-gray-50">
           <tr>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
@@ -118,112 +79,69 @@
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="(account, index) in displayedAccounts" :key="account.id">
-            <td class="px-6 py-4 whitespace-nowrap">{{ (currentPage - 1) * pageSize + index + 1 }}</td>
-            <td class="px-6 py-4 whitespace-nowrap">{{ account.name }}</td>
-            <td class="px-6 py-4 whitespace-nowrap">{{ account.employeeNumber }}</td>
-            <td class="px-6 py-4 whitespace-nowrap">{{ account.email }}</td>
-            <td class="px-6 py-4 whitespace-nowrap">{{ account.role }}</td>
-          </tr>          
+          <tr v-for="(admin, index) in accountList" :key="admin.id" @click="openAdminDetailModal(admin.id)" style="cursor: pointer;">
+            <td class="px-6 py-4 whitespace-nowrap">{{ currentPage * pageSize + index + 1 }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">{{ admin.name }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">{{ admin.employeeNumber }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">{{ admin.email }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">{{ admin.role }}</td>
+          </tr>   
         </tbody>
       </table>
-      <div class="flex items-center justify-center">
-        <!-- 이전 페이지로 이동하는 화살표 버튼 -->
-        <button
-          @click="previousPage"
-          :disabled="currentPage === 1"
-          class="font-bold py-2 px-4 rounded mr-2"
-          style="margin-right: auto"
-        >
-          ⬅︎
-        </button>
-      
-        <!-- 페이지 번호 버튼 -->
-        <div class="flex">
-          <button
-            v-for="pageNumber in generatePageNumbers()"
-            :key="pageNumber"
-            @click="goToPage(pageNumber)"
-            :class="{ 'bg-gray-800 text-white': pageNumber === currentPage, 'bg-gray-300 hover:bg-gray-400 text-gray-800': pageNumber !== currentPage }"
-            class="font-bold py-2 px-4 mx-1 rounded"
-          >
-            {{ pageNumber }}
-          </button>
+      <div class="modal-content" @click.stop>
+        <div class="modal-inner">
+          <AdminDetailModal :isModalAdminDetailOpen="isModalAdminDetailOpen" :selectedAdminId="selectedAdminId" @close-modal="isModalAdminDetailOpen = false" />
         </div>
-      
-        <!-- 다음 페이지로 이동하는 화살표 버튼 -->
-        <button
-          @click="nextPage"
-          :disabled="currentPage === totalPages"
-          class="font-bold py-2 px-4 rounded ml-2"
-          style="margin-left: auto"
-        >
-          ➡︎
-        </button>
       </div>
-      
+      <PaginationComponent :currentPage="currentPage" :totalPages="totalPageCount" @page-change="changePage" style="margin-bottom: 25px;" />
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import PaginationComponent from '@/components/PaginationComponent.vue';
+import AdminDetailModal from "@/components/modal/AdminDetailModal.vue";
 
 export default {
+  components: {
+    PaginationComponent,
+    AdminDetailModal
+  },
   data() {
     return {
       accountList: [],
       isLastPage: false,
       isLoading: false,
-      selectedRole: "",
+      selectedRole: "마케터",
       pageSize: 10,
+      pageSizeOptions: [10, 25, 50, 100],
       currentPage: 0,
-      totalPages: 0,
-      displayedAccounts: [], // displayedAccounts 배열 추가
-      cachedPages: {}, // 캐시된 페이지 데이터를 저장할 객체 추가
+      searchValue: '',
+      totalPageCount: 0,
+      selectedAdminId: null,
+      isModalAdminDetailOpen: false,
+
     };
   },
   created() {
-    this.currentPage = 1;
+    this.currentPage = 0;
     this.loadAccounts();
   },
   methods: {
     async loadAccounts() {
       try {
-        this.isLoading = true;
         const params = {
-          page: this.currentPage - 1,
+          page: this.currentPage,
           size: this.pageSize,
         };
-
-        // 페이지 데이터가 캐시에 있는지 확인
-        if (this.cachedPages[this.currentPage]) {
-          this.displayedAccounts = this.cachedPages[this.currentPage];
-        } else {
-          const access_token = localStorage.getItem("access_token");
-          const headers = access_token
-            ? { Authorization: `Bearer ${access_token}` }
-            : {};
-          const response = await axios.get(
-            `${process.env.VUE_APP_API_BASE_URL}/admin/all`,
-            { params, headers }
-          );
-          this.totalPages = response.data.totalPages;
-          const addAccountList = response.data.content.map((account) => ({
-            ...account,
-            role: this.formatRole(account.role),
-          }));
-          if (addAccountList.length < this.pageSize) {
-            this.isLastPage = true;
-          }
-          this.accountList = [...addAccountList];
-          this.displayedAccounts = [...addAccountList]; // displayedAccounts에 데이터 할당
-          this.cachedPages[this.currentPage] = [...addAccountList]; // 캐시에 데이터 저장
-        }
+        const access_token = localStorage.getItem('access_token');
+        const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/admin/all`, { headers, params });
+        this.accountList = response.data.content;
+        this.totalPageCount = response.data.totalPages;
       } catch (error) {
         console.log(error);
-      } finally {
-        this.isLoading = false;
       }
     },
     formatRole(role) {
@@ -236,49 +154,26 @@ export default {
           return role;
       }
     },
-    previousPage() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-        this.loadAccounts(); // 이전 페이지로 이동할 때마다 계정 정보를 다시 불러옴
-      }
+    changePage(pageNum) {
+      this.currentPage = pageNum;
+      this.loadAccounts();
     },
-    nextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
-        this.loadAccounts(); // 다음 페이지로 이동할 때마다 계정 정보를 다시 불러옴
-      }
+    changePageSize(event) {
+      this.pageSize = parseInt(event.target.value);
+      this.loadAccounts();
     },
-    goToPage(pageNumber) {
-      if (pageNumber > 0 && pageNumber <= this.totalPages) {
-        this.currentPage = pageNumber;
-        this.loadAccounts(); // 특정 페이지로 이동할 때마다 계정 정보를 다시 불러옴
-      }
+    // 모달 열기
+    openAdminDetailModal(id) {
+      this.selectedAdminId = id;
+      console.log("넘기는 id 값 : "+id);
+      this.isModalAdminDetailOpen = true;
+      console.log("List에서 클릭하면 열리는지 여부: ",this.isModalAdminDetailOpen);
     },
-    generatePageNumbers() {
-  const currentPage = this.currentPage;
-  const totalPages = this.totalPages;
-  const pages = [];
-
-  if (totalPages <= 10) {
-    for (let i = 1; i <= totalPages; i++) {
-      pages.push(i);
-    }
-  } else {
-    let startPage = 1;
-    if (currentPage > 10) {
-      startPage = Math.floor((currentPage - 1) / 10) * 10 + 1;
-    }
-    const endPage = Math.min(startPage + 9, totalPages);
-
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(i);
-    }
+    closeAdminDetailModal() {
+      this.isModalAdminDetailOpen = false;
+      console.log(this.isModalAdminDetailOpen);
+    },
   }
-
-  return pages;
-},
-
-  },
 };
 </script>
 

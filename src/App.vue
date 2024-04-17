@@ -3,7 +3,7 @@
     <div class="flex md:flex-row flex-col bg-gray-100">
       <AppSideBar
         v-if="isChecked && !isLoginPage"
-        class="min-w-[250px] w-1/6 h-screen"
+        class="min-w-[250px] w-1/6 h-auto"
       ></AppSideBar>
       <div class="w-full">
         <AppHeader v-if="showHeader" class="w-full"></AppHeader>
