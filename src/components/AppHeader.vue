@@ -1,25 +1,87 @@
 <template>
-    <header class="bg-white py-4 text-base md:text-xl" v-if="showHeader">
-      <div class="container mx-auto flex justify-end items-center">
-        <nav class="space-x-4">
+  <header class="bg-white py-2 text-base md:text-lg" v-if="showHeader">
+    <div class="container mx-auto flex justify-end items-center">
+      <nav class="space-x-2">
+        <template v-if="userLoggedIn">
+          <span class="text-gray-700 mr-2">
+            {{ greetingMessage }} 
+          </span>
+          <button @click="logout"
+            style="background-color: #f5a742; color: white; border: none; font-size: 0.9rem; margin-right:10px"
+            class="px-3 py-1 rounded-md hover:bg-gray-400 hover:text-gray-800 focus:outline-none focus:border-gray-500 focus:shadow-outline-gray">
+            로그아웃
+          </button>
+        </template>
+      </nav>
+    </div>
+  </header>
+</template>
 
-        </nav>
-      </div>
-    </header>
-  </template>
-  
-  <script>
-  export default {
+<script>
+import axios from 'axios';
+
+export default {
   props: {
     showHeader: {
       type: Boolean,
       default: true
     }
+  },
+  data() {
+    return {
+      userLoggedIn: false,
+      userData: {}
+    };
+  },
+  computed: {
+    greetingMessage() {
+      return `${this.userData.name}님 환영합니다.`;
+    }
+  },
+  methods: {
+    async fetchAdminProfile() {
+      try {
+        const access_token = localStorage.getItem("access_token");
+        const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/admin/profile`, { headers });
+        if (response.status === 200 && response.data.httpStatus === 'OK') {
+          this.userLoggedIn = true;
+          this.userData = response.data.result;
+        } else {
+          // 로그인 정보를 가져오는 데 실패했을 때의 처리
+          console.error('Failed to fetch user profile data.');
+        }
+      } catch (error) {
+        console.error('An error occurred while fetching user profile data:', error);
+      }
+    },
+    async logout() {
+          try {
+        const access_token = localStorage.getItem("access_token");
+        const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/admin/doLogout`, {}, { headers });
+        if (response.status === 200 && response.data.httpStatus === 'OK') {
+          // 로그아웃이 성공한 경우 로컬 스토리지 등에서 사용자 정보를 지웁니다.
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          this.userLoggedIn = false;
+          // 로그아웃 성공 메시지 등을 처리할 수 있습니다.
+          window.location.href = "/";
+        } else {
+          console.error('Failed to logout:', response.data.message);
+        }
+      } catch (error) {
+        console.error('An error occurred while logging out:', error);
+      }
+    }
+  },
+  created() {
+    // 컴포넌트가 생성될 때 사용자 프로필 정보를 가져오도록 합니다.
+    this.fetchAdminProfile();
   }
-}
-  </script>
-  
-  <style scoped>
-  /* Tailwind CSS 클래스를 여기에 직접 작성하거나 추가할 수 있습니다. */
-  </style>
-  
+};
+</script>
+
+<style scoped>
+/* Tailwind CSS 클래스를 여기에 직접 작성하거나 추가할 수 있습니다. */
+</style>
