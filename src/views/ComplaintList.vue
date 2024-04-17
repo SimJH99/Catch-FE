@@ -1,51 +1,55 @@
 <template>
   <div class="">
-    <div class="mx-3 mt-3 p-1 bg-white rounded-md">
-        <div class="text-4xl font-bold p-3 border-b-2 border-gray-300"> 문의 게시글 리스트 </div>
+    <div class="mx-3 mt-3 p-1 bg-white rounded-md shadow-md">
+        <div class="text-4xl font-bold p-3 border-gray-300"> 문의 게시글 리스트 </div>
     </div>
-
-    <div class="m-3 grid grid-cols-3">
-      <div class="bg-white m-2 p-2 rounded-md py-5 px-4">
+    <div class="m-2 grid grid-cols-4">
+      <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
         <div class="flex">
           <div class="text-xl font-bold text-gray-500 mr-2">총 게시글 수</div>
           <div>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
             </svg>
           </div>
         </div>
-        <a href="/userList">
-          <div class="m-5 text-4xl font-bold text-center"> 30명</div>
-        </a>
+          <div class="m-5 text-5xl font-bold text-center"> {{allCount}}개</div>
       </div>
       
-      <div class="bg-white m-2 p-2 rounded-md py-5 px-4">
+      <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
         <div class="flex">
           <div class="text-xl font-bold text-gray-500 mr-2">미 답변 게시글</div>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
           </svg>
         </div>
-        <a href="/complaintList">
-          <div class="m-5 text-4xl font-bold text-center"> 65개</div>
-        </a>
+          <div class="m-5 text-5xl font-bold text-center"> {{statusCount[0]}}개</div>
       </div>
       
-      <div class="bg-white m-2 p-2 rounded-md py-5 px-4">
+      <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
         <div class="flex">
           <div class="text-xl font-bold text-gray-500 mr-2">답변 완료 게시글</div>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 0 1 1.037-.443 48.282 48.282 0 0 0 5.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
           </svg>
         </div>
-        <a href="/couponList">
-          <div class="m-5 text-4xl font-bold text-center"> 8개</div>
-        </a>
+          <div class="m-5 text-5xl font-bold text-center"> {{statusCount[1]}}개</div>
+      </div>
+
+      <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
+        <div class="flex">
+          <div class="text-xl font-bold text-gray-500 mr-2">오늘 작성된 게시글</div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+          </svg>
+          
+        </div>
+          <div class="m-5 text-5xl font-bold text-center"> {{statusCount[1]}}개</div>
       </div>
     </div>
 
-    <div class="m-3 p-1 bg-white rounded-md">
-        <div class="container mb-4 border-b-2 border-gray-300" style="width: calc(100% - 40px); margin: 10px;">
+    <div class="m-3 p-1 bg-white rounded-md shadow-md">
+        <div class="container mb-4 border-b-2 border-gray-300 " style="width: calc(100% - 40px); margin: 10px;">
             <table class="table border-gray-400 border-2" style="width: calc(100%); margin: 10px;"> 
                 <tbody>
                     <tr>
@@ -135,10 +139,28 @@ export default {
       displayedAccounts: [], // displayedAccounts 배열 추가
       cachedPages: {}, // 캐시된 페이지 데이터를 저장할 객체 추가
       isTrue: false,
+      allCount: '',
+      statusCount: [],
     };
   },
+  created() {
+    this.fetchComplaint();
+  },
   methods: {
-    async searchComplaint() {
+    async fetchComplaint(){
+      try {
+        const token = localStorage.getItem('access_token');
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        const allCountRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/complaints/countAll`, { headers });
+        this.allCount = allCountRes.data.result.data;
+        const statusCountRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/complaints/countStatus`, { headers });
+        this.statusCount = statusCountRes.data.result.data;
+      } catch (error) {
+        console.log(error);
+      }
+
+    },
+    async searchComplaint() { 
       this.displayedAccounts = [],
       this.cachedPages = {}
       this.currentPage = 0;
@@ -197,13 +219,13 @@ export default {
     getStatusColor(status) {
       return {
         'px-6 py-4 whitespace-nowrap text-center text-lg text-red-400': status === '답변 없음', // BEFORE 상태일 때 글자색을 빨간색으로 설정
-        'px-6 py-4 whitespace-nowrap text-center text-lg text-green-400 bg-gray-50': status === '답변 완료' // REPLY 상태일 때 글자색을 초록색으로 설정
+        'px-6 py-4 whitespace-nowrap text-center text-lg text-green-400 bg-gray-100': status === '답변 완료' // REPLY 상태일 때 글자색을 초록색으로 설정
       };
     },
     getStatusBackground(status){
       return {
         'px-6 py-4 whitespace-nowrap text-center text-lg ': status === '답변 없음', // BEFORE 상태일 때 글자색을 빨간색으로 설정
-        'px-6 py-4 whitespace-nowrap text-center text-lg bg-gray-50': status === '답변 완료' // REPLY 상태일 때 글자색을 초록색으로 설정
+        'px-6 py-4 whitespace-nowrap text-center text-lg bg-gray-100': status === '답변 완료' // REPLY 상태일 때 글자색을 초록색으로 설정
       };
     },
     ComplaintDetail(id) {
