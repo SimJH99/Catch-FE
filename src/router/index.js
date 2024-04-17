@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LoginAdmin from '@/components/LoginAdmin.vue';
+import LoginAdmin from '@/views/LoginAdmin.vue';
 import DashBorad from '@/views/DashBoard.vue';
 import ComplaintList from '@/views/ComplaintList.vue';
 import ComplaintDetail from '@/views/ComplaintDetail.vue';
@@ -9,7 +9,6 @@ import CouponCreate from '@/views/CouponCreate.vue';
 import CouponReceive from '@/views/CouponReceive.vue';
 import MarketerCsCreate from '@/views/MarketerCsCreate.vue';
 import AdminList from '@/views/AdminList.vue';
-
 import MyPage from '@/views/MyPage.vue';
 
 
