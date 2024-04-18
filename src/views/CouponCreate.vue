@@ -7,21 +7,21 @@
                     <tr style="border-bottom: 1px solid white; margin-bottom: 0.5rem;">
                         <th class="py-2" style="background-color: #F5A742; width: 20%; color: white;">쿠폰명</th>
                         <td class="px-4" style="width: 80%;">
-                            <input type="text" id="name" name="name" v-model="name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-48 px-3 py-1.5 rounded-md border-gray-300 shadow-sm sm:text-sm" style="background-color: #DDDDDD; height: 2rem;">
+                           <input type="text" id="name" name="name" v-model="name" class="mt-1 block w-48 px-3 py-1.5 rounded-md border-gray-300 shadow-sm sm:text-sm focus:ring-transparent focus:border-gray-300" style="background-color: #DDDDDD; height: 2rem;">
                         </td>
                     </tr>
                     <tr style="border-bottom: 1px solid white; margin-bottom: 0.5rem;">
                         <th class="py-2" style="background-color: #F5A742; width: 20%; color: white;">수량</th>
                         <td class="px-4" style="width: 80%;">
-                            <input type="text" id="quantity" name="quantity" v-model="quantity" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-48 px-3 py-1.5 rounded-md border-gray-300 shadow-sm sm:text-sm" style="background-color: #DDDDDD; height: 2rem;">
+                            <input type="text" id="quantity" name="quantity" v-model="quantity" class="mt-1 block w-48 px-3 py-1.5 rounded-md border-gray-300 shadow-sm sm:text-sm" style="background-color: #DDDDDD; height: 2rem;">
                         </td>
                     </tr>
                     <tr style="border-bottom: 1px solid white;">
                         <th class="py-2" style="background-color: #F5A742; width: 20%; color: white;">시작일</th>
                         <td class="px-4" style="width: 80%;">
                             <div class="flex">
-                                <input type="date" id="startDate" v-model="startDate" class="mt-1 mr-2 focus:ring-indigo-500 focus:border-indigo-500 block w-32 shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <input type="time" id="startTime" v-model="startTime" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-32 shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="date" id="startDate" v-model="startDate" class="mt-1 mr-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm sm:text-sm border-gray-300 rounded-md" style="background-color: #DDDDDD; height: 2rem; font-size: 16px; text-align:center;">
+                                <!-- <input type="time" id="startTime" v-model="startTime" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-32 shadow-sm sm:text-sm border-gray-300 rounded-md"> -->
                             </div>
                         </td>
                     </tr>
@@ -29,8 +29,8 @@
                         <th class="py-2" style="background-color: #F5A742; width: 20%; color: white;">마감일</th>
                         <td class="px-4" style="width: 80%;">
                             <div class="flex">
-                                <input type="date" id="endDate" v-model="endDate" class="mt-1 mr-2 focus:ring-indigo-500 focus:border-indigo-500 block w-32 shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                <input type="time" id="endTime" v-model="endTime" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-32 shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="date" id="endDate" v-model="endDate" class="mt-1 mr-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm sm:text-sm border-gray-300 rounded-md" style="background-color: #DDDDDD; height: 2rem; font-size: 16px; text-align:center;">
+                                <!-- <input type="time" id="endTime" v-model="endTime" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-32 shadow-sm sm:text-sm border-gray-300 rounded-md"> -->
                             </div>
                         </td>
                     </tr>                    
@@ -53,9 +53,9 @@ export default {
             name: '',
             quantity: '',
             startDate: '',
-            startTime: '',
+            // startTime: '',
             endDate: '',
-            endTime: '',
+            // endTime: '',
         }
     },
     methods: {
@@ -63,13 +63,13 @@ export default {
             try{
                 const access_token = localStorage.getItem('access_token');
                 const headers = access_token ? { Authorization: `Bearer ${access_token}`} : {};
-                const startIsoDateTime = `${this.startDate}T${this.startTime}:00`;
-                const endIsoDateTime = `${this.startDate}T${this.startTime}:00`;
+                // const startIsoDateTime = `${this.startDate}T${this.startTime}:00`;
+                // const endIsoDateTime = `${this.startDate}T${this.startTime}:00`;
                 const data = {
                     name: this.name,
                     quantity: this.quantity,
-                    startDate: startIsoDateTime,
-                    endDate: endIsoDateTime
+                    startDate: this.startDate,
+                    endDate: this.endDate,
                     // 다른 필드들...
                 };
                 console.log(data);

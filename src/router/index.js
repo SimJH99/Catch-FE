@@ -10,20 +10,25 @@ import CouponReceive from '@/views/CouponReceive.vue';
 import MarketerCsCreate from '@/views/MarketerCsCreate.vue';
 import AdminList from '@/views/AdminList.vue';
 import MyPage from '@/views/MyPage.vue';
+import LoginUser from '@/views/LoginUser.vue';
+import UnauthorizedPage from '@/views/UnauthorizedPage.vue';
 
 
 const routes = [
-  { path: '/', name: 'LOGIN', component: LoginAdmin },
-  { path: '/dashBoard', name: 'DashBorad', component: DashBorad },
-  { path: '/complaintList', name: 'ComplaintList', component: ComplaintList },
-  { path:'/complaintDetail', name:'ComplaintDetail', component: ComplaintDetail},
-  { path: '/userList', name: 'UserList', component: UserList },
-  { path:'/couponList', name: 'CouponList', component: CouponList},
-  { path:'/couponCreate', name: 'CouponCreate', component: CouponCreate},
-  { path:'/couponReceive', name: 'CouponReceive', component: CouponReceive},
-  { path:'/marketerCsCreate', name:'MarketerCsCreate', component: MarketerCsCreate},
-  { path:'/adminList', name:'AdminList', component: AdminList},
-  { path:'/mypage', name:'MyPage', component: MyPage},
+  { path: '/admin/login', name: 'LoginAdmin', component: LoginAdmin },
+  { path: '/dashBoard', name: 'DashBorad', component: DashBorad, meta: { requiresAuth: true, requiresAdmin: true } },
+  { path: '/complaintList', name: 'ComplaintList', component: ComplaintList, meta: { requiresAuth: true, requiresAdmin: true } },
+  { path: '/complaintDetail', name: 'ComplaintDetail', component: ComplaintDetail, meta: { requiresAuth: true, requiresAdmin: true } },
+  { path: '/userList', name: 'UserList', component: UserList, meta: { requiresAuth: true, requiresAdmin: true } },
+  { path: '/couponList', name: 'CouponList', component: CouponList, meta: { requiresAuth: true, requiresAdmin: true } },
+  { path: '/couponCreate', name: 'CouponCreate', component: CouponCreate, meta: { requiresAuth: true, requiresAdmin: true } },
+  { path: '/couponReceive', name: 'CouponReceive', component: CouponReceive, meta: { requiresAuth: true, requiresAdmin: true } },
+  { path: '/marketerCsCreate', name: 'MarketerCsCreate', component: MarketerCsCreate, meta: { requiresAuth: true, requiresAdmin: true } },
+  { path: '/adminList', name: 'AdminList', component: AdminList, meta: { requiresAuth: true, requiresAdmin: true } },
+  { path: '/mypage', name: 'MyPage', component: MyPage, meta: { requiresAuth: true } },
+  { path: '/', name: 'LoginUser', component: LoginUser },
+  { path: '/unauthorized', name: 'UnauthorizedPage', component: UnauthorizedPage },
+
 ];
 
 const router = createRouter({
@@ -32,12 +37,30 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = localStorage.getItem('access_token'); // 로그인 상태 확인
-  if (to.name !== 'LOGIN' && !isAuthenticated) {
-    // 로그인이 필요한 페이지인데 로그인되어 있지 않으면 로그인 페이지로 리디렉션
-    next({ name: 'LOGIN' });
+  const accessToken = localStorage.getItem('access_token');
+
+  if (!accessToken) {
+    if (to.path !== '/admin/login' && to.path !== '/') {
+      // 사용자 로그인 페이지 또는 '/'로 접근하는 경우
+      next({ name: 'LoginUser' });
+    } else {
+      next(); // '/admin/login' 또는 '/' 페이지로 이동
+    }
   } else {
-    next(); // 그 외의 경우에는 그냥 진행
+    const [, payloadBase64] = accessToken.split('.');
+    const payload = JSON.parse(atob(payloadBase64));
+    const userRole = payload.sub.split(':')[1];
+
+    if (to.meta.requiresAuth && !accessToken) {
+      next({ name: 'LoginAdmin' });
+    } else if (to.meta.requiresAdmin && userRole !== 'ADMIN') {
+      next({ name: 'UnauthorizedPage' });
+    } else if (to.path === '/admin/login' && userRole === 'USER') {
+      // 사용자가 USER 권한으로 '/admin/login' 페이지에 접속하는 경우
+      next({ name: 'UnauthorizedPage' });
+    } else {
+      next();
+    }
   }
 });
 
