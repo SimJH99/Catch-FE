@@ -16,6 +16,11 @@ import AppFooter from "@/components/AppFooter.vue";
 import AppSideBar from "@/components/AppSideBar.vue";
 import AppHeader from "@/components/AppHeader.vue";
 
+// import firebase from 'firebase/app';
+import 'firebase/messaging';
+import { initializeApp } from 'firebase/app';
+import { getMessaging, onMessage } from 'firebase/messaging';
+
 export default {
   data() {
     return {
@@ -45,6 +50,49 @@ export default {
     if (!accessToken) {
       this.isChecked = false;
       this.isLoginPage = true;
+    }
+
+    const firebaseConfig = {
+      apiKey: `${process.env.VUE_APP_FIREBASE_API_KEY}`,
+      authDomain: `${process.env.VUE_APP_FIREBASE_AUTH_DOMAIN}`,
+      projectId: `${process.env.VUE_APP_FIREBASE_PROJECT_ID}`,
+      storageBucket: `${process.env.VUE_APP_FIREBASE_STORAGE_BUCKET}`,
+      messagingSenderId: `${process.env.VUE_APP_FIREBASE_MESSAGING_SENDER_ID}`,
+      appId: `${process.env.VUE_APP_FIREBASE_APP_ID}`,
+      measurementId: `${process.env.VUE_APP_FIREBASE_MEASUREMENTID}`
+    }
+
+    const firebase = initializeApp(firebaseConfig);
+    const messaging = getMessaging(firebase);
+
+    onMessage(messaging, (payload) => {
+      console.log("Message received. ", payload);
+      if (Notification.permission === "granted") {
+        const { title, body } = payload.notification;
+        navigator.serviceWorker.ready
+          .then((registration) => {
+            registration
+              .showNotification(title, {
+                body: body,
+                icon: "favicon.ico",
+                vibrate: [200, 100, 200, 100, 200, 100, 200],
+                tag: "vibration-sample",
+              })
+              .finally((arg) => console.log(arg));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+
+    if("serviceWorker" in navigator){
+      navigator.serviceWorker
+      .register("firebase-messaging-sw.js")
+      .then(function (registration){
+        console.log("ServiceWorker registration successful with scope: ");
+        return registration;
+      });
     }
   },
 };
