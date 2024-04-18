@@ -43,23 +43,7 @@ export default {
   mounted() {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
-      const [, payloadBase64] = accessToken.split('.');
-      const payload = JSON.parse(atob(payloadBase64));
-      console.log(accessToken);
-      console.log(payload.sub);
-      const userRole = payload.sub.split(':')[1];
-      console.log(userRole);
-      if (userRole === 'ADMIN') {
-        this.headerComponent = 'AdminHeader';
-        this.footerComponent = 'AdminFooter';
-        this.showSideBar = true;
-      } else {
-        this.headerComponent = 'UserHeader';
-        this.footerComponent = 'UserFooter';
-      }
-    }
-
-    const firebaseConfig = {
+      const firebaseConfig = {
       apiKey: `${process.env.VUE_APP_FIREBASE_API_KEY}`,
       authDomain: `${process.env.VUE_APP_FIREBASE_AUTH_DOMAIN}`,
       projectId: `${process.env.VUE_APP_FIREBASE_PROJECT_ID}`,
@@ -95,11 +79,26 @@ export default {
 
     if("serviceWorker" in navigator){
       navigator.serviceWorker
-      .register("firebase-messaging-sw.js")
+      .register("/firebase-messaging-sw.js")
       .then(function (registration){
         console.log("ServiceWorker registration successful with scope: ");
         return registration;
       });
+    }
+      const [, payloadBase64] = accessToken.split('.');
+      const payload = JSON.parse(atob(payloadBase64));
+      console.log(accessToken);
+      console.log(payload.sub);
+      const userRole = payload.sub.split(':')[1];
+      console.log(userRole);
+      if (userRole === 'ADMIN') {
+        this.headerComponent = 'AdminHeader';
+        this.footerComponent = 'AdminFooter';
+        this.showSideBar = true;
+      } else {
+        this.headerComponent = 'UserHeader';
+        this.footerComponent = 'UserFooter';
+      }
     }
   },
 };
