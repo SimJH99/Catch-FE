@@ -4,7 +4,7 @@
   >
     <div class="bg-white p-8 rounded-md shadow-md max-w-md w-full">
       <h2 class="text-3xl font-semibold mb-6 text-center text-gray-800">
-        로그인
+        관리자 로그인
       </h2>
 
       <div class="mb-4">
@@ -77,7 +77,7 @@
         </button>
 
         <div class="mt-4 flex w-full items-center justify-end space-x-4">
-          <p>계정 관련 문의는 관리자에게 문의하세요</p>
+          <p>계정 관련 문의는 <b style="color:#f5a742">시스템 관리자</b>에게 문의하세요</p>
         </div>
       </form>
     </div>

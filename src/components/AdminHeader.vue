@@ -1,17 +1,20 @@
 <template>
   <header class="bg-white py-2 text-base md:text-lg" v-if="showHeader">
-    <div class="container mx-auto flex justify-end items-center">
-      <nav class="space-x-2">
+    <div class="container mx-auto flex justify-between items-center">
+      <div>
+        <img src="@/assets/logo3.png" class="h-auto" alt="로고" />
+      </div>
+      <nav class="space-x-2 flex items-center">
         <template v-if="userLoggedIn">
           <span class="text-gray-700 mr-2">
             {{ greetingMessage }} 
           </span>
-          <button @click="logout"
-            style="background-color: #f5a742; color: white; border: none; font-size: 0.9rem; margin-right:10px"
-            class="px-3 py-1 rounded-md hover:bg-gray-400 hover:text-gray-800 focus:outline-none focus:border-gray-500 focus:shadow-outline-gray">
-            로그아웃
-          </button>
         </template>
+        <button v-if="userLoggedIn" @click="logout"
+          style="background-color: #f5a742; color: white; border: none; font-size: 0.9rem;"
+          class="px-3 py-1 rounded-md hover:bg-gray-400 hover:text-gray-800 focus:outline-none focus:border-gray-500 focus:shadow-outline-gray">
+          로그아웃
+        </button>
       </nav>
     </div>
   </header>
@@ -83,5 +86,5 @@ export default {
 </script>
 
 <style scoped>
-/* Tailwind CSS 클래스를 여기에 직접 작성하거나 추가할 수 있습니다. */
+
 </style>
