@@ -41,24 +41,6 @@ export default {
   },
 
   mounted() {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      const [, payloadBase64] = accessToken.split('.');
-      const payload = JSON.parse(atob(payloadBase64));
-      console.log(accessToken);
-      console.log(payload.sub);
-      const userRole = payload.sub.split(':')[1];
-      console.log(userRole);
-      if (userRole === 'ADMIN') {
-        this.headerComponent = 'AdminHeader';
-        this.footerComponent = 'AdminFooter';
-        this.showSideBar = true;
-      } else {
-        this.headerComponent = 'UserHeader';
-        this.footerComponent = 'UserFooter';
-      }
-    }
-
     const firebaseConfig = {
       apiKey: `${process.env.VUE_APP_FIREBASE_API_KEY}`,
       authDomain: `${process.env.VUE_APP_FIREBASE_AUTH_DOMAIN}`,
@@ -68,6 +50,7 @@ export default {
       appId: `${process.env.VUE_APP_FIREBASE_APP_ID}`,
       measurementId: `${process.env.VUE_APP_FIREBASE_MEASUREMENTID}`
     }
+    
 
     const firebase = initializeApp(firebaseConfig);
     const messaging = getMessaging(firebase);
@@ -100,6 +83,24 @@ export default {
         console.log("ServiceWorker registration successful with scope: ");
         return registration;
       });
+    }
+
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      const [, payloadBase64] = accessToken.split('.');
+      const payload = JSON.parse(atob(payloadBase64));
+      console.log(accessToken);
+      console.log(payload.sub);
+      const userRole = payload.sub.split(':')[1];
+      console.log(userRole);
+      if (userRole === 'ADMIN') {
+        this.headerComponent = 'AdminHeader';
+        this.footerComponent = 'AdminFooter';
+        this.showSideBar = true;
+      } else {
+        this.headerComponent = 'UserHeader';
+        this.footerComponent = 'UserFooter';
+      }
     }
   },
 };
