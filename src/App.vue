@@ -41,9 +41,7 @@ export default {
   },
 
   mounted() {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      const firebaseConfig = {
+    const firebaseConfig = {
       apiKey: `${process.env.VUE_APP_FIREBASE_API_KEY}`,
       authDomain: `${process.env.VUE_APP_FIREBASE_AUTH_DOMAIN}`,
       projectId: `${process.env.VUE_APP_FIREBASE_PROJECT_ID}`,
@@ -52,6 +50,7 @@ export default {
       appId: `${process.env.VUE_APP_FIREBASE_APP_ID}`,
       measurementId: `${process.env.VUE_APP_FIREBASE_MEASUREMENTID}`
     }
+    
 
     const firebase = initializeApp(firebaseConfig);
     const messaging = getMessaging(firebase);
@@ -85,6 +84,8 @@ export default {
         return registration;
       });
     }
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
       const [, payloadBase64] = accessToken.split('.');
       const payload = JSON.parse(atob(payloadBase64));
       console.log(accessToken);

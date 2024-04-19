@@ -55,6 +55,9 @@
 
 <script>
 import axios from "axios";
+import { initializeApp } from "firebase/app";
+import { getMessaging, getToken} from "firebase/messaging";
+
 
 export default {
   data() {
@@ -81,6 +84,43 @@ export default {
         const result = response.data;
         localStorage.setItem("access_token", result.result.access_token);
         localStorage.setItem("refresh_token", result.result.refresh_token);
+
+        // test
+            
+        const firebaseConfig = {
+          apiKey: `${process.env.VUE_APP_FIREBASE_API_KEY}`,
+          authDomain: `${process.env.VUE_APP_FIREBASE_AUTH_DOMAIN}`,
+          projectId: `${process.env.VUE_APP_FIREBASE_PROJECT_ID}`,
+          storageBucket: `${process.env.VUE_APP_FIREBASE_STORAGE_BUCKET}`,
+          messagingSenderId: `${process.env.VUE_APP_FIREBASE_MESSAGING_SENDER_ID}`,
+          appId: `${process.env.VUE_APP_FIREBASE_APP_ID}`,
+          measurementId: `${process.env.VUE_APP_FIREBASE_MEASUREMENTID}`
+        }
+            
+      const firebase = initializeApp(firebaseConfig);
+      const messaging = getMessaging(firebase);
+
+      getToken(messaging,{
+        vapidKey: `${process.env.VUE_APP_FIREBASE_VAP_ID}`
+      })
+      .then((token) => {
+      const access_token = localStorage.getItem('access_token');
+      const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
+      axios.post(
+          `${process.env.VUE_APP_API_BASE_URL}/user/pushToken`,
+          {
+            email: this.email,
+            pushToken: token,
+          },
+          {headers}
+        );
+        this.pushToken= token;
+        console.log('해당 브라우저에서의 토큰 : ', this.pushToken);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
         alert("로그인 되었습니다.");
         window.location.href = "/mypage";
         
