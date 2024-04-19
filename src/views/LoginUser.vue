@@ -82,7 +82,7 @@ export default {
         localStorage.setItem("access_token", result.result.access_token);
         localStorage.setItem("refresh_token", result.result.refresh_token);
         alert("로그인 되었습니다.");
-        window.location.href = "/Mypage";
+        window.location.href = "/mypage";
         
       } catch (error) {
         console.error(error);
