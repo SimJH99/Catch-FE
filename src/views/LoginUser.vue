@@ -122,7 +122,7 @@ export default {
       });
 
         alert("로그인 되었습니다.");
-        window.location.href = "/Mypage";
+        window.location.href = "/mypage";
         
       } catch (error) {
         console.error(error);

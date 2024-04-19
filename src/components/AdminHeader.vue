@@ -2,7 +2,7 @@
   <header class="bg-white py-2 text-base md:text-lg" v-if="showHeader">
     <div class="container mx-auto flex justify-between items-center">
       <div>
-        <img src="@/assets/logo3.png" class="h-auto" alt="로고" />
+        <img src="@/assets/logo2.png" style="height:60px; width:60px;" alt="로고" />
       </div>
       <nav class="space-x-2 flex items-center">
         <template v-if="userLoggedIn">
