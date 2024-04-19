@@ -4,7 +4,7 @@
             <div class="wrap mys">
                 <MyProfileTop/>
                 <MyProfileSideVue class="mys_lnb"/>
-                <MyProfileContents class="mys_cont"/>
+                <MyProfileContents />
             </div>
         </div>
     </div>
