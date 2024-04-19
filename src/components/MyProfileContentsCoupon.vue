@@ -1,10 +1,12 @@
 <template>
-    <div class="mys_m_shop">
-      <h3>• 쿠폰</h3>
-      <div class="my_clm">
-        <div class="flex items-center">
-          <button @click="prevCoupon" class="arrow prev text-white bg-gray-500 rounded-full p-2">&larr;</button>
-          <button @click="nextCoupon" class="arrow next text-white bg-gray-500 rounded-full p-2">&rarr;</button>
+  <div class="mys_m_cpn">
+      <h3>쿠폰</h3>
+      <div class="my_m_wrap">
+        <div class="my_m_cpn">
+          <div class="flex items-center">
+            <button @click="prevCoupon" class="arrow prev text-white bg-gray-500 rounded-full p-2">&larr;</button>
+            <button @click="nextCoupon" class="arrow next text-white bg-gray-500 rounded-full p-2">&rarr;</button>
+          </div>
         </div>
       </div>
       
@@ -74,6 +76,34 @@ nextCoupon() {
   </script>
   
   <style scoped>
+  .mys_m_cpn {
+    clear: both;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.mys_m_cpn h3 {
+  margin-bottom: 20px;
+  font-size: 26px;
+  line-height: 32px;
+  color: #191919;
+  letter-spacing: 0;
+}
+
+.mys_cont h3 {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 38px;
+}
+
+.my_m_wrap {
+  overflow: hidden;
+  width: 1016px;
+}
   .coupon {
     width: 25%; /* 4개의 쿠폰을 가로로 정렬 */
     background-color: #fff;
