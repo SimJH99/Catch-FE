@@ -1,8 +1,11 @@
 <template>
-    <div class="body">
+    <div class="my_body">
         <div class="content">
-            <MyProfileTop/>
-            <MyProfileContents/>
+            <div class="wrap mys">
+                <MyProfileTop/>
+                <MyProfileSideVue class="mys_lnb"/>
+                <MyProfileContents class="mys_cont"/>
+            </div>
         </div>
     </div>
 </template>
@@ -10,11 +13,14 @@
 <script>
 import MyProfileContents from "@/components/MyProfileContents.vue";
 import MyProfileTop from "@/components/MyProfileTop.vue";
+import MyProfileSideVue from '@/components/MyProfileSide.vue';
+
 
 export default {
     components: {
         MyProfileTop,
-        MyProfileContents
+        MyProfileContents,
+        MyProfileSideVue
     },
     setup () {
         
@@ -25,9 +31,8 @@ export default {
 </script>
 
 <style>
-
-.body {
-    background-color: white;
+.my_body
+    {
     width: 100%;
     height: 100%;
     margin: 0;
@@ -35,9 +40,23 @@ export default {
     border: 0;
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
+    background-color: white;
 }
 
 
+.wrap.mys {
+    position: relative;
+    width: 1280px;
+    margin: 30px auto 0 auto;
+}
+
+.mys_cont {
+    outline: none;
+    display: table-cell;
+    width: 1016px;
+    padding-left: 54px;
+    vertical-align: top;
+}
 
 .content {
     position: relative;
@@ -68,6 +87,15 @@ header, footer, section, article, aside, nav, hgroup, details, menu, figure, fig
     width: 1280px;
     margin: 30px auto 0 auto;
 }
+
+.mys_lnb {
+    display: table-cell;
+    overflow: hidden;
+    width: 208px;
+    border-top: 0;
+    vertical-align: top;
+}
+
 
 
 </style>

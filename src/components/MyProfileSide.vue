@@ -1,0 +1,120 @@
+<template>
+  <div class="inb">
+    <div class="container">
+      <!-- 쇼핑 내역 -->
+      <div class="section">
+        <div class="title">쇼핑내역</div>
+        <a class="item">주문/배송조회</a>
+        <a class="item">취소/교환/반품</a>
+        <a class="item">영수증 확인/출력</a>
+      </div>
+  
+      <!-- 쿠폰 -->
+      <div class="section">
+        <div class="title">쿠폰</div>
+        <a class="item">쿠폰 리스트</a>
+        <a class="item">쿠폰 등록</a>
+      </div>
+  
+      <!-- 관심 목록 -->
+      <div class="section">
+        <div class="title">관심목록</div>
+        <a class="item">위시리스트</a>
+        <a class="item">재입고알림</a>
+      </div>
+  
+      <!-- 쇼핑 활동 -->
+      <div class="section">
+        <div class="title">쇼핑활동</div>
+        <a class="item">상품리뷰</a>
+        <a class="item">상품문의</a>
+        <a class="item">1:1문의내역</a>
+        <a class="item">이벤트참여내역</a>
+      </div>
+  
+      <!-- 회원 정보 -->
+      <div class="section">
+        <div class="title">회원정보</div>
+        <a class="item">개인정보관리</a>
+        <a class="item">비밀번호변경</a>
+        <a class="item">배송지관리</a>
+        <a class="item">회원탈퇴</a>
+      </div>
+    </div>
+  </div>
+  </template>
+  
+  <style scoped>
+
+  .inb{
+    overflow: hidden;
+    width: 170px;
+    padding: 0 19px 20px 19px;
+    padding-top: 0px;
+    padding-right: 19px;
+    padding-bottom: 20px;
+    padding-left: 19px;
+    border: 1px solid #D4D4D8;
+    border-top: 2px solid #191919;
+
+}
+  .container {
+    width: 210px;
+    height: 828px;
+    padding-bottom: 1197.50px;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+  }
+  
+  .section {
+    width: 170px;
+    height: 120px;
+    position: relative;
+    border-top: 1px solid #CBD5E0;
+    padding: 0 5px;
+    margin-bottom: 80%; /* 각 섹션 사이의 간격 추가 */
+  }
+  
+  .title {
+    margin-top: 10%;
+    font-size: 17px;
+    line-height: 25px;
+    color: #191919;
+    font-weight: 500;
+  }
+  
+  .item {
+    height: 19px;
+    position: absolute;
+    font-size: 14px;
+    color: #718096;
+    cursor: pointer; /* 포인터 커서 추가 */
+  }
+  .item:hover {
+    font-size: 15px;
+    color: #2D3748;
+  }
+  .item:hover::after {
+    content: " >";
+  }
+  
+  
+  .item:nth-child(2) {
+    top: 50px;
+  }
+  
+  .item:nth-child(3) {
+    top: 79px;
+  }
+  
+  .item:nth-child(4) {
+    top: 108px;
+  }
+  
+  .item:nth-child(5) {
+    top: 137px;
+  }
+  </style>
+  

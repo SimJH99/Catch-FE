@@ -1,7 +1,5 @@
 <template>
-    <div class="mys_cont">
         <MyProfileContentsShop/>
-    </div>
 </template>
 
 <script>
@@ -21,13 +19,7 @@ export default {
 
 
 <style>
-.mys_cont {
-    outline: none;
-    display: table-cell;
-    width: 1016px;
-    padding-left: 54px;
-    vertical-align: top;
-}
+
 
 
 </style>
