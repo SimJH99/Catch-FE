@@ -2,20 +2,20 @@
     <div class="body">
         <div class="content">
             <MyProfileTop/>
+            <MyProfileSideVue class="inb"/>
         </div>
-        <UserFooter/>
     </div>
 
 </template>
 
 <script>
 import MyProfileTop from "@/components/MyProfileTop.vue";
-import UserFooter from "@/components/UserFooter.vue";
+import MyProfileSideVue from '@/components/MyProfileSide.vue';
 
 export default {
     components: {
         MyProfileTop,
-        UserFooter
+        MyProfileSideVue
     },
     setup () {
         
@@ -36,7 +36,6 @@ export default {
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
 }
-
 
 
 .content {
@@ -62,6 +61,17 @@ header, footer, section, article, aside, nav, hgroup, details, menu, figure, fig
     display: block;
 }
 
+.inb{
+    overflow: hidden;
+    width: 170px;
+    padding: 0 19px 20px 19px;
+    padding-top: 0px;
+    padding-right: 19px;
+    padding-bottom: 20px;
+    padding-left: 19px;
+    border: 1px solid #D4D4D8;
+    border-top: 2px solid #191919;
+}
 
 
 </style>
