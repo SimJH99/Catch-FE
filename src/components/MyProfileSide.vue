@@ -1,4 +1,5 @@
 <template>
+  <div class="inb">
     <div class="container">
       <!-- 쇼핑 내역 -->
       <div class="section">
@@ -40,9 +41,23 @@
         <a class="item">회원탈퇴</a>
       </div>
     </div>
+  </div>
   </template>
   
   <style scoped>
+
+  .inb{
+    overflow: hidden;
+    width: 170px;
+    padding: 0 19px 20px 19px;
+    padding-top: 0px;
+    padding-right: 19px;
+    padding-bottom: 20px;
+    padding-left: 19px;
+    border: 1px solid #D4D4D8;
+    border-top: 2px solid #191919;
+
+}
   .container {
     width: 210px;
     height: 828px;
