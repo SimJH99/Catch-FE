@@ -2,20 +2,19 @@
     <div class="body">
         <div class="content">
             <MyProfileTop/>
+            <MyProfileContents/>
         </div>
-        <UserFooter/>
     </div>
-
 </template>
 
 <script>
+import MyProfileContents from "@/components/MyProfileContents.vue";
 import MyProfileTop from "@/components/MyProfileTop.vue";
-import UserFooter from "@/components/UserFooter.vue";
 
 export default {
     components: {
         MyProfileTop,
-        UserFooter
+        MyProfileContents
     },
     setup () {
         
@@ -28,6 +27,7 @@ export default {
 <style>
 
 .body {
+    background-color: white;
     width: 100%;
     height: 100%;
     margin: 0;
@@ -58,10 +58,16 @@ div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input,
     letter-spacing: 0;
 }
 
+
 header, footer, section, article, aside, nav, hgroup, details, menu, figure, figcaption, canvas, summary {
     display: block;
 }
 
+.wrap.mys {
+    position: relative;
+    width: 1280px;
+    margin: 30px auto 0 auto;
+}
 
 
 </style>
