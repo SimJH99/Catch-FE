@@ -78,12 +78,98 @@
                 </dd>
             </dl>
         </div>
+
+        <div class="mt-3 grid grid-cols-2 border border-[#D4D4D8]">
+            <div class="border-r border-[#D4D4D8]">
+                <div class="flex justify-between bg-gray-100">
+                    <div class="font-bold text-xl px-2 pt-2 bg-gray-100">문의내역</div>
+                    <div class="px-2 py-3 bg-gray-100 cursor-pointer" @click="MyComplaintList">전체 보기</div>
+                </div>
+                <div class="p-3">
+                    <table class="w-full">
+                        <tbody>
+                            <tr v-for="(complaint) in complaintList" :key="complaint.title" class="">
+                                <td>{{ complaint.title }}</td>
+                                <td :class="getStatusColor(complaint.status)">{{ complaint.status }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <div class="flex justify-between bg-gray-100">
+                    <div class="font-bold text-xl px-2 pt-2 bg-gray-100"> Best FAQ </div>
+                    <div class="px-2 py-3  bg-gray-100">상세 보기</div>
+                </div>
+                <div class="p-3">
+                    <table class="w-full">
+                        <tbody>
+                            <tr v-for="(i) in people" :key="i.name">
+                                <div class="p-1 flex justify-between">
+                                    <td>{{ i.name }}</td>
+                                    <a href="#">
+                                        <td>{{ i.age }}</td>
+                                    </a>
+                                </div>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         <!-- //STATE -->
     </div>
 </template>
 
 <script>
-
+import axios from 'axios';
+export default {
+  data() {
+    return {
+        complaintList: {},
+        people: [
+            { name: '[로그인/정보] 아이디와 비밀번호가 기억나지 않아요.', age: '자세히 보기' },
+            { name: '[배송 일반] 일반 배송 상품은 언제 배송 되나요?', age: '자세히 보기' },
+            { name: '[결제수단] 결제하는 방법에 따라 할인 이벤트가 있나요?', age: '자세히 보기' },
+            { name: '[주문] 상품을 받는 주소(배송지) 등록은 어떻게 하나요?', age: '자세히 보기' },
+            { name: '[취소/반품(환불)] 반품접수는 어떻게 하나요?', age: '자세히 보기' },
+        ]
+    };
+  },
+  created() {
+    this.myComplaintList();
+  },
+  methods: {
+    MyComplaintList(){
+        this.$router.push({ name: 'MyComplaintList' });
+    },
+    async myComplaintList(){
+        const token = localStorage.getItem('access_token');
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/complaints/myPage`, { headers});
+        this.complaintList = response.data.result.data.map((account) => ({
+            ...account,
+            status: this.formatRole(account.status),
+        }));
+    },
+    formatRole(status) {
+      switch (status) {
+        case "BEFORE":
+          return "답변 없음";
+        case "REPLY":
+          return "답변 완료";
+        default:
+          return status;
+      }
+    },
+    getStatusColor(status) {
+      return {
+        'p-1 whitespace-nowrap text-right text-red-400': status === '답변 없음', // BEFORE 상태일 때 글자색을 빨간색으로 설정
+        'p-1 whitespace-nowrap text-right text-green-400': status === '답변 완료' // REPLY 상태일 때 글자색을 초록색으로 설정
+      };
+    },
+  }
+};
 </script>
 
 <style>
@@ -138,6 +224,19 @@
 .mys_m_shop .my_stat dd span a{display:inline-block;margin-left:6px;vertical-align:middle;}
 .mys_m_shop .my_stat dd span.dd{font-size:13px;line-height:22px;color:#767676;}
 .mys_m_shop .my_stat dd span.dd a{font-family:'Roboto Condensed';font-size:18px;line-height:22px;color:#191919;}
+
+table {
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
 
 
 </style>
