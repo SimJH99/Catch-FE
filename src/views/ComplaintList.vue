@@ -122,6 +122,7 @@
 <script>
 import axios from 'axios';
 import PaginationComponent from '@/components/PaginationComponent.vue';
+import router from '@/router';
 
 export default {
   components: {
@@ -183,7 +184,6 @@ export default {
           const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/complaints/list`, registerData ,{ headers, params });
           this.complaintList = response.data.result.data.content;
           this.totalPageCount = response.data.result.data.totalPages;
-          console.log(response.data.result.data);
           const addAccountList = response.data.result.data.content.map((account) => ({
             ...account,
             status: this.formatRole(account.status),
@@ -228,10 +228,10 @@ export default {
         'px-6 py-4 whitespace-nowrap text-center text-lg bg-gray-100': status === '답변 완료' // REPLY 상태일 때 글자색을 초록색으로 설정
       };
     },
-    ComplaintDetail(id) {
-      // 특정 ID에 해당하는 계정 상세 정보 페이지로 이동
-      this.$router.push({ name: 'ComplaintDetail', params: { id: id } });
-    },
+    ComplaintDetail(complaintId) {
+      router.push({ name: 'ComplaintDetail', params: { complaintId: complaintId }
+    });
+  },
   },
 }
 

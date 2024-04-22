@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import MyProfileContents from "@/components/ComplaintDetailComponent.vue";
+import MyProfileContents from "@/components/MyComplaintListComponent.vue";
 import MyProfileTop from "@/components/MyProfileTop.vue";
 import MyProfileSideVue from '@/components/MyProfileSide.vue';
 

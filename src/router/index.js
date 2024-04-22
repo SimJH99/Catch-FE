@@ -12,7 +12,8 @@ import AdminList from '@/views/AdminList.vue';
 import MyPage from '@/views/MyPage.vue';
 import LoginUser from '@/views/LoginUser.vue';
 import UnauthorizedPage from '@/views/UnauthorizedPage.vue';
-
+import MyComplaintList from '@/views/MyComplaintList.vue';
+import CreateComplaint from '@/views/CreateComplaint.vue';
 
 const routes = [
   { path: '/admin/login', name: 'LoginAdmin', component: LoginAdmin },
@@ -28,7 +29,9 @@ const routes = [
   { path: '/mypage', name: 'MyPage', component: MyPage, meta: { requiresAuth: true } },
   { path: '/', name: 'LoginUser', component: LoginUser },
   { path: '/unauthorized', name: 'UnauthorizedPage', component: UnauthorizedPage },
-
+  { path:'/mycomplaintlist', name:'MyComplaintList', component: MyComplaintList},
+  { path:'/createComplaint', name:'CreateComplaint', component: CreateComplaint},
+  { path: '/:complaintId/complaintDetail', name: 'ComplaintDetail', component: ComplaintDetail, props: true},
 ];
 
 const router = createRouter({
