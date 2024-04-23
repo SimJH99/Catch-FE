@@ -1,7 +1,7 @@
 <template>
   <div class="">
-    <div class="mx-3 mt-3 p-1 bg-white rounded-md shadow-md">
-        <div class="text-4xl font-bold p-3 border-gray-300"> 문의 게시글 리스트 </div>
+    <div class="m-3 p-1 bg-white rounded-md shadow-md flex">
+      <div class="text-4xl font-bold p-3">문의 게시글 리스트 </div>  
     </div>
     <div class="m-2 grid grid-cols-4">
       <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
@@ -13,7 +13,7 @@
             </svg>
           </div>
         </div>
-          <div class="m-5 text-5xl font-bold text-center"> {{allCount}}개</div>
+          <div class="m-5 text-4xl font-bold text-center"> {{allCount}}개</div>
       </div>
       
       <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
@@ -23,7 +23,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
           </svg>
         </div>
-          <div class="m-5 text-5xl font-bold text-center"> {{statusCount[0]}}개</div>
+          <div class="m-5 text-4xl font-bold text-center"> {{statusCount[0]}}개</div>
       </div>
       
       <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
@@ -33,7 +33,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 0 1 1.037-.443 48.282 48.282 0 0 0 5.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
           </svg>
         </div>
-          <div class="m-5 text-5xl font-bold text-center"> {{statusCount[1]}}개</div>
+          <div class="m-5 text-4xl font-bold text-center"> {{statusCount[1]}}개</div>
       </div>
 
       <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
@@ -42,38 +42,37 @@
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
           </svg>
-          
         </div>
-          <div class="m-5 text-5xl font-bold text-center"> {{statusCount[1]}}개</div>
+          <div class="m-5 text-4xl font-bold text-center"> {{statusCount[1]}}개</div>
       </div>
     </div>
 
     <div class="m-3 p-1 bg-white rounded-md shadow-md">
-        <div class="container mb-4 border-b-2 border-gray-300 " style="width: calc(100% - 40px); margin: 10px;">
-            <table class="table border-gray-400 border-2" style="width: calc(100%); margin: 10px;"> 
+        <div class="container mb-4 mx-[10px]" style="width: calc(100% - 40px);">
+            <table style="width: calc(100% - 20px); margin: 10px"> 
                 <tbody>
                     <tr>
-                        <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;" >게시글 번호</th>
-                        <td class="p-2 border-2 border-gray-300" style="width: 80%;">
-                            <input type="text" v-model="complaintId" class="w-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent shadow-sm text-base"> <!-- 너비 조정 -->
+                        <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">게시글 번호</th>
+                        <td class="px-2 border-2 border-gray-300" style="width: 80%;">
+                            <input type="text" v-model="complaintId" class="w-full text-base outline-none hover:bg-gray-100 active:bg-gray-200">
                         </td>
                     </tr>
                     <tr>
                         <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">고객 이름</th>
                         <td class="px-2 border-2 border-gray-300" style="width: 80%;">
-                            <input type="text" v-model="name" class="w-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent shadow-sm text-base">
+                            <input type="text" v-model="name" class="w-full text-base outline-none hover:bg-gray-100 active:bg-gray-200">
                         </td>
                     </tr>
                     <tr>
                         <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">게시글 제목</th>
                         <td class="px-2 border-2 border-gray-300" style="width: 80%;">
-                            <input type="text" v-model="title" class="w-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent shadow-sm text-base">
+                            <input type="text" v-model="title" class="w-full text-base outline-none hover:bg-gray-100 active:bg-gray-200">
                         </td>
                     </tr>
                     <tr>
                         <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">답변 여부</th>
                         <td class="px-2 border-2 border-gray-300" style="width: 80%;">
-                        <select class="custom-select m-1 p-1 border rounded-md" v-model="status">
+                        <select v-model="status" class="m-1 p-1 rounded-md w-48 outline-none">
                             <option :value="null">--선택--</option>
                             <option value="BEFORE">답변 없음</option>
                             <option value="REPLY">답변 완료</option>
@@ -82,11 +81,18 @@
                     </tr>
                 </tbody>
             </table>
-            <button 
-                class="bg-custom-F5A742 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded" 
-                style="width: 200px; text-align: center; margin-left: calc(100% - 210px); margin-bottom: 10px;"
-                @click="searchComplaint"
-            >검색</button>
+            <div class="flex justify-between">
+              <div style="margin-left: 10px; margin-top: 30px">
+                  <span>페이지 크기:</span>
+                  <select v-model="pageSize" @change="changePageSize" class="outline-none">
+                      <option v-for="size in pageSizeOptions" :key="size" :value="size">{{ size }}</option>
+                  </select>
+              </div>
+              <div style="text-align: right; margin-bottom: 10px; margin-right: 10px;">
+                  <button @click="resetInputs" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded w-[120px] mr-3"> 입력값 초기화 </button>
+                  <button @click="searchComplaint" class="bg-custom-F5A742 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded w-[120px]"> 검색 </button>
+              </div>
+            </div>
         </div>
 
         <div class="container" style="width: calc(100% - 40px); margin: 10px">
@@ -94,12 +100,12 @@
               class="divide-y divide-gray-200"
               style="width: calc(100% - 20px); margin: 10px"
             >
-              <thead class="bg-gray-100">
+              <thead class="bg-gray-50">
                 <tr>
-                  <th scope="col" class="px-6 py-3 w-1/6 text-center text-xl font-medium text-gray-500 uppercase tracking-wider">No</th>
-                  <th scope="col" class="px-6 py-3 w-1/6 text-center text-xl font-medium text-gray-500 uppercase tracking-wider">이름</th>
-                  <th scope="col" class="px-6 py-3 w-3/6 text-center text-xl font-medium text-gray-500 uppercase tracking-wider">제목</th>
-                  <th scope="col" class="px-6 py-3 w-1/6 text-center text-xl font-medium text-gray-500 uppercase tracking-wider">답변 상태</th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">이름</th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">제목</th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">답변 상태</th>
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
@@ -138,6 +144,7 @@ export default {
   data() {
     return {
       complaintList: [],
+      pageSizeOptions: [10, 25, 50, 100],
       pageSize: 10,
       currentPage: 0,
       searchValue: '',
@@ -216,6 +223,10 @@ export default {
       this.currentPage = pageNum;
       this.loadComplaint();
     },
+    changePageSize(event) {
+        this.pageSize = parseInt(event.target.value);
+        this.searchComplaint();
+    },
     formatRole(status) {
       switch (status) {
         case "BEFORE":
@@ -228,14 +239,14 @@ export default {
     },
     getStatusColor(status) {
       return {
-        'px-6 py-4 whitespace-nowrap text-center text-lg text-red-400': status === '답변 없음', // BEFORE 상태일 때 글자색을 빨간색으로 설정
-        'px-6 py-4 whitespace-nowrap text-center text-lg text-green-400 bg-gray-100': status === '답변 완료' // REPLY 상태일 때 글자색을 초록색으로 설정
+        'px-6 py-4 whitespace-nowrap text-red-400': status === '답변 없음', // BEFORE 상태일 때 글자색을 빨간색으로 설정
+        'px-6 py-4 whitespace-nowrap text-green-400 bg-gray-100': status === '답변 완료' // REPLY 상태일 때 글자색을 초록색으로 설정
       };
     },
     getStatusBackground(status){
       return {
-        'px-6 py-4 whitespace-nowrap text-center text-lg ': status === '답변 없음', // BEFORE 상태일 때 글자색을 빨간색으로 설정
-        'px-6 py-4 whitespace-nowrap text-center text-lg bg-gray-100': status === '답변 완료' // REPLY 상태일 때 글자색을 초록색으로 설정
+        'px-6 py-4 whitespace-nowrap': status === '답변 없음', // BEFORE 상태일 때 글자색을 빨간색으로 설정
+        'px-6 py-4 whitespace-nowrap bg-gray-100': status === '답변 완료' // REPLY 상태일 때 글자색을 초록색으로 설정
       };
     },
     ComplaintDetail(complaintId) {
@@ -251,11 +262,18 @@ export default {
       this.isModalComplaintDetailOpen = false;
       console.log(this.isModalComplaintDetailOpen);
     },
+    resetInputs() {
+        this.complaintId = null;
+        this.name = null;
+        this.title = null;
+        this.status = null;
+        this.searchComplaint();
+    },
   },
 }
 
 </script>
 
-<style lang="scss" scoped>
+<style>
 
 </style>
