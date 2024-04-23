@@ -80,11 +80,6 @@ export default {
             this.$router.push("/couponList");
         },
     },
-    setup () {
-        
-
-        return {}
-    }
 }
 </script>
 

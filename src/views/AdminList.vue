@@ -137,7 +137,7 @@ export default {
         };
         const access_token = localStorage.getItem('access_token');
         const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
-        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/admin/all`, { headers, params });
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/admin/all`, { headers, params });
         this.accountList = response.data.content;
         this.totalPageCount = response.data.totalPages;
       } catch (error) {

@@ -56,7 +56,7 @@ router.beforeEach((to, from, next) => {
 
     if (to.meta.requiresAuth && !accessToken) {
       next({ name: 'LoginAdmin' });
-    } else if (to.meta.requiresAdmin && userRole !== 'ADMIN') {
+    } else if (to.meta.requiresAdmin && userRole == 'USER') {
       next({ name: 'UnauthorizedPage' });
     } else if (to.path === '/admin/login' && userRole === 'USER') {
       // 사용자가 USER 권한으로 '/admin/login' 페이지에 접속하는 경우

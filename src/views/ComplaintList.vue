@@ -53,25 +53,25 @@
             <table class="table border-gray-400 border-2" style="width: calc(100%); margin: 10px;"> 
                 <tbody>
                     <tr>
-                        <th class="py-2 border-2 border-orange-400 text-xl" style="background-color: #F5A742; width: 20%; color: white;" >게시글 번호</th>
-                        <td class="px-2 border-2 border-gray-300" style="width: 80%;">
+                        <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;" >게시글 번호</th>
+                        <td class="p-2 border-2 border-gray-300" style="width: 80%;">
                             <input type="text" v-model="complaintId" class="w-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent shadow-sm text-base"> <!-- 너비 조정 -->
                         </td>
                     </tr>
                     <tr>
-                        <th class="py-2 border-2 border-orange-400 text-xl" style="background-color: #F5A742; width: 20%; color: white;">고객 이름</th>
+                        <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">고객 이름</th>
                         <td class="px-2 border-2 border-gray-300" style="width: 80%;">
                             <input type="text" v-model="name" class="w-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent shadow-sm text-base">
                         </td>
                     </tr>
                     <tr>
-                        <th class="py-2 border-2 border-orange-400 text-xl" style="background-color: #F5A742; width: 20%; color: white;">게시글 제목</th>
+                        <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">게시글 제목</th>
                         <td class="px-2 border-2 border-gray-300" style="width: 80%;">
                             <input type="text" v-model="title" class="w-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent shadow-sm text-base">
                         </td>
                     </tr>
                     <tr>
-                        <th class="py-2 border-2 border-orange-400 text-xl" style="background-color: #F5A742; width: 20%; color: white;">답변 여부</th>
+                        <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">답변 여부</th>
                         <td class="px-2 border-2 border-gray-300" style="width: 80%;">
                         <select class="custom-select m-1 p-1 border rounded-md" v-model="status">
                             <option :value="null">--선택--</option>
@@ -103,7 +103,7 @@
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="(account) in displayedAccounts" :key="account.id" @click="ComplaintDetail(account.id)">
+                <tr v-for="(account) in displayedAccounts" :key="account.id" @click="openComplaintDetailModal(account.complaintId)" style="cursor: pointer;">
                     <td :class="getStatusBackground(account.status)">{{ account.complaintId }}</td>
                     <td :class="getStatusBackground(account.status)">{{ account.name }}</td>
                     <td :class="getStatusBackground(account.status)">{{ account.title }}</td>
@@ -113,6 +113,11 @@
                 </tr>          
               </tbody>
             </table>
+            <div class="modal-content" @click.stop>
+              <div class="modal-inner">
+                <ComplaintDetailModal :isModalComplaintDetailOpen="isModalComplaintDetailOpen" :selectedComplaintId="selectedComplaintId" @close-modal="isModalComplaintDetailOpen = false" />
+              </div>
+            </div>
             <PaginationComponent :currentPage="currentPage" :totalPages="totalPageCount" @page-change="changePage"/>
           </div>
         </div>
@@ -123,10 +128,12 @@
 import axios from 'axios';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import router from '@/router';
+import ComplaintDetailModal from '@/components/modal/ComplaintDetailModal.vue';
 
 export default {
   components: {
-        PaginationComponent,
+        PaginationComponent, 
+        ComplaintDetailModal
   },
   data() {
     return {
@@ -142,10 +149,13 @@ export default {
       isTrue: false,
       allCount: '',
       statusCount: [],
+      selectedComplaintId: '',
+      isModalComplaintDetailOpen: false,
     };
   },
   created() {
     this.fetchComplaint();
+    this.searchComplaint();
   },
   methods: {
     async fetchComplaint(){
@@ -229,9 +239,18 @@ export default {
       };
     },
     ComplaintDetail(complaintId) {
-      router.push({ name: 'ComplaintDetail', params: { complaintId: complaintId }
-    });
-  },
+        router.push({ name: 'ComplaintDetail', params: { complaintId: complaintId }
+      });
+    },
+    // 모달 열기
+    openComplaintDetailModal(id) {
+      this.selectedComplaintId = id;
+      this.isModalComplaintDetailOpen = true;
+    },
+    closeComplaintDetailModal() {
+      this.isModalComplaintDetailOpen = false;
+      console.log(this.isModalComplaintDetailOpen);
+    },
   },
 }
 

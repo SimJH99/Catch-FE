@@ -70,7 +70,7 @@ export default {
 div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td, legend, img, button {
     margin: 0;
     padding: 0;
-    font-family: 'Noto Sans KR', 'Roboto Condensed', '돋음', Dotum, 'Apple SD Gothic Neo', sans-serif;
+    font-family: 'NanumSquare_acR';
     font-weight: 400;
     font-size: 13px;
     color: #191919;
