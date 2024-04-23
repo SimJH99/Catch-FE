@@ -22,7 +22,7 @@
             <div class="my_itm"> 
                 <dl class="cpn">
                     <dt><a href="javascript:overpass.link('MYCPNLIST');" class="dt">쿠폰 <em class="ir">페이지 이동</em></a> <em class="arm" id="cpn_date"><!-- 7일내 만료예정 1장 --></em></dt>
-                    <dd><a href="javascript:overpass.link('MYCPNLIST');"><span class="num"><em id="cpn_cnt">5<!-- 5 --></em>장</span><em class="ir">쿠폰 페이지 이동</em></a></dd>
+                    <dd><a href="javascript:overpass.link('MYCPNLIST');"><span class="num"><em id="cpn_cnt">{{ couponCount }}</em>장</span><em class="ir">쿠폰 페이지 이동</em></a></dd>
                 </dl>
                 <dl class="rsv">
                     <dt><a href="javascript:overpass.link('MYSAVEMONEY');" class="dt">적립금 <em class="ir">페이지 이동</em></a> <em class="arm" id="save_money_date"></em></dt>
@@ -36,12 +36,30 @@
 </template>
 
 <script>
-export default {
-    setup () {
-        
+import axios from "axios";
 
-        return {}
+export default {
+    data () {
+        return {
+            couponCount: '',
+        }
+    },    
+    created(){
+        this.loadMyCouponCount();
     },
+    methods: {
+        async loadMyCouponCount() {
+        try{
+            const access_token = localStorage.getItem('access_token');
+            const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
+            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/coupon/myCouponCount`, { headers });
+            this.couponCount = response.data.result.data;
+            console.log("couponConut : " + this.couponCount);
+        }catch(error){
+            console.log(error);
+        }
+      },
+    }
 }
 </script>
 

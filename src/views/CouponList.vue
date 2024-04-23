@@ -100,7 +100,7 @@
                 <tbody class="bg-white divide-y divide-gray-200" >
                     <tr v-for="coupon in couponList" :key="coupon.id">
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <input type="checkbox" v-model="selectedCoupons[coupon.id]"/>
+                            <input type="checkbox" v-model="selectedCoupons[coupon.id]">
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span v-if="!coupon.editing">{{ coupon.name }}</span>
@@ -117,8 +117,8 @@
             </table>
 
             <div class="flex justify-between" style="width: calc(100% - 20px); margin: 10px;">
-                <button class="bg-custom-F5A742 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded" style="width: 200px; text-align: center; margin-left: calc(100% - 400px);" @click="publishCoupon">발행</button>
-                <SelectMemberModalComponent ref="modal"/>
+                <button class="bg-custom-F5A742 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded" style="width: 200px; text-align: center; margin-left: calc(100% - 400px);" @click="openSelectUserModal">발행</button>
+                <SelectUserModal :isModalSelectUserOpen="isModalSelectUserOpen" :selectedCoupons="selectedCoupons" @close-modal="isModalSelectUserOpen = false"/>
                 <button class="bg-custom-F5A742 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded" style="width: 200px; text-align: center; margin-left: 10px;" @click="deleteCoupon">삭제</button>
             </div>
         </div>
@@ -132,9 +132,11 @@
 <script>
 import axios from 'axios';
 import PaginationComponent from '@/components/PaginationComponent.vue';
+import SelectUserModal from "@/components/modal/SelectUserModal.vue";
 export default {
     components: {
         PaginationComponent,
+        SelectUserModal
     },
     data(){
         return{
@@ -153,7 +155,8 @@ export default {
             isLoading: false,
             totalPageCount: 0,
 
-            isModalOpen: false,
+            isModalSelectUserOpen: false,
+
         }
     },
     created(){
@@ -174,7 +177,7 @@ export default {
                 const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/coupon/list`, { headers, params });
                 this.couponList = response.data.result.data;
                 this.totalPageCount = response.data.result.totalPage;
-                console.log(response);
+                console.log(this.couponList);
                 console.log(this.totalPageCount);
             }catch(error){
                 console.log(error);
@@ -204,6 +207,19 @@ export default {
             this.currentPage = pageNum;
             this.loadCoupons();
         },
+        openSelectUserModal() {
+            console.log(this.selectedCoupons);
+            if (Object.keys(this.selectedCoupons).length === 0) {
+                alert("쿠폰을 선택하세요");
+                return;
+            }
+            this.isModalSelectUserOpen = true;
+            console.log("List에서 클릭하면 열리는지 여부: ",this.isModalSelectUserOpen);
+        },
+        closeSelectUserModal() {
+            this.isModalSelectUserOpen = false;
+            console.log(this.isModalSelectUserOpen);
+        },
 
 
         // async updateCoupon(couponId){
@@ -231,9 +247,6 @@ export default {
         //         }
         //     }
         // },
-        openModal() {
-            this.$refs.modal.openModal();
-        },
         async publishCoupon() {
             console.log(this.selectedCoupons);
             if (Object.keys(this.selectedCoupons).length === 0) {
