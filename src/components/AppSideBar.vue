@@ -102,6 +102,7 @@
 
 <script>
 export default {
+
   data() {
     return {
       isAdmin: false
