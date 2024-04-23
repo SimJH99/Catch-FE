@@ -3,7 +3,7 @@
     <div class="bg-gray-100">
       <component :is="headerComponent"></component>
       <div class="flex w-auto">
-        <AppSideBar v-if="showSideBar" class="min-w-[250px] w-1/6 h-auto"></AppSideBar>
+        <AppSideBar v-if="showSideBar" class="min-w-[250px] w-1/6 h-auto font-"></AppSideBar>
         <router-view class="w-full min-h-[800px]"/>
       </div>
     </div>
@@ -92,7 +92,7 @@ export default {
       console.log(payload.sub);
       const userRole = payload.sub.split(':')[1];
       console.log(userRole);
-      if (userRole === 'ADMIN') {
+      if (userRole === 'ADMIN' || userRole === 'CS' || userRole === 'MARKETER') {
         this.headerComponent = 'AdminHeader';
         this.footerComponent = 'AdminFooter';
         this.showSideBar = true;
