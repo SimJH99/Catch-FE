@@ -14,6 +14,8 @@ import LoginUser from '@/views/LoginUser.vue';
 import UnauthorizedPage from '@/views/UnauthorizedPage.vue';
 import MyComplaintList from '@/views/MyComplaintList.vue';
 import CreateComplaint from '@/views/CreateComplaint.vue';
+import NotFound from '@/views/NotFound.vue';
+import EventCreate from '@/views/eventCreate.vue'
 
 const routes = [
   { path: '/admin/login', name: 'LoginAdmin', component: LoginAdmin },
@@ -28,10 +30,14 @@ const routes = [
   { path: '/adminList', name: 'AdminList', component: AdminList, meta: { requiresAuth: true, requiresAdmin: true } },
   { path: '/mypage', name: 'MyPage', component: MyPage, meta: { requiresAuth: true } },
   { path: '/', name: 'LoginUser', component: LoginUser },
-  { path: '/unauthorized', name: 'UnauthorizedPage', component: UnauthorizedPage },
   { path:'/mycomplaintlist', name:'MyComplaintList', component: MyComplaintList},
   { path:'/createComplaint', name:'CreateComplaint', component: CreateComplaint},
   { path: '/:complaintId/complaintDetail', name: 'ComplaintDetail', component: ComplaintDetail, props: true},
+  { path: '/unauthorized', name: 'UnauthorizedPage', component: UnauthorizedPage, meta: { hideHeaderFooter: true } },
+  { path: '/notfound', name: 'NotFound', component: NotFound, meta: { hideHeaderFooter: true } },
+  { path: '/:catchAll(.*)', redirect: '/notfound' }, // 모든 잘못된 경로를 404 페이지로 리다이렉트
+  { path: '/eventCreate', name:'EventCreate',component: EventCreate}
+
 ];
 
 const router = createRouter({
@@ -62,9 +68,24 @@ router.beforeEach((to, from, next) => {
       // 사용자가 USER 권한으로 '/admin/login' 페이지에 접속하는 경우
       next({ name: 'UnauthorizedPage' });
     } else {
+      const hideHeaderFooter = to.meta.hideHeaderFooter || false;
+
+      if (hideHeaderFooter) {
+        // App.vue에서 사용하는 데이터를 변경하여 헤더, 푸터, 사이드바를 숨깁니다.
+        // 이 예제에서는 Vuex를 사용하여 상태를 변경하거나, 
+        // Vue 컴포넌트에 직접 접근하여 데이터를 변경할 수 있습니다.
+        // 이 예제에서는 Vuex를 사용하지 않고, App.vue의 data에 직접 접근하는 방법을 보여드리겠습니다.
+        const appInstance = router.app;
+        if (appInstance) {
+          appInstance.showHeader = false; // 헤더 숨기기
+          appInstance.showFooter = false; // 푸터 숨기기
+          appInstance.showSideBar = false; // 사이드바 숨기기
+        }
+      }
       next();
     }
   }
 });
+
 
 export default router;

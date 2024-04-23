@@ -1,3 +1,5 @@
+<!-- App.vue -->
+
 <template>
   <div>
     <div class="bg-gray-100">
@@ -31,7 +33,6 @@ export default {
       showSideBar: false
     };
   },
-
   components: {
     AppSideBar,
     UserHeader,
@@ -39,8 +40,14 @@ export default {
     AdminHeader,
     AdminFooter
   },
-
+  watch: {
+    $route(to) {
+      this.updateLayout(to);
+    }
+  },
   mounted() {
+    this.updateLayout(this.$route);
+
     const firebaseConfig = {
       apiKey: `${process.env.VUE_APP_FIREBASE_API_KEY}`,
       authDomain: `${process.env.VUE_APP_FIREBASE_AUTH_DOMAIN}`,
@@ -54,6 +61,7 @@ export default {
 
     const firebase = initializeApp(firebaseConfig);
     const messaging = getMessaging(firebase);
+    
 
     onMessage(messaging, (payload) => {
       console.log("Message received. ", payload);
@@ -74,34 +82,36 @@ export default {
             console.log(err);
           });
       }
-    });
-
-    if("serviceWorker" in navigator){
-      navigator.serviceWorker
-      .register("/firebase-messaging-sw.js")
-      .then(function (registration){
-        console.log("ServiceWorker registration successful with scope: ");
-        return registration;
-      });
-    }
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      const [, payloadBase64] = accessToken.split('.');
-      const payload = JSON.parse(atob(payloadBase64));
-      console.log(accessToken);
-      console.log(payload.sub);
-      const userRole = payload.sub.split(':')[1];
-      console.log(userRole);
-      if (userRole === 'ADMIN' || userRole === 'CS' || userRole === 'MARKETER') {
-        this.headerComponent = 'AdminHeader';
-        this.footerComponent = 'AdminFooter';
-        this.showSideBar = true;
+    })
+  },
+  methods: {
+    updateLayout(route) {
+      const meta = route.meta || {};
+      const hideHeaderFooter = meta.hideHeaderFooter || false;
+      
+      if (hideHeaderFooter) {
+        this.headerComponent = null; // 헤더 숨기기
+        this.footerComponent = null; // 푸터 숨기기
+        this.showSideBar = false; // 사이드바 숨기기
       } else {
-        this.headerComponent = 'UserHeader';
-        this.footerComponent = 'UserFooter';
+        // 헤더, 푸터, 사이드바를 역할에 따라 설정
+        const accessToken = localStorage.getItem("access_token");
+        if (accessToken) {
+          const [, payloadBase64] = accessToken.split('.');
+          const payload = JSON.parse(atob(payloadBase64));
+          const userRole = payload.sub.split(':')[1];
+          if (userRole === 'ADMIN' || userRole === 'CS' || userRole ==='MARKETER') {
+            this.headerComponent = 'AdminHeader';
+            this.footerComponent = 'AdminFooter';
+            this.showSideBar = true;
+          } else {
+            this.headerComponent = 'UserHeader';
+            this.footerComponent = 'UserFooter';
+          }
+        }
       }
     }
-  },
+  }
 };
 </script>
 
