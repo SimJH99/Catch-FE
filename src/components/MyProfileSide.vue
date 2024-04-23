@@ -13,7 +13,10 @@
       <div class="section">
         <div class="title">쿠폰</div>
         <a class="item">쿠폰 리스트</a>
-        <a class="item">쿠폰 등록</a>
+        <a class="item" @click="openCouponReceiveModal">
+            쿠폰 등록
+          <CouponReceiveModal :isModalCouponReceiveOpen="isModalCouponReceiveOpen" :selectedAdminId="selectedAdminId" @close-modal="isModalCouponReceiveOpen = false" />
+        </a>
       </div>
   
       <!-- 관심 목록 -->
@@ -43,6 +46,33 @@
     </div>
   </div>
   </template>
+  
+  <script>
+  import CouponReceiveModal from "@/components/modal/CouponReceiveModal.vue";
+  export default {
+    components: {
+      CouponReceiveModal,
+    },
+    data() {
+      return {
+        isModalCouponReceiveOpen: false,
+      };
+    },
+    methods: {
+      openCouponReceiveModal() {
+        this.isModalCouponReceiveOpen = true;
+        console.log("List에서 클릭하면 열리는지 여부: ",this.isModalCouponReceiveOpen);
+      },
+      closeCouponReceiveModal() {
+        this.isModalCouponReceiveOpen = false;
+        console.log(this.isModalCouponReceiveOpen);
+      },
+    }
+
+
+  };
+
+  </script>
   
   <style scoped>
 
