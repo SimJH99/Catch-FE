@@ -2,7 +2,7 @@
   <div v-if="isModalAdminDetailOpen" class="modal">
     <div class="modal-content" @click.stop>
       <div class="modal-header">
-        <h2>계정 상세 정보</h2>
+        <h2 style="font-size: 24px; font-weight: bold; color:#EFEFEF">계정 상세 정보</h2>
         <span class="close" @click="closeAdminDetailModal">&times;</span>
       </div>
       <div class="modal-body">
@@ -11,11 +11,36 @@
         </div>
         <div v-else>
           <div v-if="!isEditing">
-            <p><strong>이름:</strong> {{ accountDetails.name }}</p>
-            <p><strong>사원번호:</strong> {{ accountDetails.employeeNumber }}</p>
-            <p><strong>이메일:</strong> {{ accountDetails.email }}</p>
-            <p><strong>권한:</strong> {{ formatRole(accountDetails.role) }}</p>
-            <p><strong>상태:</strong> {{ formatActive(accountDetails.active) }}</p>
+            <div class="user-info">
+              <h3 style="font-size: 20px; font-weight: bold; margin-bottom: 5px;">사원 정보</h3>
+              <div class="rounded-table">
+                <!-- 이름 -->
+                <div class="table-row">
+                  <div class="table-label">이름</div>
+                  <div class="table-value" style="width: 70%;">{{ accountDetails.name }}</div>
+                </div>
+                <!-- 사원번호 -->
+                <div class="table-row">
+                  <div class="table-label">사원번호</div>
+                  <div class="table-value">{{ accountDetails.employeeNumber }}</div>
+                </div>
+                <!-- 이메일 -->
+                <div class="table-row">
+                  <div class="table-label">이메일</div>
+                  <div class="table-value">{{ (accountDetails.email) }}</div>
+                </div>
+                <!-- 권한 -->
+                <div class="table-row">
+                  <div class="table-label">권한</div>
+                  <div class="table-value">{{ formatRole(accountDetails.role) }}</div>
+                </div>
+                <!-- 활성화 상태 -->
+                <div class="table-row">
+                  <div class="table-label">활성화 상태</div>
+                  <div class="table-value">{{ formatActive(accountDetails.active) }}</div>
+                </div>
+              </div>
+            </div>
             <div class="btn-container">
               <button @click="toggleEdit" class="btn">수정</button>
               <button v-if="accountDetails.active" @click="disabledAdmin" class="btn">계정 비활성화</button>
@@ -229,9 +254,11 @@ export default {
 
 .modal-content {
   background: white;
-  width: 400px;
+  width: 500px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  max-height: 100vh; /* 최대 높이 설정 */
+  overflow-y: auto; /* 세로 스크롤 활성화 */
 }
 
 .close {
@@ -239,13 +266,13 @@ export default {
   border: none;
   background: none;
   font-size: 24px;
-  color: white;
+  color: #000000;
 }
 
 .modal-header {
   background-color: #f5a742;
   color: white;
-  padding: 20px;
+  padding: 15px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   display: flex;
@@ -253,7 +280,7 @@ export default {
   align-items: center;
 }
 
-.modal-title {
+.modal-header h2 {
   margin: 0;
 }
 
@@ -261,10 +288,46 @@ export default {
   padding: 20px;
 }
 
-.modal-footer {
+.rounded-table {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #eae8e8;
+  /* 테두리 색상 설정 */
+  background-color: #f5f5f5;
+  /* 연한 회색으로 변경 */
+}
+
+.table-row {
   display: flex;
-  justify-content: flex-end;
-  padding: 20px;
+  border-bottom: 1px solid #d9d8d8;
+  background-color: #ffffff;
+  /* 연한 회색 */
+  height: 40px;
+  /* 로우의 높이를 설정합니다. */
+}
+
+.table-label,
+.table-value {
+  padding: 12px;
+}
+
+.table-label {
+  background-color: #efefef;
+  /* 연한 회색 */
+  color: black;
+  /* 검정색 */
+  font-weight: bold;
+  flex: 1;
+  /* 너비 조정 */
+}
+
+.table-value {
+  flex: 3;
+  /* 너비 조정 */
+}
+
+.btn-container {
+  text-align: right;
 }
 
 .btn {
@@ -274,6 +337,7 @@ export default {
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
+  margin-top: 10px;
   margin-left: 10px;
 }
 
@@ -281,12 +345,39 @@ export default {
   background-color: #e69500;
 }
 
-p {
-  margin: 10px 0;
-  font-weight: bold;
+.editable {
+  background-color: #d1ecf1;
+  /* 수정 가능한 부분을 강조하는 색상 */
 }
 
-.btn-container {
-  text-align: right;
+.memo-info {
+  margin-top: 20px;
 }
+
+.memo-info .rounded-table {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #eae8e8;
+  background-color: #ffffff;
+  height: 300px; /* 원하는 높이로 설정 */
+  max-height: 100%; /* 최대 높이 설정 */
+}
+
+.memo-info .table-row {
+  border-bottom: none; /* 중간 선 제거 */
+}
+.table-row {
+  display: flex;
+  background-color: #ffffff;
+  height: 40px;
+}
+
+.memo-info .table-value {
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  white-space: pre-line; /* 수정 */
+}
+
+
 </style>
