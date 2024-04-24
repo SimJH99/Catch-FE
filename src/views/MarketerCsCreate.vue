@@ -1,5 +1,5 @@
 <template>
-  <div class="container bg-gray-100 min-w-full min-h-screen flex justify-center items-center">
+  <div class="container bg-gray-100 min-h-screen flex justify-center items-center">
     <form class="max-w-lg w-full p-6 bg-white rounded-md shadow-md border-3 border-gray-800"
       style="margin-top: 20px; margin-bottom: 20px;">
       <div class="text-white font-bold text-center mb-4"
