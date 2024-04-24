@@ -59,7 +59,7 @@
                         <tr>
                             <th class="py-2 border-t border-b border-r border-black text-black font-bold bg-white text-xl text-center font-sans">내용</th>
                             <td class="px-2 py-2 border-t border-b border-black">
-                                <textarea v-model="contents" class="w-full" cols="30" rows="20"></textarea>
+                                <textarea v-model="contents" class="w-full outline-none" cols="30" rows="20"></textarea>
                         </td>
                         </tr>
                         <tr>
