@@ -173,6 +173,7 @@
         
         <!-- 페이지네이션 컴포넌트 추가 -->
         <PaginationComponent :currentPage="currentPage" :totalPages="totalPageCount" @page-change="changePage"/>
+
         <div class="flex justify-between" style="width: calc(100% - 20px); margin: 10px;">
             <button class="bg-custom-F5A742 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded" style="width: 200px; text-align: center; margin-left: calc(100% - 400px);" @click="openSelectUserModal">발행</button>
             <SelectUserModal :isModalSelectUserOpen="isModalSelectUserOpen" :selectedCoupons="selectedCoupons" @close-modal="isModalSelectUserOpen = false"/>
@@ -207,9 +208,7 @@ export default {
             isLastPage: false,
             isLoading: false,
             totalPageCount: 0,
-
             isModalSelectUserOpen: false,
-
         }
     },
     created(){
@@ -221,22 +220,7 @@ export default {
                 const params = {
                 page: this.currentPage,
                 size: this.pageSize,
-                
                 }
-                console.log("data 호출");
-                const access_token = localStorage.getItem('access_token');
-                const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
-                const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/coupon/list`, { headers, params });
-                this.couponList = response.data.result.data;
-                this.totalPageCount = response.data.result.totalPage;
-                console.log(this.couponList);
-                console.log(this.totalPageCount);
-            }catch(error){
-                console.log(error);
-            }
-        },
-        async searchCoupons(){
-            try{
                 console.log("search 호출");
                 const access_token = localStorage.getItem('access_token');
                 const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
@@ -244,20 +228,29 @@ export default {
                         name: this.searchName,
                         code: this.searchCode,
                         startDate: this.searchStartDate,
-                        endDate: this.searchEndDate,
+                        endDate: this.searchEndDate,    
                         couponStatus: this.searchCouponStatus,
                     };
-                const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/coupon/search`, data ,{headers});
-                this.couponList = response.data.result.data;
-                this.totalPageCount = response.data.result.totalPage;
-                console.log(this.couponList);
+                const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/coupon/search`, data, { headers, params });
+                this.couponList = response.data.result.data.content;
+                this.totalPageCount = response.data.result.data.totalPages;
+                console.log(response);
             }catch(error){
                 console.log(error);
             }
         },
+        searchCoupons(){
+            this.couponList = [];
+            this.totalPageCount = '';
+            this.loadCoupons();
+        },
         changePage(pageNum) {
             this.currentPage = pageNum;
-            this.searchCoupons();
+            this.loadCoupons();
+        },
+        changePageSize(event) {
+            this.pageSize = parseInt(event.target.value);
+            this.loadCoupons();
         },
         openSelectUserModal() {
             console.log(this.selectedCoupons);
