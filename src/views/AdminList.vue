@@ -6,7 +6,7 @@
     </div>
 
     <div class="container mb-4" style="width: calc(100% - 40px); margin: 10px;">
-      <table class="table border border-gray-200 border-2" style="width: calc(100% - 20px); margin: 10px">
+      <table class="table border border-gray-200" style="width: calc(100% - 20px); margin: 10px">
         <tbody>
           <tr>
             <th class="py-2 border border-gray-300 bg-gray-200"

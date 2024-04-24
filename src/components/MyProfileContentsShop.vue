@@ -5,15 +5,15 @@
         <div class="my_clm">
             <dl>
                 <dt>취소</dt>
-                <dd><a href="javascript:overpass.link('MYCLAIM', {ord_crt_divi_cd:'20'});" id="claim_cancel">0<em class="ir"></em></a></dd>
+                <dd><a href="#" id="claim_cancel">0<em class="ir"></em></a></dd>
             </dl>
             <dl>
                 <dt>교환</dt>
-                <dd><a href="javascript:overpass.link('MYCLAIM', {ord_crt_divi_cd:'40'});" id="claim_exchng">0<em class="ir"></em></a></dd>
+                <dd><a href="#" id="claim_exchng">0<em class="ir"></em></a></dd>
             </dl>
             <dl>
                 <dt>반품</dt>
-                <dd><a href="javascript:overpass.link('MYCLAIM', {ord_crt_divi_cd:'30'});" id="claim_return">0<em class="ir"></em></a></dd>
+                <dd><a href="#" id="claim_return">0<em class="ir"></em></a></dd>
             </dl>
         </div>
         
@@ -22,27 +22,27 @@
             <div class="m_step">
                 <dl class="s1">
                     <dt>결제대기</dt>
-                    <dd><a code="goOrderList" href="javascript:overpass.link('MYORDER');" id="pay_wait"></a></dd>
+                    <dd><a code="goOrderList" href="#" id="pay_wait"></a></dd>
                 </dl>
                 <dl class="s2">
                     <dt>결제완료</dt>
-                    <dd><a code="goOrderList" href="javascript:overpass.link('MYORDER');" id="pay_fini"></a></dd>
+                    <dd><a code="goOrderList" href="#" id="pay_fini"></a></dd>
                 </dl>
                 <dl class="s3">
                     <dt>상품준비중</dt>
-                    <dd><a code="goOrderList" href="javascript:overpass.link('MYORDER');" id="ship_indi"></a></dd>
+                    <dd><a code="goOrderList" href="#" id="ship_indi"></a></dd>
                 </dl>
                 <dl class="s4">
                     <dt>물류센터이동중</dt>
-                    <dd><a code="goOrderList" href="javascript:overpass.link('MYORDER');" id="ship_ing"></a></dd>
+                    <dd><a code="goOrderList" href="#" id="ship_ing"></a></dd>
                 </dl>
                 <dl class="s5">
                     <dt>배송중</dt>
-                    <dd><a code="goOrderList" href="javascript:overpass.link('MYORDER');" id="deli_ing"></a></dd>
+                    <dd><a code="goOrderList" href="#" id="deli_ing"></a></dd>
                 </dl>
                 <dl class="s6">
                     <dt>배송완료</dt>
-                    <dd><a code="goOrderList" href="javascript:overpass.link('MYORDER');" id="deli_fini"></a></dd>
+                    <dd><a code="goOrderList" href="#" id="deli_fini"></a></dd>
                 </dl>
             </div>
             <div class="m_clm">
@@ -54,27 +54,27 @@
         <div class="my_stat">
             <dl>
                 <dt><span class="dt">상품리뷰</span></dt>
-                <dd><span class="dd">미작성 <a href="javascript:overpass.link('MYREV');">0</a></span></dd>
+                <dd><span class="dd">미작성 <a href="#">0</a></span></dd>
             </dl>
             <dl>
                 <dt><span class="dt">상품문의</span></dt>
                 <dd>
-                    <span class="dd">작성<a href="javascript:overpass.link('MYQNA');">0</a></span>
-                    <span class="dd">답변<a href="javascript:overpass.link('MYQNA');">0</a></span>
+                    <span class="dd">작성<a href="#">0</a></span>
+                    <span class="dd">답변<a href="#">0</a></span>
                 </dd>
             </dl>
             <dl>
                 <dt><span class="dt">1:1 문의내역</span></dt>
                 <dd>
-                    <span class="dd">작성 <a href="javascript:overpass.link('MYCONTACT');">0</a></span>
-                    <span class="dd">답변 <a href="javascript:overpass.link('MYCONTACT');">0</a></span>
+                    <span class="dd">작성 <a href="#">0</a></span>
+                    <span class="dd">답변 <a href="#">0</a></span>
                 </dd>
             </dl>
             <dl>
                 <dt><span class="dt">이벤트참여내역</span></dt>
                 <dd>
-                    <span class="dd">응모<a href="javascript:overpass.link('MYEVENT');">0</a></span>
-                    <span class="dd">당첨<a href="javascript:overpass.link('MYEVENT');">0</a></span>
+                    <span class="dd">응모<a href="#">0</a></span>
+                    <span class="dd">당첨<a href="#">0</a></span>
                 </dd>
             </dl>
         </div>

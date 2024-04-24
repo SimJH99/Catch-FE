@@ -260,8 +260,9 @@ export default {
   background: white;
   width: 500px;
   border-radius: 8px;
+  max-height: 85vh;
+  overflow-y: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  max-height: 100vh; /* 최대 높이 설정 */
   overflow-y: auto; /* 세로 스크롤 활성화 */
 }
 

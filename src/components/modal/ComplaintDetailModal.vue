@@ -2,9 +2,9 @@
 <template>
   <div v-if="isModalComplaintDetailOpen" class="modal">
     <div class="modal-content" @click.stop>
-      <div class="modal-header">
+      <div class="modal-header relative">
         <h2 style="font-size: 24px; font-weight: bold; color:#EFEFEF">계정 상세 정보</h2>
-        <span class="close" @click="closeComplaintDetailModal(selectedComplaintId)">&times;</span>
+        <span class="close absolute" @click="closeComplaintDetailModal(selectedComplaintId)">&times;</span>
       </div>
         <div v-if="loading" class="loading-text">
           로딩 중...
@@ -34,8 +34,8 @@
           <h3 style="font-size: 20px; font-weight: bold; margin-top: 10px; margin-bottom: 5px;">사진</h3>
           <div class="rounded-table">
             <div class="flex flex-row flex-wrap p-2 h-auto">
-              <div v-for="image in urls" :key="image.files" class="mt-2 max-w-[100px] max-h-[100px] rounded-md flex-shrink-0">
-                <img :src="image" alt="선택된 이미지" class="w-full h-full object-cover aspect-w-1 aspect-h-1 p-1">
+              <div v-for="image in urls" :key="image" class="mt-2 max-w-[100px] max-h-[100px] rounded-md flex-shrink-0">
+                <img :src="image" alt="선택된 이미지" @click="openImageDetailModal(image)" style="cursor: pointer;" class="w-full h-full object-cover aspect-w-1 aspect-h-1 p-1">
               </div>
             </div>
           </div>
@@ -52,14 +52,24 @@
           </div>
           <button v-if="!isUpdating && click" @click="updateComment(selectedComplaintId)" class="hover:bg-orange-600 text-white py-3 px-6 rounded" style="width: 100px; background-color: #F5A742;">수정완료</button>
         </div>
+        <div class="modal-content" @click.stop>
+          <div class="modal-inner">
+            <ImageModal :isModalImageDetailOpen="isModalImageDetailOpen" :selectedImageUrl="selectedImageUrl" @close-modal="isModalImageDetailOpen = false" />
+          </div>
+        </div>
       </div>
+
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import no_images from '@/assets/images/no_image.png'
+import ImageModal from '@/components/modal/ImageModal.vue';
 export default {
+  components: {
+    ImageModal
+  },
   props: ['selectedComplaintId', 'isModalComplaintDetailOpen'],
   data() {
     return {
@@ -82,7 +92,9 @@ export default {
                 { id: 'myinfo', value: 'MYINFO', label: '회원정보' },
                 { id: 'confirmation', value: 'CONFIRMATION', label: '상품확인' },
                 { id: 'service', value: 'SERVICE', label: '서비스' }
-      ]
+      ],
+      selectedImageUrl: '',
+      isModalImageDetailOpen: false,
     };
   },
   watch: {
@@ -223,7 +235,16 @@ export default {
         this.isUpdating = false;
         this.isEditing = false;
       }
-    }
+    },
+    // 모달 열기
+    openImageDetailModal(url) {
+      this.selectedImageUrl = url;
+      this.isModalImageDetailOpen = true;
+    },
+    closeImageDetailModal() {
+      this.isModalImageDetailOpen = false;
+      console.log(this.isModalImageDetailOpen);
+    },
   },
 };
 </script>
