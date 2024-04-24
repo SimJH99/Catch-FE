@@ -22,7 +22,7 @@
           <tr>
             <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">종료일</th>
             <td class="px-2 border-2 border-gray-300" style="width: 80%;">
-              <input type="date" id="endDate" v-model="endDate" class="m-1 p-1 rounded-md w-48 outline-none">
+              <input type="date" id="endDate" v-model="endDate" class="m-1 p-1 rounded-md w-48 outline-none ">
             </td>
           </tr>
       </tbody>
