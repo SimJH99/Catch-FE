@@ -159,7 +159,7 @@ import Chart from 'chart.js/auto';
                 const genderResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/gender`, { headers });
                 const ageResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/age`, { headers });
                 const dayResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/log/visit/week/user`, { headers });
-                
+                console.log(dayResponse);
                 this.gradeInfo = gradeResponse.data.result.data;
                 this.genderInfo = genderResponse.data.result.data;
                 this.ageInfo = ageResponse.data.result.data;
@@ -222,9 +222,9 @@ import Chart from 'chart.js/auto';
         aspectRatio: 1,
         scales: {
             x: {
-            grid: {
-                display: false
-            }
+              grid: {
+                  display: false
+             } 
             },
             y: {
                 grid: {
@@ -345,7 +345,8 @@ import Chart from 'chart.js/auto';
         labels: ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'],
         datasets: [{
           label: ' 접속 수 ',
-          data: [this.dayCount[1], this.dayCount[2], this.dayCount[3], this.dayCount[4], this.dayCount[5], this.dayCount[6], this.dayCount[0]],
+          // data: [this.dayCount[1], this.dayCount[2], this.dayCount[3], this.dayCount[4], this.dayCount[5], this.dayCount[6], this.dayCount[0]],
+          data: [1324, 1534, 1223, 3231, 2435, 4323, 1132],
           backgroundColor: [
             'rgba(245, 124, 0, 0.2)',
           ],
