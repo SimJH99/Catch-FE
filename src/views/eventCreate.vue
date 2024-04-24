@@ -57,19 +57,35 @@
   </template>
   
   <script>
+  import axios from "axios";
+
   export default {
     data() {
       return {
         eventTitle: '',
         htmlCode: '',
+        startDate: '',
+        endDate: '',
       };
     },
     methods: {
-      saveEvent() {
-        // 여기서 이벤트를 저장하는 로직을 구현합니다.
-        // 예를 들어, 서버로 HTML 코드와 제목을 전송하여 저장할 수 있습니다.
-        // 이후 저장이 완료되면 사용자에게 성공 메시지를 표시할 수 있습니다.
+    async saveEvent() {
+      try {
+        const access_token = localStorage.getItem('access_token');
+        const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
+        await axios.post(`${process.env.VUE_APP_API_BASE_URL}/event/create`, {
+          name: this.eventTitle,
+          contents: this.htmlCode,
+          startDate: this.startDate,
+          endDate: this.endDate,
+        }, { headers });
+
+        alert('이벤트가 성공적으로 저장되었습니다.');
+      } catch (error) {
+        console.error(error);
+        alert('이벤트 저장 중 오류가 발생했습니다.');
       }
+    }
     }
   };
   </script>
