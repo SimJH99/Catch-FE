@@ -1,10 +1,12 @@
 <template>
-  <header class="bg-white py-2 text-base md:text-lg" v-if="showHeader">
-    <div class="container mx-auto flex justify-between items-center">
-      <div>
-        <img src="@/assets/logo2.png" style="height:60px; width:60px;" alt="로고" />
+  <header class="bg-white pl-5 pr-12 py-2 text-base md:text-lg" v-if="showHeader">
+    <div class="mx-auto flex justify-between">
+      <div class="flex place-content-center items-center">
+        <a href="/dashBoard">
+          <img src="@/assets/logo2.png" class="h-[60px] w-[60px]" alt="로고" />
+        </a>
       </div>
-      <nav class="space-x-2 flex items-center">
+      <nav class="space-x-2 flex place-content-center items-center">
         <template v-if="userLoggedIn">
           <span class="text-gray-700 mr-2">
             {{ greetingMessage }} 

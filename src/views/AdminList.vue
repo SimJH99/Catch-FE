@@ -1,120 +1,95 @@
 <template>
-  <div class="container mb-4 border border-gray-300 bg-white"
-    style="width: calc(100% - 40px); margin: 10px; border-color: #CCCCCC;">
-    <div class="text-white font-bold text-center mb-4" style="color: #f5a742; font-size: 3rem; margin-top: 50px">
-      계정 조회
+  <div>
+    <div class="m-3 p-1 bg-white rounded-md shadow-md flex">
+      <div class="text-4xl font-bold p-3">관리자 계정 조회</div>  
     </div>
 
-    <div class="container mb-4" style="width: calc(100% - 40px); margin: 10px;">
-      <table class="table border border-gray-200" style="width: calc(100% - 20px); margin: 10px">
-        <tbody>
-          <tr>
-            <th class="py-2 border border-gray-300 bg-gray-200"
-              style="background-color: #f5a742; width: 20%; color: white">
-              이름
-            </th>
-            <td class="px-4 border-t border-gray-300" style="width: 80%;">
-              <input type="text" id="searchName" v-model="searchName"
-                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-48 px-3 py-1.5 rounded-md border-gray-300 shadow-sm sm:text-sm"
-                style="background-color: #DDDDDD; height: 2rem; width:50%; margin-top: 0.5rem; margin-bottom: 0.5rem;">
-            </td>
-          </tr>
-          <tr>
-            <th class="py-2 border border-gray-300 bg-gray-200"
-              style="background-color: #f5a742; width: 20%; color: white">
-              사원번호
-            </th>
-            <td class="px-4 border-t border-gray-300" style="width: 80%;">
-              <input type="text" id="searchEmployeeNumber" v-model="searchEmployeeNumber"
-                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-48 px-3 py-1.5 rounded-md border-gray-300 shadow-sm sm:text-sm"
-                style="background-color: #DDDDDD; height: 2rem; width:50%; margin-top: 0.5rem; margin-bottom: 0.5rem;">
-            </td>
-          </tr>
-          <tr>
-            <th class="py-2 border border-gray-300 bg-gray-200"
-              style="background-color: #f5a742; width: 20%; color: white">
-              이메일
-            </th>
-            <td class="px-4 border-t border-gray-300" style="width: 80%;">
-              <input type="text" id="searchEmail" v-model="searchEmail"
-                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-48 px-3 py-1.5 rounded-md border-gray-300 shadow-sm sm:text-sm"
-                style="background-color: #DDDDDD; height: 2rem; width:50%; margin-top: 0.5rem; margin-bottom: 0.5rem;">
-            </td>
-          </tr>
-          <tr>
-            <th class="py-2 border border-gray-300 bg-gray-200"
-              style="background-color: #f5a742; width: 20%; color: white">
-              권한(역할)
-            </th>
-            <td class="px-4 border-t border-gray-300" style="width: 80%;">
-              <select id="searchRole" name="searchRole" v-model="searchRole"
-                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block px-3 py-1 rounded-md border-gray-300 shadow-sm sm:text-sm"
-                style="background-color: #dddddd; height: 2rem; width: 25%; margin-top: 0.5rem; margin-bottom: 0.5rem;">
-                <option value="마케터">마케터</option>
-                <option value="CS 담당자">CS 담당자</option>
+    <div class="m-3 p-1 bg-white rounded-md shadow-md">
+      <div class="container mb-4 mx-[10px]" style="width: calc(100% - 40px);">
+        <table style="width: calc(100% - 20px); margin: 10px">
+          <tbody>
+            <tr>
+              <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">이름</th>
+              <td class="px-2 border-2 border-gray-300" style="width: 80%;">
+                <input type="text" id="searchName" v-model="searchName" class="w-full text-base outline-none hover:bg-gray-100 active:bg-gray-200">
+              </td>
+            </tr>
+            <tr>
+              <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">사원번호</th>
+              <td class="px-2 border-2 border-gray-300" style="width: 80%;">
+                <input type="text" id="searchEmployeeNumber" v-model="searchEmployeeNumber" class="w-full text-base outline-none hover:bg-gray-100 active:bg-gray-200">
+              </td>
+            </tr>
+            <tr>
+              <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">이메일</th>
+              <td class="px-2 border-2 border-gray-300" style="width: 80%;">
+                <input type="text" id="searchEmail" v-model="searchEmail" class="w-full text-base outline-none hover:bg-gray-100 active:bg-gray-200">
+              </td>
+            </tr>
+            <tr>
+              <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">권한(역할)</th>
+              <td class="px-2 border-2 border-gray-300" style="width: 80%;">
+                <select id="searchRole" name="searchRole" v-model="searchRole" class="m-1 p-1 rounded-md w-48 outline-none">
+                  <option value="마케터">마케터</option>
+                  <option value="CS 담당자">CS 담당자</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="flex justify-between">
+          <div style="margin-left: 10px; margin-top: 30px">
+              <span>페이지 크기:</span>
+              <select v-model="pageSize" @change="changePageSize" class="outline-none">
+                  <option v-for="size in pageSizeOptions" :key="size" :value="size">{{ size }}</option>
               </select>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div style="text-align: right; margin-bottom: 10px;">
-        <button @click="resetInputs" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
-          입력값 초기화
-        </button>
-      </div>
-      <div class="flex justify-between">
-        <div style="margin-left: 10px; margin-top: 30px">
-          <span>페이지 크기:</span>
-          <select v-model="pageSize" @change="changePageSize">
-            <option v-for="size in pageSizeOptions" :key="size" :value="size">{{ size }}</option>
-          </select>
+          </div>
+          <div style="text-align: right; margin-bottom: 10px; margin-right: 10px;">
+              <button @click="resetInputs" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded w-[120px] mr-3"> 입력값 초기화 </button>
+              <button @click="loadAccounts" class="bg-custom-F5A742 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded w-[120px]"> 검색 </button>
+          </div>
         </div>
-        <button @click="loadAccounts"
-          class="bg-custom-F5A742 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded"
-          style="width: 200px; text-align: center; margin-bottom: 10px;">
-          검색
-        </button>
       </div>
-    </div>
 
-    <div class="container mb-4 border border-gray-300 bg-white"
-      style="width: calc(100% - 40px); margin: 10px; border-color: #CCCCCC;">
-      <table class="divide-y divide-gray-200" style="width: calc(100% - 20px); margin: 10px">
-        <thead class="bg-gray-50">
-          <tr>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No
-            </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">이름
-            </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">사원번호
-            </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">이메일
-            </th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              권한(역할)</th>
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="(admin, index) in accountList" :key="admin.id" @click="openAdminDetailModal(admin.id)"
-            style="cursor: pointer;">
-            <td class="px-6 py-4 whitespace-nowrap">{{ currentPage * pageSize + index + 1 }}</td>
-            <td class="px-6 py-4 whitespace-nowrap">{{ admin.name }}</td>
-            <td class="px-6 py-4 whitespace-nowrap">{{ admin.employeeNumber }}</td>
-            <td class="px-6 py-4 whitespace-nowrap">{{ admin.email }}</td>
-            <td class="px-6 py-4 whitespace-nowrap">{{ formatRole(admin.role) }}</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="modal-content" @click.stop>
-        <div class="modal-inner">
-          <AdminDetailModal :isModalAdminDetailOpen="isModalAdminDetailOpen" :selectedAdminId="selectedAdminId"
-            @close-modal="isModalAdminDetailOpen = false" />
+      <div class="container mb-4 bg-white"
+        style="width: calc(100% - 40px); margin: 10px; border-color: #CCCCCC;">
+        <table class="divide-y divide-gray-200" style="width: calc(100% - 20px); margin: 10px">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">이름
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">사원번호
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">이메일
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                권한(역할)</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr v-for="(admin, index) in accountList" :key="admin.id" @click="openAdminDetailModal(admin.id)"
+              style="cursor: pointer;">
+              <td class="px-6 py-4 whitespace-nowrap">{{ currentPage * pageSize + index + 1 }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ admin.name }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ admin.employeeNumber }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ admin.email }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ formatRole(admin.role) }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="modal-content" @click.stop>
+          <div class="modal-inner">
+            <AdminDetailModal :isModalAdminDetailOpen="isModalAdminDetailOpen" :selectedAdminId="selectedAdminId"
+              @close-modal="isModalAdminDetailOpen = false" />
+          </div>
         </div>
+        <PaginationComponent :currentPage="currentPage" :totalPages="totalPageCount" @page-change="changePage"
+          style="margin-bottom: 25px;" />
       </div>
-      <PaginationComponent :currentPage="currentPage" :totalPages="totalPageCount" @page-change="changePage"
-        style="margin-bottom: 25px;" />
-    </div>
   </div>
+</div>
 </template>
 
 <script>
