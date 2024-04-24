@@ -29,7 +29,7 @@
                         <th class="py-2 border border-gray-300" style="background-color: #F5A742; width: 20%; color: white;">생일</th>
                         <td class="px-4 border border-gray-300" style="width: 80%;">
                             <div class="flex">
-                                <input type="date" id="searchBrithDate" v-model="searchBrithDate" class="mt-1 mr-2 focus:ring-indigo-500 focus:border-indigo-500 block w-32 shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <input type="date" id="searchBirthDate" v-model="searchBirthDate" class="mt-1 mr-2 focus:ring-indigo-500 focus:border-indigo-500 block w-32 shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
                         </td>
                     </tr>
@@ -55,11 +55,18 @@
                     </tr>
                 </tbody>
             </table>
-            <button 
-                class="bg-custom-F5A742 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded" 
-                style="width: 200px; text-align: center; margin-left: calc(100% - 210px); margin-bottom: 10px;"
-                @click="searchUsers"
-            >검색</button>
+            <div class="flex justify-between">
+              <div style="margin-left: 10px; margin-top: 30px">
+                  <span>페이지 크기:</span>
+                  <select v-model="pageSize" @change="changePageSize" class="outline-none">
+                      <option v-for="size in pageSizeOptions" :key="size" :value="size">{{ size }}</option>
+                  </select>
+              </div>
+              <div style="text-align: right; margin-bottom: 10px; margin-right: 10px;">
+                  <button @click="resetInputs" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded w-[120px] mr-3"> 입력값 초기화 </button>
+                  <button @click="loadMarketingUser" class="bg-custom-F5A742 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded w-[120px]"> 검색 </button>
+              </div>
+          </div>
         </div>
 
         
@@ -68,9 +75,9 @@
                 <thead class="bg-gray-50">
                     <tr>
                       <th scope="col"
-                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      <input id="selectAllCheckbox" type="checkbox" v-model="isAllUsersSelected" @change="toggleAllUsersSelection"/>
-                  </th>
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <input id="selectAllCheckbox" type="checkbox" v-model="isAllUsersSelected" @change="toggleAllUsersSelection"/>
+                      </th>
                         <th scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             고객명
@@ -102,7 +109,6 @@
                         <span v-if="!user.editing">{{ user.name }}</span>
                         <input v-else type="text" v-model="user.name" @blur="cancelEdit(user)" @keyup.enter="saveEdit(user)">
                     </td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ user.name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{ user.gender === "MALE" ? '남성' : '여성' }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{user.birthDate}}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{user.email}}</td>
@@ -138,13 +144,14 @@ export default {
       selectedUsers: [],
       searchName: '',
       searchEmail: '',
-      searchBrithDate: '',
+      searchBirthDate: '',
       searchGender: '',
       searchGrade: '',
       loading: false,
       isEditing: false,
       isAllUsersSelected: false, // 전체 선택 상태를 저장하는 변수 추가
       pageSize: 5,
+      pageSizeOptions: [10, 25, 50, 100],
       currentPage: 0,
       searchValue: '',
       isLastPage: false,
@@ -153,29 +160,49 @@ export default {
     };
   },
   created(){
+      this.currentPage = 0;
       this.loadMarketingUser();
       
   },
   methods: {
     async loadMarketingUser() {
-      try{
-          // this.loading = true;
-          const params = {
-              page: this.currentPage,
-              size: this.pageSize,
-          }
-          console.log("data 호출");
-          console.log("넘어온 쿠폰 : " + Object.keys(this.selectedCoupons));
-          const access_token = localStorage.getItem('access_token');
-          const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
-          const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/marketing`, { headers, params });
-          this.userList = response.data.result.data;
-          this.totalPageCount = response.data.result.totalPage;
-          console.log(response);
-          console.log(this.totalPageCount);
-      }catch(error){
-          console.log(error);
-      }
+      try {
+                const params = {
+                    page: this.currentPage,
+                    size: this.pageSize,
+
+                }
+                console.log("data 호출");
+                const access_token = localStorage.getItem('access_token');
+                const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
+                const data = {};
+                if (this.searchName.trim() !== '') {
+                    data.name = this.searchName;
+                }
+                if (this.searchBirthDate.trim() !== '') {
+                    data.birthDate = this.searchBirthDate;
+                }
+                if (this.searchEmail.trim() !== '') {
+                    data.email = this.searchEmail;
+                }
+                if (this.searchGender === "남자") {
+                    data.gender = "MALE";
+                } else if (this.searchGender === "여자") {
+                    data.gender = "FEMALE";
+                } else if (this.searchGender.trim() !== '') {
+                    data.gender = this.searchGender;
+                }
+                if (this.searchGrade.trim() !== '') {
+                    data.grade = this.searchGrade;
+                }
+                console.log(data);
+                const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/user/search`, data, { headers, params });
+                this.userList = response.data.result.data;
+                this.totalPageCount = response.data.result.totalPage;
+                console.log(response);
+            } catch (error) {
+                console.log(error);
+            }
     },
     changePage(pageNum) {
         this.currentPage = pageNum;
@@ -192,6 +219,14 @@ export default {
     cancelEdit() {
       this.isEditing = false;
     },
+    resetInputs() {
+            this.searchName = '';
+            this.searchEmail = '';
+            this.searchBirthDate = '';
+            this.searchGender = '';
+            this.searchGrade = '';
+            this.loadMarketingUser();
+        },
 
     async searchUsers(){
       try{
