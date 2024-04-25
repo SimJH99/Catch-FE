@@ -79,7 +79,7 @@
             </dl>
         </div>
 
-        <div class="mt-3 grid grid-cols-2 border border-[#D4D4D8]">
+        <div class="mt-3 grid grid-cols-2 border-t border-[#D4D4D8]">
             <div class="border-r border-[#D4D4D8]">
                 <div class="flex justify-between bg-gray-100">
                     <div class="font-bold text-xl px-2 pt-2 bg-gray-100">문의내역</div>
@@ -88,32 +88,73 @@
                 <div class="p-3">
                     <table class="w-full">
                         <tbody>
-                            <tr v-for="(complaint) in complaintList" :key="complaint.title" class="">
-                                <td>{{ complaint.title }}</td>
-                                <td :class="getStatusColor(complaint.status)">{{ complaint.status }}</td>
+                            <tr v-for="(complaint) in complaintList" :key="complaint.id" @click="detailComplaint(complaint.id)">
+                                <td class="cursor-pointer">{{ complaint.title }}</td>
+                                <td :class="getStatusColor(complaint.status)" class="cursor-pointer">{{ complaint.status }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div>
-                <div class="flex justify-between bg-gray-100">
+                <div class="bg-gray-100">
                     <div class="font-bold text-xl px-2 pt-2 bg-gray-100"> Best FAQ </div>
-                    <div class="px-2 py-3  bg-gray-100">상세 보기</div>
                 </div>
                 <div class="p-3">
                     <table class="w-full">
                         <tbody>
-                            <tr v-for="(i) in people" :key="i.name">
-                                <div class="p-1 flex justify-between">
-                                    <td>{{ i.name }}</td>
-                                    <a href="#">
-                                        <td>{{ i.age }}</td>
-                                    </a>
-                                </div>
-                            </tr>
+                          <tr>
+                            <td @click="toggleDisplay1(index)" class="p-1 flex justify-between cursor-pointer border-b border-gray-300">
+                                [로그인/정보] 아이디와 비밀번호가 기억나지 않아요.
+                            </td>
+                            <transition name="fade">
+                                <p v-if="displayIndex1 !== -1" class="w-full p-1 bg-gray-100 outline-none resize-none" readonly>
+                                    로그인 화면에서  아이디 찾기/비밀번호 찾기를 통해 확인 가능합니다.<br>아이디 찾기는 아래 3가지 방법 중 하나로 진행해 주세요.<br><br><br>■ 휴대전화<br>회원 정보에 등록된 본인의 휴대전화 번호를 인증하는 방법입니다.<br><br><br>■ 이메일<br>회원 정보에 등록된 본인의 이메일 주소를 인증하는 방법입니다.<br><br><br>■ 본인인증<br>이용 중인 통신사와 휴대전화 번호를 인증하는 방법입니다.<br><br><br>※ 비밀번호 재설정을 완료한 휴면 회원은 휴면 해제 및 탈퇴 신청이 취소됩니다.<br>※ 비밀번호 찾기는 휴대전화 본인 인증으로만 가능합니다.
+                                </p>
+                            </transition>
+                          </tr>
+                          <tr>
+                            <td @click="toggleDisplay2(index)" class="mt-2 p-1 flex justify-between cursor-pointer border-b border-gray-300">
+                                [상품 문의] 재고가 없어요. 언제쯤 구입할 수 있을까요?
+                            </td>
+                            <transition name="fade">
+                                <p v-if="displayIndex2 !== -1" class="w-full p-1 bg-gray-100 outline-none resize-none" readonly>
+                                    품절 상품 재입고 여부 및 일정은 정확한 확인이 가능하지 않지만 재입고 알림을 등록하면 알림톡으로 확인 할 수 있습니다.  <br>알림 신청 방법은 아래내용을 확인해 주세요.<br><br><br>■ 재입고 알림 신청 <br>모바일(앱) : 상품 선택 > 구매하기 > 재입고 알림 받기 선택<br><br><br>※ 재입고 알림 신청은 APP에서만 신청이 가능합니다.<br>※ 재고 입고 수량에서 요청순서에 따라 순차적으로 발송 됩니다.<br>※ 재입고 알림 버튼이 보이지 않거나 재입고 관련 상세확인은 상품 페이지의 상품문의를 이용해 주세요.    
+                                </p>
+                            </transition>
+                          </tr>
+                          <tr>
+                            <td @click="toggleDisplay3(index)" class="mt-2 p-1 flex justify-between cursor-pointer border-b border-gray-300">
+                                [배송 일반] 일반 배송 상품은 언제 배송 되나요?
+                            </td>
+                            <transition name="fade">
+                                <p v-if="displayIndex3 !== -1" class="w-full p-1 bg-gray-100 outline-none resize-none" readonly>
+                                    일반배송은 브랜드마다 일정이 다르고 평일 기준으로 출고 됩니다. <br>출고 일정은 상품의 상세페이지 출고 정보에서 확인 가능합니다.<br><br><br>※ 평일 기준 출고로 연휴 및 공휴일은 배송일에서 제외됩니다.<br>※ 캐치스토어는 전 상품 100% 무료 배송입니다. <br>※ 배송 지연 상품의 경우 상품명에 지연으로 아이콘이 표시됩니다. <br>※ 출고 지연 발생 시에는 알림톡 또는 문자를 통해 안내해 드립니다.<br>※ 주문 시 배송 메모에 배송 희망 일자를 작성하셔도 해당일에 지정 배송은 어렵습니다.
+                                </p>
+                            </transition>
+                          </tr>
+                          <tr>
+                            <td @click="toggleDisplay4(index)" class="mt-2 p-1 flex justify-between cursor-pointer border-b border-gray-300">
+                                [기타] 주문한 상품이 일부만 도착했어요.
+                            </td>
+                            <transition name="fade">
+                                <p v-if="displayIndex4 !== -1" class="w-full p-1 bg-gray-100 outline-none resize-none" readonly>
+                                    브랜드 및 상품에 따라 출고지가 다르기 때문에 여러 개 상품을 주문한 경우에는 각각 배송이 됩니다. <br>브랜드가 달라도 상품 주문 시 한 번에 결제할 수 있습니다. <br><br><br>아직 도착하지 않는 상품은 아래 경로에서 배송진행 상황을 확인해 주세요. 
+                                </p>
+                            </transition>
+                          </tr>
+                          <tr>
+                            <td @click="toggleDisplay5(index)" class="mt-2 p-1 flex justify-between cursor-pointer">
+                                [취소/반품(환불)] 반품접수는 어떻게 하나요?
+                            </td>
+                            <transition name="fade">
+                                <p v-if="displayIndex5 !== -1" class="w-full p-1 bg-gray-100 outline-none resize-none" readonly>
+                                    교환(환불) 접수 시 선택했던 방법으로 반품 접수해 주세요.<br><br><br>■ 회수해 주세요<br>캐치 자동회수 서비스로 택배기사가 요청한 회수지로 평일 기준 1일 ~ 3일 이내 방문합니다. <br>※ 방문 전 택배 기사분이 연락 후 방문 예정이며, 비대면으로 상품을 전달할 때는 반품 상자를 구분할 수 있도록 표시 후 회수 장소에 보관해 주세요.<br><br><br>■ 직접 보냈어요<br>상품을 받은 택배사와 같은 택배사로 고객님께서 직접 반품 예약을 해주셔야 합니다.<br>상품 회수 완료 시 반송장 정보를 입력해 주세요.<br><br><br>※ 계약된 택배사가 아닌 다른 택배사 이용 시 추가 비용 발생할 수 있고 2개 이상의 브랜드 반송 시, 각각 반송지로 보내주세요.<br>※ 안내서에 배송비 동봉 등에 대한 내용이 있더라도, 동봉하면 안 됩니다.
+                                </p>
+                            </transition>
+                          </tr>
                         </tbody>
-                    </table>
+                      </table>
                 </div>
             </div>
         </div>
@@ -127,13 +168,11 @@ export default {
   data() {
     return {
         complaintList: {},
-        people: [
-            { name: '[로그인/정보] 아이디와 비밀번호가 기억나지 않아요.', age: '자세히 보기' },
-            { name: '[배송 일반] 일반 배송 상품은 언제 배송 되나요?', age: '자세히 보기' },
-            { name: '[결제수단] 결제하는 방법에 따라 할인 이벤트가 있나요?', age: '자세히 보기' },
-            { name: '[주문] 상품을 받는 주소(배송지) 등록은 어떻게 하나요?', age: '자세히 보기' },
-            { name: '[취소/반품(환불)] 반품접수는 어떻게 하나요?', age: '자세히 보기' },
-        ]
+        displayIndex1: -1,
+        displayIndex2: -1,
+        displayIndex3: -1,
+        displayIndex4: -1,
+        displayIndex5: -1,
     };
   },
   created() {
@@ -152,6 +191,9 @@ export default {
             status: this.formatRole(account.status),
         }));
     },
+    detailComplaint(id){
+        this.$router.push(`/${id}/complaintDetail`)
+    },
     formatRole(status) {
       switch (status) {
         case "BEFORE":
@@ -167,6 +209,21 @@ export default {
         'p-1 whitespace-nowrap text-right text-red-400': status === '답변 없음', // BEFORE 상태일 때 글자색을 빨간색으로 설정
         'p-1 whitespace-nowrap text-right text-green-400': status === '답변 완료' // REPLY 상태일 때 글자색을 초록색으로 설정
       };
+    },
+    toggleDisplay1(index) {
+        this.displayIndex1 = this.displayIndex1 === index ? -1 : index;
+    },
+    toggleDisplay2(index) {
+        this.displayIndex2 = this.displayIndex2 === index ? -1 : index;
+    },
+    toggleDisplay3(index) {
+        this.displayIndex3 = this.displayIndex3 === index ? -1 : index;
+    },
+    toggleDisplay4(index) {
+        this.displayIndex4 = this.displayIndex4 === index ? -1 : index;
+    },
+    toggleDisplay5(index) {
+        this.displayIndex5 = this.displayIndex5 === index ? -1 : index;
     },
   }
 };
@@ -236,6 +293,13 @@ table {
   
   th {
     background-color: #f2f2f2;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+      transition: opacity 0.2s ease;
+  }  
+  .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+      opacity: 0;
   }
 
 
