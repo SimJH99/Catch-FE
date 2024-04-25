@@ -15,7 +15,8 @@ import UnauthorizedPage from '@/views/UnauthorizedPage.vue';
 import MyComplaintList from '@/views/MyComplaintList.vue';
 import CreateComplaint from '@/views/CreateComplaint.vue';
 import NotFound from '@/views/NotFound.vue';
-import EventCreate from '@/views/eventCreate.vue'
+import EventCreate from '@/views/eventCreate.vue';
+import EventList from '@/views/EventList.vue';
 
 const routes = [
   { path: '/admin/login', name: 'LoginAdmin', component: LoginAdmin },
@@ -36,8 +37,8 @@ const routes = [
   { path: '/unauthorized', name: 'UnauthorizedPage', component: UnauthorizedPage, meta: { hideHeaderFooter: true } },
   { path: '/notfound', name: 'NotFound', component: NotFound, meta: { hideHeaderFooter: true } },
   { path: '/:catchAll(.*)', redirect: '/notfound' }, // 모든 잘못된 경로를 404 페이지로 리다이렉트
-  { path: '/eventCreate', name:'EventCreate',component: EventCreate}
-
+  { path: '/eventCreate', name:'EventCreate',component: EventCreate},
+  { path: '/eventList', name:'EventList',component:EventList}
 ];
 
 const router = createRouter({
