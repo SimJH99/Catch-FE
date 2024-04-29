@@ -26,7 +26,7 @@
         </svg>
       </div>
       <a href="/complaintList">
-        <div class="m-5 text-4xl font-bold text-center"> {{ statusCount[0] }}개</div>
+        <div class="m-5 text-4xl font-bold text-center"> {{ statusCount }}개</div>
       </a>
     </div>
     
@@ -136,7 +136,7 @@ import Chart from 'chart.js/auto';
         const publishCouponRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/coupon/publish/count`, { headers });
         const visitTotalRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/log/visit/total`, { headers });
         const emailTotalRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/log/email/total`, { headers });
-        this.statusCount = statusCountRes.data.result.data;
+        this.statusCount = statusCountRes.data.result.data[0][1];
         this.publishCoupon = publishCouponRes.data.result.data;
         this.visitTotal = visitTotalRes.data.result.data;
         this.emailTotal = emailTotalRes.data.result.data;
@@ -155,7 +155,6 @@ import Chart from 'chart.js/auto';
                 const genderResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/gender`, { headers });
                 const ageResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/age`, { headers });
                 const dayResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/log/visit/week/user`, { headers });
-                console.log(dayResponse);
                 this.gradeInfo = gradeResponse.data.result.data;
                 this.genderInfo = genderResponse.data.result.data;
                 this.ageInfo = ageResponse.data.result.data;
