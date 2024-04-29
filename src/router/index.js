@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
+
+// Import route components
 import LoginAdmin from '@/views/LoginAdmin.vue';
 import DashBorad from '@/views/DashBoard.vue';
 import ComplaintList from '@/views/ComplaintList.vue';
@@ -18,6 +20,7 @@ import NotFound from '@/views/NotFound.vue';
 import EventCreate from '@/views/eventCreate.vue';
 import EventList from '@/views/EventList.vue';
 
+// Define routes
 const routes = [
   { path: '/admin/login', name: 'LoginAdmin', component: LoginAdmin },
   { path: '/dashBoard', name: 'DashBorad', component: DashBorad, meta: { requiresAuth: true, requiresAdmin: true } },
@@ -36,7 +39,7 @@ const routes = [
   { path: '/:complaintId/complaintDetail', name: 'ComplaintDetail', component: ComplaintDetail, props: true},
   { path: '/unauthorized', name: 'UnauthorizedPage', component: UnauthorizedPage, meta: { hideHeaderFooter: true } },
   { path: '/notfound', name: 'NotFound', component: NotFound, meta: { hideHeaderFooter: true } },
-  { path: '/:catchAll(.*)', redirect: '/notfound' }, // 모든 잘못된 경로를 404 페이지로 리다이렉트
+  { path: '/:catchAll(.*)', redirect: '/notfound' }, // Redirect all invalid paths to 404 page
   { path: '/eventCreate', name:'EventCreate',component: EventCreate},
   { path: '/eventList', name:'EventList',component:EventList}
 ];
@@ -46,47 +49,61 @@ const router = createRouter({
   routes,
 });
 
+// Router navigation guard
 router.beforeEach((to, from, next) => {
   const accessToken = localStorage.getItem('access_token');
 
+  // Check if user is logged in and redirect to login page if accessing a page that requires authentication
   if (!accessToken) {
     if (to.path !== '/admin/login' && to.path !== '/') {
-      // 사용자 로그인 페이지 또는 '/'로 접근하는 경우
       next({ name: 'LoginUser' });
     } else {
-      next(); // '/admin/login' 또는 '/' 페이지로 이동
+      next(); // Redirect to '/admin/login' or '/' page
     }
   } else {
+    // If user is logged in, check user's role and redirect if necessary
     const [, payloadBase64] = accessToken.split('.');
     const payload = JSON.parse(atob(payloadBase64));
     const userRole = payload.sub.split(':')[1];
 
     if (to.meta.requiresAuth && !accessToken) {
       next({ name: 'LoginAdmin' });
-    } else if (to.meta.requiresAdmin && userRole == 'USER') {
+    } else if (to.meta.requiresAdmin && userRole === 'USER') {
       next({ name: 'UnauthorizedPage' });
     } else if (to.path === '/admin/login' && userRole === 'USER') {
-      // 사용자가 USER 권한으로 '/admin/login' 페이지에 접속하는 경우
       next({ name: 'UnauthorizedPage' });
     } else {
-      const hideHeaderFooter = to.meta.hideHeaderFooter || false;
+      // Update last activity time whenever accessing a page
+      let lastActivityTime = new Date().getTime();
+      
+      const inactivityDuration = 60 * 60 * 1000; // 1 hour (in milliseconds)
 
+      // Start a timer to check activity periodically
+      setInterval(() => {
+        const currentTime = new Date().getTime();
+        const elapsedTime = currentTime - lastActivityTime;
+      
+        if (elapsedTime > inactivityDuration) {
+          localStorage.clear(); // Clear all data from local storage
+          alert("세션이 만료되었습니다. 다시 로그인 해주세요.");
+          window.location.href = '/';
+        }
+      }, 1000); // Check every second
+
+      // Hide header, footer, and sidebar if specified in meta
+      const hideHeaderFooter = to.meta.hideHeaderFooter || false;
       if (hideHeaderFooter) {
-        // App.vue에서 사용하는 데이터를 변경하여 헤더, 푸터, 사이드바를 숨깁니다.
-        // 이 예제에서는 Vuex를 사용하여 상태를 변경하거나, 
-        // Vue 컴포넌트에 직접 접근하여 데이터를 변경할 수 있습니다.
-        // 이 예제에서는 Vuex를 사용하지 않고, App.vue의 data에 직접 접근하는 방법을 보여드리겠습니다.
         const appInstance = router.app;
         if (appInstance) {
-          appInstance.showHeader = false; // 헤더 숨기기
-          appInstance.showFooter = false; // 푸터 숨기기
-          appInstance.showSideBar = false; // 사이드바 숨기기
+          appInstance.showHeader = false; // Hide header
+          appInstance.showFooter = false; // Hide footer
+          appInstance.showSideBar = false; // Hide sidebar
         }
       }
+      
       next();
     }
   }
 });
-
 
 export default router;

@@ -168,7 +168,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "@/axios/index";
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import UserDetailModal from '@/components/modal/UserDetailModal.vue';
 

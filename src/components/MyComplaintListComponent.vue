@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "@/axios/index";
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import router from '@/router';
 export default {

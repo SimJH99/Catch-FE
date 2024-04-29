@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "@/axios/index";
 import no_images from '@/assets/images/no_image.png'
 import ImageModal from '@/components/modal/ImageModal.vue';
 export default {

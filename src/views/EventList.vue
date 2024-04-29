@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "@/axios/index";
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import EventDetailModal from '@/components/modal/EventDetailModal.vue'
 
