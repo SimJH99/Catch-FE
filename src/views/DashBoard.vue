@@ -101,7 +101,7 @@
 </template>
   
 <script>
-import axios from 'axios';
+import axios from "@/axios/index";
 import Chart from 'chart.js/auto';
   export default {
     data() {
