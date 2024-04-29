@@ -6,7 +6,6 @@
         <img :src="url" alt="선택된 이미지" class="w-full h-full object-cover aspect-w-1 aspect-h-1 p-1">
         <span class="close absolute" @click="closeImageDetailModal()">&times;</span>
       </div>
-      <button @click="closeImageDetailModal">Close</button>
     </div>
   </div>
 </template>

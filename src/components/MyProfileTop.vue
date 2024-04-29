@@ -4,17 +4,26 @@
             <div class="my_grd">
                 <dl>
                     <dt>
-                        <span class="grd" id="staff_yn">
-                            <img src="@/assets/images/common/vvip.png" id="grade_img" alt="vvip등급">
+                        <span class="grd" v-if="this.grade == 'VVIP'">
+                            <img src="@/assets/images/common/vvip.png">
+                        </span>
+                        <span class="grd" v-if="this.grade == 'VIP'">
+                            <img src="@/assets/images/common/vip.png">
+                        </span>
+                        <span class="grd" v-if="this.grade == 'GOLD'">
+                            <img src="@/assets/images/common/gold.png">
+                        </span>
+                        <span class="grd" v-if="this.grade == 'SILVER'">
+                            <img src="@/assets/images/common/silver.png">
                         </span>
                     </dt>
-                    <dd class="grd" id="grade_nm">VVIP
+                    <dd class="grd" id="grade_nm">{{ grade }}
                         <!-- TIP LAYER -->
                         <div class="lyr_tip_wrap">
                         </div>
                         <!-- //TIP LAYER -->
                     </dd>
-                    <dd class="mb">김선국님</dd>
+                    <dd class="mb">{{ name }}님</dd>
                     <dd class="lnk"><a href="#">이벤트 보러가기 ></a></dd>
                 </dl>
             </div>
@@ -42,23 +51,42 @@ export default {
     data () {
         return {
             couponCount: '',
+            grade:'',
+            name:'',
         }
     },    
     created(){
         this.loadMyCouponCount();
+        this.fetchUserProfile();
     },
     methods: {
         async loadMyCouponCount() {
-        try{
-            const access_token = localStorage.getItem('access_token');
-            const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
-            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/coupon/myCouponCount`, { headers });
-            this.couponCount = response.data.result.data;
-            console.log("couponConut : " + this.couponCount);
-        }catch(error){
-            console.log(error);
-        }
-      },
+            try{
+                const access_token = localStorage.getItem('access_token');
+                const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
+                const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/coupon/myCouponCount`, { headers });
+                this.couponCount = response.data.result.data;
+                console.log("couponConut : " + this.couponCount);
+            }catch(error){
+                console.log(error);
+            }
+        },
+        async fetchUserProfile() {
+            try {
+                const access_token = localStorage.getItem("access_token");
+                const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
+                const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/profile`, { headers });
+                if (response.status === 200 && response.data.httpStatus === 'OK') {
+                    this.name = response.data.result.name;
+                    this.grade = response.data.result.grade;
+                } else {
+                // 로그인 정보를 가져오는 데 실패했을 때의 처리
+                console.error('Failed to fetch user profile data.');
+                }
+            } catch (error) {
+                console.error('An error occurred while fetching user profile data:', error);
+            }
+        },
     }
 }
 </script>
@@ -108,10 +136,7 @@ export default {
     background: url(@/assets/images/common/ico_grd.png) no-repeat 0 0;
 }
 
-.mys_top .my_grd dt span.grd img {
-    width: 60px;
-    margin: 18.5px 0 0 7.5px;
-}
+
 
 .mys_top .my_grd dt span.ico{position:absolute;bottom:-17px;left:9px;display:inline-block;width:52px;height:26px;font-size:13px;line-height:26px;color:#fff;text-align:center;border-radius:13px;-webkit-border-radius:13px;background:-moz-linear-gradient(45deg,#EC72D3,#F5B527);background:-webkit-linear-gradient(45deg,#EC72D3,#F5B527);background:-o-linear-gradient(45deg,#EC72D3,#F5B527);background:-ms-linear-gradient(45deg,#EC72D3,#F5B527);background: linear-gradient(45deg,#EC72D3,#F5B527);filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr='#EC72D3',endColorstr='#F5B527');zoom:1;}
 .mys_top .my_grd dd{position:relative;}

@@ -3,7 +3,7 @@
   <div v-if="isModalComplaintDetailOpen" class="modal">
     <div class="modal-content" @click.stop>
       <div class="modal-header relative">
-        <h2 style="font-size: 24px; font-weight: bold; color:#EFEFEF">계정 상세 정보</h2>
+        <h2 style="font-size: 24px; font-weight: bold; color:#EFEFEF">1:1 문의</h2>
         <span class="close absolute" @click="closeComplaintDetailModal(selectedComplaintId)">&times;</span>
       </div>
         <div v-if="loading" class="loading-text">

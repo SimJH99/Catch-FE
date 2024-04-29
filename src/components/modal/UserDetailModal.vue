@@ -32,7 +32,15 @@
               <!-- 등급 -->
               <div class="table-row">
                 <div class="table-label">등급</div>
-                <div class="table-value">{{ accountDetails.grade }}</div>
+                <div v-if="isEditing" class="table-value">
+                  <select  v-model="grade" class="outline-none">
+                    <option>VVIP</option>
+                    <option>VIP</option>
+                    <option>GOLD</option>
+                    <option>SILVER</option>
+                  </select>
+                </div>
+                <div v-else class="table-value">{{ accountDetails.grade }}</div>
               </div>
               <!-- 마케팅 수신 여부 -->
               <div class="table-row">
@@ -120,6 +128,7 @@ export default {
       loading: false,
       isEditing: false,
       userNotice: "",
+      grade: ""
     };
   },
   computed: {
@@ -162,6 +171,7 @@ export default {
     toggleEdit() {
       this.isEditing = true;
       this.userNotice = this.accountDetails.userNotice;
+      this.grade = this.accountDetails.grade;
 
       // 계정 비활성화/활성화 버튼 숨기기
       const disableButton = document.querySelector('.disable-button');
@@ -174,6 +184,7 @@ export default {
       this.isEditing = false;
       // 메모도 원래 값으로 되돌리기
       this.userNotice = this.accountDetails.userNotice;
+      this.grade = this.accountDetails.grade;
 
       // 계정 비활성화/활성화 버튼 다시 보이기
       const disableButton = document.querySelector('.disable-button');
@@ -187,13 +198,15 @@ export default {
           const access_token = localStorage.getItem('access_token');
           const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
           const data = {
-            userNotice: this.userNotice // 메모도 업데이트
+            userNotice: this.userNotice, // 메모도 업데이트
+            grade: this.grade
           };
 
           await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/user/${this.selectedUserId}/update`, data, { headers });
           this.isEditing = false;
           this.loadAccountDetails(this.selectedUserId);
           alert("수정이 완료 되었습니다.")
+          window.location.reload();
         } catch (error) {
           console.error("Error saving changes:", error);
           alert("서버 오류가 발생했습니다. 다시 시도해주세요.")
