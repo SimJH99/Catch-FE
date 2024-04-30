@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "@/axios/index";
 import MyCouponListModal from "@/components/modal/MyCouponListModal.vue";
 
 export default {
