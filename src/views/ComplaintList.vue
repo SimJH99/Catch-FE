@@ -155,6 +155,8 @@ export default {
       cachedPages: {}, // 캐시된 페이지 데이터를 저장할 객체 추가
       isTrue: false,
       allCount: '',
+      statusInfo: [],
+      complaintStatus: [],
       statusCount: [],
       selectedComplaintId: '',
       isModalComplaintDetailOpen: false,
@@ -171,8 +173,14 @@ export default {
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
         const allCountRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/complaints/countAll`, { headers });
         this.allCount = allCountRes.data.result.data;
-        const statusCountRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/complaints/countStatus`, { headers });
-        this.statusCount = statusCountRes.data.result.data;
+        const statusRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/complaints/countStatus`, { headers });
+        this.statusInfo = statusRes.data.result.data;
+
+        for(var i = 0; i < this.statusInfo.length; i++){
+          this.complaintStatus.push(this.statusInfo[i][0]);
+          this.statusCount.push(this.statusInfo[i][1]);
+        }
+
       } catch (error) {
         console.log(error);
       }
@@ -201,6 +209,7 @@ export default {
           const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/complaints/list`, registerData ,{ headers, params });
           this.complaintList = response.data.result.data.content;
           this.totalPageCount = response.data.result.data.totalPages;
+          console.log(response);
           const addAccountList = response.data.result.data.content.map((account) => ({
             ...account,
             status: this.formatRole(account.status),
