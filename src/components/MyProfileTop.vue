@@ -24,7 +24,7 @@
                         <!-- //TIP LAYER -->
                     </dd>
                     <dd class="mb">{{ name }}님</dd>
-                    <dd class="lnk"><a href="#">이벤트 보러가기 ></a></dd>
+                    <dd class="lnk"><a href="/myEvent">이벤트 보러가기 ></a></dd>
                 </dl>
             </div>
 

@@ -121,9 +121,20 @@ export default {
         console.log(err);
       });
 
-        alert("로그인 되었습니다.");
-        window.location.href = "/mypage";
-        
+      let queryString = window.location.search;
+        console.log(queryString);
+        let urlParams = new URLSearchParams(queryString);
+        console.log(urlParams);
+        let url;
+        if (urlParams.has('url')) {
+          url = urlParams.get('url');
+        }
+        if(url == undefined){
+          alert("로그인 되었습니다.");
+          window.location.href = "/mypage";  
+        }else{
+          window.location.href = `/${url}`;
+        }
       } catch (error) {
         console.error(error);
         alert("입력하신 정보와 일치하는 정보가 없습니다.");
