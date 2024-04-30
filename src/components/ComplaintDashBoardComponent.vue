@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <div class="m-2 grid grid-cols-3">
+    <div class="m-2 grid grid-cols-2">
       <div class="bg-white m-2 p-2 rounded-md shadow-md border">
         <div class="m-2 text-2xl font-bold">문의글 답변 상태</div>
         <div class="m-2 p-4">
@@ -50,7 +50,7 @@
 
     <div class="bg-white m-2 p-2 rounded-md shadow-md border">
       <div class="flex">
-        <div class="m-2 text-2xl font-bold">지난달 일별 문의글</div>
+        <div class="m-2 text-2xl font-bold">일별 문의글 작성 수</div>
         <input type="month" class="ml-3 outline-none" v-model="defaultMonth" :max="maxMonth">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 self-center cursor-pointer" @click="findMonth()">
           <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 15.75-2.489-2.489m0 0a3.375 3.375 0 1 0-4.773-4.773 3.375 3.375 0 0 0 4.774 4.774ZM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -58,6 +58,21 @@
       </div>
       <div class="m-2 p-4">
         <canvas id="monthChart"></canvas>
+      </div>
+    </div>
+
+    <div class="bg-white m-2 p-2 rounded-md shadow-md border">
+      <div class="flex">
+        <div class="m-2 text-2xl font-bold">월별 문의글 작성 수</div>
+        <select id="year" v-model="defaultYear" class="ml-3 outline-none">
+          <option v-for="(year, index) in years" :key="index" :value="year">{{year}}</option>
+        </select>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 self-center cursor-pointer" @click="findYear()">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 15.75-2.489-2.489m0 0a3.375 3.375 0 1 0-4.773-4.773 3.375 3.375 0 0 0 4.774 4.774ZM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>    
+      </div>
+      <div class="m-2 p-4">
+        <canvas id="yearChart"></canvas>
       </div>
     </div>
 
@@ -82,27 +97,37 @@ export default {
       monthCategory: {},
       defaultMonth: '',
       maxMonth: '',
+      years: [],
+      defaultYear: '',
+      yearInfo: {},
+      yearCategory: {},
     }
   },
   created(){
     this.fetchComplaint();
+    this.createYearOptions();
   },
   methods: {
     async fetchComplaint(){
       try {
         this.defaultMonth = this.getCurrentYearMonth();
         this.maxMonth = this.defaultMonth;
+        this.defaultYear = this.getCurrentYear();
         const token = localStorage.getItem('access_token');
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
         const statusRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/complaints/countStatus`, { headers });
         const todayRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/complaints/countToday`, { headers });
         const categoriesRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/complaints/countCategory`, { headers });
-        const registerData = {month: this.defaultMonth};
-        const monthRes = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/complaints/countMonth`, registerData, { headers });
+        const monthData = {month: this.defaultMonth};
+        const monthRes = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/complaints/countMonth`, monthData, { headers });
+        const yearData = {year: this.defaultYear};
+        const yearRes = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/complaints/countYear`, yearData, { headers });
         this.statusInfo = statusRes.data.result.data;
         this.todayInfo = todayRes.data.result.data;
         this.categoryInfo = categoriesRes.data.result.data;
         this.monthInfo = monthRes.data.result.data;
+        this.yearInfo = yearRes.data.result.data;
+        console.log(this.yearInfo);
 
         if(this.statusInfo.length == 1){
           this.complaintStatus.push(this.formatRole(this.statusInfo[0][0]));
@@ -145,9 +170,20 @@ export default {
             }
         });
 
+        this.yearCategory = this.groupYearByCategory(this.yearInfo);
+
+        Object.values(this.yearCategory).forEach(categoryData => {
+            for (let month = 1; month <= 12; month++) {
+                if (!(month in categoryData)) {
+                    categoryData[month] = 0;
+                }
+            }
+        });
+
         this.statusChart();
         this.categoryChart();
         this.monthChart();
+        this.yearChart();
         }
       catch (error) {
         console.log(error);
@@ -162,7 +198,6 @@ export default {
       const monthRes = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/complaints/countMonth`, registerData, { headers });
       this.monthInfo = monthRes.data.result.data;
       this.monthCategory = this.groupDataByCategory(this.monthInfo);
-      console.log(this.monthInfo);
       const currentDate = new Date();
 
       let lastMonth = new Date(currentDate);
@@ -180,6 +215,36 @@ export default {
       })
       this.monthChart();
     },
+    async findYear(){
+      this.yearInfo = {},
+      this.yearCategory = {};
+      const token = localStorage.getItem('access_token');
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      const registerData = {year: this.defaultYear};
+      const yearRes = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/complaints/countYear`, registerData, { headers });
+      this.yearInfo = yearRes.data.result.data;
+      this.yearCategory = this.groupYearByCategory(this.yearInfo);
+
+      Object.values(this.yearCategory).forEach(categoryData => {
+          for (let month = 1; month <= 12; month++) {
+              if (!(month in categoryData)) {
+                  categoryData[month] = 0;
+              }
+          }
+      });
+
+      this.yearChart();
+    },
+    getCurrentYear() {
+      return new Date().getFullYear();
+    },
+    createYearOptions() {
+      var currentYear = this.getCurrentYear();
+
+      for (var year = 1970; year <= currentYear; year++) {
+          this.years.push(year);
+      }
+    },
     getCurrentYearMonth() {
       const now = new Date();
       const year = now.getFullYear();
@@ -187,6 +252,18 @@ export default {
       return `${year}-${month}`;
     },
     groupDataByCategory(data) {
+      const groupedData = {};
+      data.forEach(item => {
+          const categoryName = item.category;
+          if (!groupedData[categoryName]) {
+              groupedData[categoryName] = {};
+          }
+          const day = item.day;
+          groupedData[categoryName][day] = item.count;
+      });
+      return groupedData;
+    },
+    groupYearByCategory(data) {
       const groupedData = {};
       data.forEach(item => {
           const categoryName = item.category;
@@ -391,6 +468,115 @@ export default {
         {
           label: '서비스',
           data: this.monthCategory['SERVICE'],
+          backgroundColor: [
+            'rgba(153, 102, 255, 0.2)',
+          ],
+          borderColor: [
+            'rgba(153, 102, 255, 1)',
+          ],
+          borderWidth: 1
+        }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        aspectRatio: 1,
+        scales: {
+            x: {
+              stacked: true,
+              grid: {
+                  display: false
+              }
+            },
+            y: {
+                stacked: true,
+                grid: {
+                    display: false
+                },
+                ticks: {
+                  stepSize: 1
+                }
+            },
+        },
+        plugins: {
+            legend: {
+                display: false,
+            },
+        }
+      }
+    });
+  },
+  yearChart() {
+    const ctx = document.getElementById('yearChart').getContext('2d');
+        if (Chart.getChart(ctx)) {
+        Chart.getChart(ctx)?.destroy();
+      }
+      if (!ctx) {
+        return;
+      }
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: '',
+        datasets: [
+          {
+          label: '취소/교환/환불',
+          data: this.yearCategory['CANCEL/EXCHANGE/REFUND'],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+          ],
+          borderWidth: 1
+        },
+        {
+          label: '상품확인',
+          data: this.yearCategory['CONFIRMATION'],
+          backgroundColor: [
+            'rgba(245, 124, 0, 0.2)',
+          ],
+          borderColor: [
+            'rgba(245, 124, 0, 1)',
+          ],
+          borderWidth: 1
+        } 
+        ,{
+          label: '배송',
+          data: this.yearCategory['DELIVERY'],
+          backgroundColor: [
+            'rgba(255, 206, 86, 0.2)',
+          ],
+          borderColor: [
+            'rgba(255, 206, 86, 1)',
+          ],
+          borderWidth: 1
+        },
+        {
+          label: '회원정보',
+          data: this.yearCategory['MYINFO'],
+          backgroundColor: [
+            'rgba(75, 192, 192, 0.2)',
+          ],
+          borderColor: [
+            'rgba(75, 192, 192, 1)',
+          ],
+          borderWidth: 1
+        },
+        {
+          label: '주문/결제',
+          data: this.yearCategory['ORDER'],
+          backgroundColor: [
+            'rgba(54, 162, 235, 0.2)',
+          ],
+          borderColor: [
+            'rgba(54, 162, 235, 1)',
+          ],
+          borderWidth: 1
+        },
+        {
+          label: '서비스',
+          data: this.yearCategory['SERVICE'],
           backgroundColor: [
             'rgba(153, 102, 255, 0.2)',
           ],
