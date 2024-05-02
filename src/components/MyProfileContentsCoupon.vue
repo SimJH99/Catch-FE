@@ -9,15 +9,32 @@
     <div class="mt-8">
       <div class="coupon-slider relative" ref="slider">
         <div class="slider-container relative overflow-hidden">
-          <div class="coupons flex">
-            <button @click="prevCoupon" class="arrow prev text-white bg-custom-F5A742 hover:bg-orange-600 p-2">&larr;</button>
-            <div v-for="(coupon, index) in visibleCoupons" :key="index" class="coupon relative">
-              <div class="coupon-content">
-                <p class="coupon-name">{{ coupon.name }}</p>
-              </div>
-              <button class="receive-button" @click="receiveCoupon(coupon)">수령</button>
+          <div class="coupons flex" style="height: 160px;">
+            <button @click="prevCoupon" class="arrow prev p-2" style="margin-right:10px; border-radius: 5px;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+              </svg>                          
+            </button>
+            <div v-for="(coupon, index) in visibleCoupons" :key="index" class="coupon">
+              <div class="coupon-wrapper">
+                <img src="@/assets/coupon_image.png" alt="Coupon Image" class="coupon-image">
+                <div class="coupon-content">
+                  <p class="coupon-name">{{ coupon.name }}</p>
+                  <p class="coupon-price">{{ coupon.price }}원</p>
+                </div>
+              </div> 
+              <button class="receive-button" @click="receiveCoupon(coupon)">
+                <span>쿠폰 받기</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+              </button>
             </div>
-            <button @click="nextCoupon" class="arrow next text-white bg-custom-F5A742 hover:bg-orange-600 p-2">&rarr;</button>
+            <button @click="nextCoupon" class="arrow next p-2" style="margin-left:10px; border-radius: 5px">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+              </svg>              
+            </button>
           </div>
         </div>
       </div>
@@ -140,35 +157,78 @@ export default {
   width: 1016px;
 }
 
+.coupon-image {
+  width: 100%; /* 이미지를 쿠폰 박스 안에 꽉 차게 표시 */
+  height: 100%; /* 이미지를 쿠폰 박스 안에 꽉 차게 표시 */
+  object-fit: cover; /* 이미지가 박스에 꽉 차도록 설정 */
+  border-radius: 5px; /* 쿠폰 박스와 이미지의 모서리를 일치시킴 */
+  background-color: #FFFFFF; /* 배경색 변경 */
+  border: 1px solid #CCCCCC; /* 테두리 추가 */
+}
+
 .coupon {
+  margin-top: 5px;
+  position: relative; /* 이미지 위치를 조정하기 위해 필요 */
+  height: 100px; /* 이미지 높이에 맞게 조정 */
   width: 25%; /* 4개의 쿠폰을 가로로 정렬 */
-  background-color: #FFF4E6; /* 배경색 변경 */
-  border-radius: 10px;
-  padding: 20px;
+  border-radius: 10px; /* 모서리 둥글게 처리 */
   margin-right: 10px; /* 쿠폰 간격을 조정 */
+  margin-left: 10px; /* 쿠폰 간격을 조정 */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+}
+.coupon-wrapper {
+  position: relative;
 }
 
 .coupon-content {
-  text-align: center; /* 쿠폰 내용 가운데 정렬 */
+  position: absolute;
+  top: 10px; /* 쿠폰 이미지 상단으로부터의 간격 조정 */
+  left: 10px; /* 쿠폰 이미지 왼쪽으로부터의 간격 조정 */
+  z-index: 1; /* 다른 콘텐츠 위에 배치 */
+  background-color: rgba(255, 255, 255, 0.8); /* 배경색 및 투명도 설정 */
+  padding: 5px; /* 내부 여백 조정 */
+  border-radius: 5px; /* 모서리 둥글게 처리 */
 }
 
 .coupon-name {
-  font-size: 20px; /* 쿠폰 이름 폰트 사이즈 변경 */
-  color: #FFA500; /* 쿠폰 이름 색상 변경 */
+  font-size: 15px; /* 쿠폰 이름 폰트 사이즈 변경 */
+}
+
+.coupon-price{
+  font-size: 30px;
+  margin-top: 10px;
+  margin-left: 10px;
+  color: #FFA500;
 }
 
 .receive-button {
-  background-color: #FFA500; /* 버튼 배경색 변경 */
-  color: white;
-  border: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 60px;
+  background-color: #FFFFFF; /* 배경색 변경 */
+  border: 1px solid #CCCCCC; /* 테두리 추가 */
   border-radius: 5px;
-  padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.3s;
+  height: 30px;
+  width: 100%;
+  margin-top: 5px;
 }
 
 .receive-button:hover {
-  background-color: #FF8C00; /* 버튼 호버 배경색 변경 */
+  background-color: #e8e8e8; /* 버튼 호버 배경색 변경 */
+}
+
+.receive-button span {
+  flex: 1;
+}
+
+.arrow.prev:hover {
+  background-color: #e8e8e8;
+}
+
+.arrow.next:hover {
+  background-color: #e8e8e8;
 }
 </style>

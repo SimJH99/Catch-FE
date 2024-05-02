@@ -173,8 +173,8 @@ export default {
       }
     },
     validatePassword() {
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~`@$!%*?&])[A-Za-z\d@`$!%~*?&]{8,}$/;
 
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~`@$!%*?&])[A-Za-z\d@`$!%~*?&]{8,}$/;
       if (!this.password.match(passwordRegex)) {
         this.passwordErrorMessage = "비밀번호는 최소 8자 이상, 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.";
         this.passwordSatisfied = false;

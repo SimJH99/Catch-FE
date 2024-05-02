@@ -14,7 +14,13 @@
           <div class="mb-6">
             <label for="employeeNumber" class="block text-sm font-semibold texts-gray-800 mb-1">수량</label>
             <div class="flex">
-              <input v-model="quantity" type="text" id="quantity" class="mt-1 p-2 w-full border rounded-md" placeholder="수량 입력하세요" />
+              <input v-model="quantity" type="text" id="quantity" class="mt-1 p-2 w-full border rounded-md" placeholder="수량을 입력하세요" />
+            </div>
+          </div>
+          <div class="mb-6">
+            <label for="employeeNumber" class="block text-sm font-semibold texts-gray-800 mb-1">가격</label>
+            <div class="flex">
+              <input v-model="price" type="text" id="price" class="mt-1 p-2 w-full border rounded-md" placeholder="가격을 입력하세요" />
             </div>
           </div>
           <div class="mb-6">
@@ -41,6 +47,7 @@ export default {
         return{
             name: '',
             quantity: '',
+            price: '',
             startDate: '',
             endDate: '',
         }
@@ -52,6 +59,8 @@ export default {
                     alert("쿠폰명을 입력하세요.");
                 } else if (!this.quantity) {
                     alert("수량을 입력하세요.");
+                } else if (!this.price) {
+                    alert("가격을 입력하세요.");
                 } else if (!this.startDate) {
                     alert("쿠폰 시작일을 선택하세요.");
                 } else if (!this.endDate) {
@@ -62,6 +71,7 @@ export default {
                     const data = {
                         name: this.name,
                         quantity: this.quantity,
+                        price : this.price,
                         startDate: this.startDate,
                         endDate: this.endDate,
                     };
