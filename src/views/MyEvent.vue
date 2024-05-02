@@ -4,7 +4,11 @@
         <div class="text-4xl font-bold p-3"> 진행 중인 이벤트 </div>
       </div>
   
-      <div class="m-3 p-1 bg-white rounded-md shadow-md">
+      <div v-if="eventList.length === 0" class="m-3 p-1 bg-white rounded-md shadow-md">
+        <div style="min-height:700px" class="text-center2 p-2">진행 중인 이벤트가 없습니다.</div>
+      </div>
+  
+      <div v-else class="m-3 p-1 bg-white rounded-md shadow-md">
         <div v-for="(events, index) in groupedEventList" :key="index">
           <div class="flex">
             <div class="w-1/2 p-2" v-for="event in events" :key="event">
@@ -15,6 +19,7 @@
       </div>
     </div>
   </template>
+  
   
   <script>
   import axios from "@/axios/index";
@@ -98,6 +103,14 @@
     font-size: 2.25rem;
     line-height: 3rem;
     color: white;
+  }
+  .text-center2{
+    font-size: 25px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 700px;
   }
   </style>
   
