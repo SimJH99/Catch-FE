@@ -25,8 +25,16 @@ jobs:
         echo "VUE_APP_FIREBASE_APP_ID=${{secrets.APP_ID}}" >> .env
         echo "VUE_APP_FIREBASE_MEASUREMENTID=${{secrets.MEASUREMENT_ID}}" >> .env
         echo "VUE_APP_FIREBASE_VAP_ID=${{secrets.VAP_ID}}" >> .env
-
     - run: cat .env
+    
+    - name: Set JS
+      run: |
+        mkdir -p /public
+        echo "${{ secrets.FIREBASE_JS }}" | base64 --decode > /public/firebase-messaging-sw.js
+        find public
+
+    - run: cat /public/firebase-messaging-sw.js
+
         
     - name: npm install
       working-directory: ./
