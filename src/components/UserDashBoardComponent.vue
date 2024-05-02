@@ -136,7 +136,6 @@ import Chart from 'chart.js/auto';
         ageCount: [],
         showHelp: false,
         statusCount: [],
-        visitTotal: '',
         visitUser: '',
         defaultMonth: '',
         maxMonth: '',
@@ -147,7 +146,7 @@ import Chart from 'chart.js/auto';
         yearInfo: {},
         yearSignUp: [],
         signUpUser: {},
-        lastDayUser:"",
+        lastDayUser:'',
         lastWeekUser:'',
         lastMonthUser:'',
         dayColorCheck: false,
@@ -166,10 +165,8 @@ import Chart from 'chart.js/auto';
         const token = localStorage.getItem('access_token');
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
         const visitUserRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/log/visit/today/user`, { headers });
-        const visitTotalRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/log/visit/today`, { headers });
         const signUpUserRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/signUp/user`, { headers });
         this.visitUser = visitUserRes.data.result.data;
-        this.visitTotal = visitTotalRes.data.result.data;
         this.signUpUser = signUpUserRes.data.result.data;
 
         if(this.signUpUser.lastDayUser >= 0){
@@ -222,7 +219,7 @@ import Chart from 'chart.js/auto';
           }
 
           for(var j = 0; j < this.genderInfo.length; j++){
-              this.genders.push(this.genderInfo[j].gender);
+              this.genders.push(this.formatGender(this.genderInfo[j].gender));
               this.genderCount.push(this.genderInfo[j].count);
           }
 
@@ -345,6 +342,16 @@ import Chart from 'chart.js/auto';
         'my-5 text-xl text-blue-500': count < 0 // REPLY 상태일 때 글자색을 초록색으로 설정
       };
     },
+    formatGender(status) {
+      switch (status) {
+        case "FEMALE":
+          return "여성";
+        case "MALE":
+          return "남성";
+        default:
+          return status;
+      }
+    },
     gradeChart() {
     const ctx = document.getElementById('gradeChart').getContext('2d');
     if (Chart.getChart(ctx)) {
@@ -414,6 +421,7 @@ import Chart from 'chart.js/auto';
       data: {
         labels: this.genders,
         datasets: [{
+          label: '고객 수 ',
           data: this.genderCount,
           backgroundColor: [
             'rgba(255, 99, 132, 0.5)',

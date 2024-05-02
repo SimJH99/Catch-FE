@@ -69,6 +69,7 @@ export default {
         localStorage.setItem("access_token", result.result.access_token);
         localStorage.setItem("refresh_token", result.result.refresh_token);
 
+        console.log(response);
         // test
 
         const firebaseConfig = {
@@ -100,25 +101,25 @@ export default {
             );
             this.pushToken = token;
             console.log('해당 브라우저에서의 토큰 : ', this.pushToken);
+            let queryString = window.location.search;
+            console.log(queryString);
+            let urlParams = new URLSearchParams(queryString);
+            console.log(urlParams);
+            let url;
+            if (urlParams.has('url')) {
+              url = urlParams.get('url');
+            }
+            if (url == undefined) {
+              alert("로그인 되었습니다.");
+              window.location.href = "/mypage";
+            } else {
+              window.location.href = `/${url}`;
+            }
           })
           .catch((err) => {
             console.log(err);
           });
 
-        let queryString = window.location.search;
-        console.log(queryString);
-        let urlParams = new URLSearchParams(queryString);
-        console.log(urlParams);
-        let url;
-        if (urlParams.has('url')) {
-          url = urlParams.get('url');
-        }
-        if (url == undefined) {
-          alert("로그인 되었습니다.");
-          window.location.href = "/mypage";
-        } else {
-          window.location.href = `/${url}`;
-        }
       } catch (error) {
         console.error(error);
         alert("입력하신 정보와 일치하는 정보가 없습니다.");

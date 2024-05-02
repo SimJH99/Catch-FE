@@ -1,18 +1,15 @@
 <template>
     <div class="mys_cont">
         <MyProfileContentsShop/>
-        <MyProfileContentsCoupon/>
     </div>
 
 </template>
 
 <script>
 import MyProfileContentsShop from "@/components/MyProfileContentsShop.vue";
-import MyProfileContentsCoupon from "@/components/MyProfileContentsCoupon.vue";
 
 export default {
     components: {
-        MyProfileContentsCoupon,
         MyProfileContentsShop
     },
     setup () {

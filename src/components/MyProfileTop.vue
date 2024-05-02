@@ -30,12 +30,12 @@
 
             <div class="my_itm"> 
                 <dl class="cpn">
-                    <dt><a href="javascript:overpass.link('MYCPNLIST');" class="dt">쿠폰 <em class="ir">페이지 이동</em></a> <em class="arm" id="cpn_date"><!-- 7일내 만료예정 1장 --></em></dt>
-                    <dd><a href="javascript:overpass.link('MYCPNLIST');"><span class="num"><em id="cpn_cnt">{{ couponCount }}</em>장</span><em class="ir">쿠폰 페이지 이동</em></a></dd>
+                    <dt><a href="#" class="dt">쿠폰</a></dt>
+                    <dd><a href="#"><span class="num"><em id="cpn_cnt">{{ couponCount }}</em>장</span><em class="ir">쿠폰 페이지 이동</em></a></dd>
                 </dl>
                 <dl class="rsv">
-                    <dt><a href="javascript:overpass.link('MYSAVEMONEY');" class="dt">적립금 <em class="ir">페이지 이동</em></a> <em class="arm" id="save_money_date"></em></dt>
-                    <dd><a href="javascript:overpass.link('MYSAVEMONEY');"><span class="num"><em id="save_cnt">3500<!-- 100 --></em>원</span><em class="ir">적립금 페이지 이동</em></a></dd>
+                    <dt><a href="#" class="dt">적립금</a></dt>
+                    <dd><a href="#"><span class="num"><em id="save_cnt">3500<!-- 100 --></em>원</span><em class="ir">적립금 페이지 이동</em></a></dd>
                 </dl>
             </div>  
 
@@ -66,7 +66,6 @@ export default {
                 const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
                 const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/coupon/myCouponCount`, { headers });
                 this.couponCount = response.data.result.data;
-                console.log("couponConut : " + this.couponCount);
             }catch(error){
                 console.log(error);
             }

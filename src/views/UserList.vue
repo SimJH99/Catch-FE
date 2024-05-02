@@ -4,50 +4,70 @@
             <div class="text-4xl font-bold p-3 border-gray-300">고객 계정 조회</div>  
         </div>
 
-        <div class="m-2 grid grid-cols-4">
-            <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
+        <div class="m-3 flex">
+            <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md border w-1/4">
               <div class="flex">
-                <div class="text-xl font-bold text-gray-500 mr-2">총 고객</div>
+                <div class="text-xl font-bold text-gray-500 mr-2">오늘 방문자 수</div>
                 <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
-                    </svg>
+                  <svg @click="toggleHelp" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                  </svg>
+                  <div v-if="showHelp" class="help-bubble">
+                    <p>이곳에 도움말 내용을 입력하세요.</p>
+                  </div>
                 </div>
               </div>
-                <div class="m-5 text-4xl font-bold text-center"> 30명</div>
+                <div class="mt-[52px] mb-5 text-4xl font-bold text-center h-auto"> {{ visitUser}}명</div>
             </div>
             
-            <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
+            <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md border w-3/4">
               <div class="flex">
-                <div class="text-xl font-bold text-gray-500 mr-2">신규 회원</div>
+                <div class="text-xl font-bold text-gray-500 mr-2">신규 회원 가입</div>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
-                </svg>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                </svg>        
               </div>
-                <div class="m-5 text-4xl font-bold text-center"> 30명</div>
-            </div>
-            
-            <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
-              <div class="flex">
-                <div class="text-xl font-bold text-gray-500 mr-2">템플릿 1</div>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
-                </svg>
+              <div class="grid grid-cols-3 divide-x-2 divide-gray-300">
+                <div>
+                  <div class="font-semibold text-[17px] mt-2 ml-2 text-gray-500">일간</div>
+                  <div class="flex items-end place-content-center">
+                    <div class="ml-5 mr-2 my-5 text-4xl font-bold"> {{ this.signUpUser.dayUser }}명 </div>
+                    <div :class="getCountBackground( this.signUpUser.lastDayUser)"> {{ this.lastDayUser }} </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 my-5 text-red-500" v-if="dayColorCheck">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 my-5 text-blue-500" v-if="!dayColorCheck">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
+                    </svg>  
+                  </div>
+                </div>
+                <div>
+                  <div class="font-semibold text-[17px] mt-2 ml-2 text-gray-500">주간</div>
+                  <div class="flex items-end place-content-center">
+                    <div class="ml-5 mr-2 my-5 text-4xl font-bold"> {{ this.signUpUser.weekUser }}명 </div>
+                    <div :class="getCountBackground( this.signUpUser.lastWeekUser)"> {{ this.lastWeekUser }} </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 my-5 text-red-500" v-if="weekColorCheck">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 my-5 text-blue-500" v-if="!weekColorCheck">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
+                    </svg>
+                  </div>
+                </div>
+                <div>
+                  <div class="font-semibold text-[17px] mt-2 ml-2 text-gray-500">월간</div>
+                  <div class="flex items-end place-content-center">
+                    <div class="ml-5 mr-2 my-5 text-4xl font-bold"> {{ this.signUpUser.monthUser }}명 </div>
+                    <div :class="getCountBackground( this.signUpUser.lastMonthUser)"> {{ this.lastMonthUser }} </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 my-5 text-red-500" v-if="monthColorCheck">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 my-5 text-blue-500" v-if="!monthColorCheck">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
+                    </svg>
+                  </div>
+                </div>
               </div>
-              <div class="flex m-5 justify-center">
-                  <div class="text-4xl font-bold text-right"> 30</div>
-                  <div class="mt-3 text-xl font-bold text-center"> /120개</div>
-              </div>
-            </div>
-      
-            <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
-              <div class="flex">
-                <div class="text-xl font-bold text-gray-500 mr-2">만료 임박 쿠폰</div>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-              </div>
-                <div class="m-5 text-4xl font-bold text-center"> 30개</div>
             </div>
           </div>
 
@@ -187,6 +207,15 @@ export default {
             searchPhoneNumber: '',
             searchGender: '',
             searchGrade: '',
+            showHelp: false,
+            lastDayUser:'',
+            lastWeekUser:'',
+            lastMonthUser:'',
+            dayColorCheck: false,
+            weekColorCheck: false,
+            monthColorCheck: false,
+            visitUser: {},
+            signUpUser: {},
 
             pageSize: 10,
             pageSizeOptions: [10, 25, 50, 100],
@@ -200,8 +229,44 @@ export default {
     created() {
         this.currentPage = 0;
         this.loadUsers();
+        this.fetchData();
     },
     methods: {
+    async fetchData(){
+      try {
+        const token = localStorage.getItem('access_token');
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        const visitUserRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/log/visit/today/user`, { headers });
+        const signUpUserRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/signUp/user`, { headers });
+        this.visitUser = visitUserRes.data.result.data;
+        this.signUpUser = signUpUserRes.data.result.data;
+
+        if(this.signUpUser.lastDayUser >= 0){
+          this.dayColorCheck = true;
+        }
+
+        if(this.signUpUser.lastWeekUser >= 0){
+          this.weekColorCheck = true;
+        }
+
+        if(this.signUpUser.lastMonthUser >= 0){
+          this.monthColorCheck = true;
+        }
+
+        this.lastDayUser = this.signUpUser.lastDayUser >= 0 ? '+' + this.signUpUser.lastDayUser : this.signUpUser.lastDayUser.toString();
+        this.lastWeekUser = this.signUpUser.lastWeekUser >= 0 ? '+' + this.signUpUser.lastWeekUser : this.signUpUser.lastWeekUser.toString();
+        this.lastMonthUser = this.signUpUser.lastMonthUser >= 0 ? '+' + this.signUpUser.lastMonthUser : this.signUpUser.lastMonthUser.toString();
+
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    getCountBackground(count){
+      return {
+        'my-5 text-xl text-red-500': count >= 0, 
+        'my-5 text-xl text-blue-500': count < 0 // REPLY 상태일 때 글자색을 초록색으로 설정
+      };
+    },
         async loadUsers() {
             try {
                 const params = {
