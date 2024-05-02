@@ -97,7 +97,7 @@
             <div class="rounded-table">
               <div class="table-row">
                 <div class="table-value" style="width: 100%;">
-                  <textarea class="w-full" v-if="isEditing" v-model="userNotice" rows="14" cols="30"></textarea>
+                  <textarea class="w-full outline-none" v-if="isEditing" v-model="userNotice" rows="14" cols="30"></textarea>
                   <span v-else v-html="accountDetails.userNotice"></span>
                 </div>
               </div>

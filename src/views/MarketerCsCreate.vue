@@ -3,7 +3,7 @@
     <form class="max-w-lg w-full p-6 bg-white rounded-md shadow-md border-3 border-gray-800"
       style="margin-top: 20px; margin-bottom: 20px;">
       <div class="text-white font-bold text-center mb-4"
-        style="color: #f5a742; font-size: 3rem; margin-top: 20px; margin-bottom: 20px;">
+        style="color: #F5A742; font-size: 3rem; margin-top: 20px; margin-bottom: 20px;">
         계정 생성
       </div>
       <div style="width: 100m; margin-bottom: 50px">
@@ -19,7 +19,7 @@
               placeholder="사원번호을 입력하세요" />
             <button :disabled="isEmployeeNumberNotUsed" @click.prevent="checkEmployeeNumber"
               :class="{ 'bg-gray-400': isEmployeeNumberNotUsed, 'bg-f5a742': !isEmployeeNumberNotUsed }"
-              style="background-color: #f5a742; color: white; border: none"
+              style="background-color: #F5A742; color: white; border: none"
               class="ml-2 px-4 py-2 rounded-md hover:bg-gray-400 hover:text-gray-800 focus:outline-none focus:border-gray-500 focus:shadow-outline-gray">
               {{ isEmployeeNumberNotUsed ? '사용 가능' : '중복 체크' }}
             </button>
@@ -33,7 +33,7 @@
               placeholder="이메일을 입력하세요">
             <button :disabled="isEmailNotUsed" type="button" @click.prevent="checkEmail"
               :class="{ 'bg-gray-400': !email || !isValidEmail, 'bg-f5a742': isValidEmail }"
-              style="background-color: #f5a742; color: white; border: none"
+              style="background-color: #F5A742; color: white; border: none"
               class="ml-2 px-4 py-2 rounded-md hover:bg-gray-400 hover:text-gray-800 focus:outline-none focus:border-gray-500 focus:shadow-outline-gray">
               {{ isEmailNotUsed ? '사용 가능' : '중복 체크' }}
             </button>
@@ -66,14 +66,13 @@
       <div class="text-right mt-4">
         <button @click.prevent="createAccount"
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded"
-          style="width: 200px; background-color: #f5a742">
+          style="width: 200px; background-color: #F5A742">
           생성
         </button>
       </div>
     </form>
   </div>
 </template>
-
 <script>
 import axios from "@/axios/index";
 export default {
@@ -127,7 +126,6 @@ export default {
         const access_token = localStorage.getItem("access_token");
         const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
         const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/admin/employeeNumberCheck`, { employeeNumber: this.employeeNumber }, { headers });
-
         if (response.data.result.code === 'EXISTING_EMPLOYEE_NUMBER') {
           this.isEmployeeNumberNotUsed = false;
           this.nameErrorMessage = response.data.result.label;
@@ -136,7 +134,6 @@ export default {
           this.isEmployeeNumberNotUsed = true;
           window.alert("사용 가능한 사원번호 입니다.");
         }
-        
         // isFormValid를 재계산
         this.$nextTick(() => {
           this.$forceUpdate();
@@ -157,7 +154,6 @@ export default {
         const access_token = localStorage.getItem("access_token");
         const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
         const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/admin/emailCheck`, { email: this.email }, { headers });
-
         if (response.data.result.code === 'EXISTING_EMAIL') {
           this.isEmailNotUsed = false;
           this.emailValidMessage = response.data.result.label;
@@ -166,7 +162,6 @@ export default {
           this.isEmailNotUsed = true;
           window.alert("사용 가능한 이메일 입니다.");
         }
-
         // isFormValid를 재계산
         this.$nextTick(() => {
           this.$forceUpdate();
@@ -179,6 +174,7 @@ export default {
     },
     validatePassword() {
       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~`@$!%*?&])[A-Za-z\d@`$!%~*?&]{8,}$/;
+
       if (!this.password.match(passwordRegex)) {
         this.passwordErrorMessage = "비밀번호는 최소 8자 이상, 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.";
         this.passwordSatisfied = false;
@@ -190,7 +186,6 @@ export default {
         this.passwordErrorMessage = "비밀번호를 입력하세요.";
         this.passwordSatisfied = false;
       }
-
       // isFormValid를 재계산
       this.$nextTick(() => {
         this.$forceUpdate();
@@ -207,7 +202,6 @@ export default {
         this.confirmPasswordErrorMessage = "";
         this.confirmPasswordSatisfied = true;
       }
-
       // isFormValid를 재계산
       this.$nextTick(() => {
         this.$forceUpdate();

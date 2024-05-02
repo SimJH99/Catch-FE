@@ -29,9 +29,6 @@
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             쿠폰상태
                         </th>
-                        <th scope="col"
-                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        </th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200" >
@@ -40,7 +37,6 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{coupon.startDate}}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{coupon.endDate}}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{coupon.status}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap"><button class="btn btn-success">사용하기</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -85,7 +81,6 @@ import axios from "@/axios/index";
                 page: this.currentPage,
                 size: this.pageSize,
             }
-            console.log("data 호출");
             const access_token = localStorage.getItem('access_token');
             const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
             const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/coupon/myList`, { headers, params });
@@ -129,6 +124,8 @@ import axios from "@/axios/index";
     background: white;
     width: 600px; /* 수정된 부분: 넓이를 더 크게 조정 */
     height: 600px;
+    max-height: 85vh;
+    overflow-y: auto;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   }

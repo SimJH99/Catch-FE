@@ -70,7 +70,7 @@
                                         <img :src="image" alt="선택된 이미지" class="w-full h-full object-cover aspect-w-1 aspect-h-1">
                                     </div>
                                 </div>
-                                <input type="file" multiple @change="handleImageUpload" accept="image/*" class="mt-1 p-3 border rounded-md w-full">
+                                <input type="file" multiple @change="handleImageUpload" accept=".jpg, .jpeg, .png, .JPG, .JPEG, .PNG" class="mt-1 p-3 border rounded-md w-full">
                             </td>
                         </tr>
                     </tbody>
@@ -109,8 +109,6 @@ export default {
                     }
                 }
             }
-            console.log("사진 등록할때 : ")
-            console.log(this.complaintImage)
         },
         async createComplaint() {
             try {
@@ -139,18 +137,15 @@ export default {
                     
                     const access_token = localStorage.getItem('access_token');
                     headers.Authorization = `Bearer ${access_token}`;
-                    console.log("폼데이터에 넣었을때 :")
-                    console.log(this.complaintImage)
 
                     await axios.post(`${process.env.VUE_APP_API_BASE_URL}/complaints/create`, registerData, { headers });
                     alert("등록 완료");
                     this.$router.push({ name: 'MyComplaintList' });
                 }
             } catch (error) {
-                    alert(error);
-
+                    alert(error.message);
             }
-        }
+        },       
     }
 }
 </script>

@@ -35,13 +35,13 @@
                             <img :src="urls[0]" alt="선택된 이미지" class="p-2 max-w-[100px] max-h-[100px] w-full h-full object-cover aspect-w-1 aspect-h-1">
                             <div class="relative">
                                 <button v-if="deletebutton1" @click="removeImage1" class="absolute top-0 right-0 bg-red-500 hover:bg-red-600 text-white p-1 rounded-full">X</button>
-                                <input type="file" id="uploadImg" ref="fileInput" @change="handleFileChange1" hidden>
+                                <input type="file" id="uploadImg" ref="fileInput" @change="handleFileChange1" hidden accept=".jpg, .jpeg, .png, .JPG, .JPEG, .PNG">
                                 <button v-if="editbutton1" @click="uploadImage1" :for="uploadimg" class="absolute top-0 right-0 bg-blue-500 hover:bg-blue-600 text-white p-1 rounded-full">+</button>
                             </div>
                             <img :src="urls[1]" alt="선택된 이미지" class="p-2 max-w-[100px] max-h-[100px] w-full h-full object-cover aspect-w-1 aspect-h-1">
                             <div class="relative">
                                 <button v-if="deletebutton2" @click="removeImage2" class="absolute top-0 right-0 bg-red-500 hover:bg-red-600 text-white p-1 rounded-full">X</button>
-                                <input type="file" id="uploadImg" ref="fileInput" @change="handleFileChange2" hidden>
+                                <input type="file" id="uploadImg" ref="fileInput" @change="handleFileChange2" hidden accept=".jpg, .jpeg, .png, .JPG, .JPEG, .PNG">
                                 <button v-if="editbutton2" @click="uploadImage2" :for="uploadimg" class="absolute top-0 right-0 bg-blue-500 hover:bg-blue-600 text-white p-1 rounded-full">+</button>
                             </div>  
                         </div>
@@ -219,7 +219,7 @@ export default {
             location.reload(true);
         }
         catch(error){
-            console.log(error)
+            console.log(error.message);
         }
     },
     uploadImage1() {

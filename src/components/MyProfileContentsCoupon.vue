@@ -1,6 +1,6 @@
 <template>
   <div class="mys_m_cpn" v-if="coupons.length > 0">
-    <h3>쿠폰 <em @click="openMyCouponListModal()">내 쿠폰보기</em></h3>
+    <h3>쿠폰 <em @click="openMyCouponListModal()" class="cursor-pointer">내 쿠폰보기</em></h3>
     <div class="modal-content" @click.stop>
       <div class="modal-inner">
         <MyCouponListModal :isModalMyCouponListOpen="isModalMyCouponListOpen" @close-modal="isModalMyCouponListOpen = false" />

@@ -79,6 +79,9 @@
             </dl>
         </div>
 
+        <MyProfileContentsCoupon class="mt-10"/>
+
+
         <div class="mt-3 grid grid-cols-2 border-t border-[#D4D4D8]">
             <div class="border-r border-[#D4D4D8]">
                 <div class="flex justify-between bg-gray-100">
@@ -164,7 +167,11 @@
 
 <script>
 import axios from "@/axios/index";
+import MyProfileContentsCoupon from "@/components/MyProfileContentsCoupon.vue";
 export default {
+  components: {
+    MyProfileContentsCoupon,
+  },
   data() {
     return {
         complaintList: {},
@@ -268,7 +275,7 @@ export default {
 .mys_m_shop .my_step .m_step dl.s6 dd{background-image:url("@/assets/images/mys/ico_step_06.png")}
 .mys_m_shop .my_step .m_step dl dd a{display:block;position:absolute;left:27px;top:48px;width:133px;height:100px;}
 .mys_m_shop .my_step .m_step dl dd a em{display:inline-block;min-width:10px;height:32px;padding:0 11px;margin:26px 0 0 40px;border-radius:16px;-webkit-border-radius:16px;font-family:'Roboto Condensed';font-size:18px;line-height:32px;color:#fff;text-align:center;background:#191919}
-.mys_m_shop .my_stat{overflow:hidden;clear:both;height:116px;border-left:1px solid #D4D4D8;border-right:1px solid #D4D4D8;}
+.mys_m_shop .my_stat{overflow:hidden;clear:both;height:116px;border-left:1px solid #D4D4D8;border-right:1px solid #D4D4D8; border-bottom:1px solid #D4D4D8;}
 .mys_m_shop .my_stat dl{position:relative;float:left;width:225px;height:98px;padding:18px 0 0 28px}
 .mys_m_shop .my_stat dl + dl:after{content:'';display:block;position:absolute;left:0;top:0;width:1px;height:116px;background-color:#E9E9ED;z-index:1}
 .mys_m_shop .my_stat dt{height:58px;}
