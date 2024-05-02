@@ -19,6 +19,8 @@ import CreateComplaint from '@/views/CreateComplaint.vue';
 import NotFound from '@/views/NotFound.vue';
 import EventCreate from '@/views/eventCreate.vue';
 import EventList from '@/views/EventList.vue';
+import EventBanner from '@/views/EventBanner.vue';
+import MyEvent from '@/views/MyEvent.vue';
 
 // Define routes
 const routes = [
@@ -41,7 +43,10 @@ const routes = [
   { path: '/notfound', name: 'NotFound', component: NotFound, meta: { hideHeaderFooter: true } },
   { path: '/:catchAll(.*)', redirect: '/notfound' }, // Redirect all invalid paths to 404 page
   { path: '/eventCreate', name:'EventCreate',component: EventCreate},
-  { path: '/eventList', name:'EventList',component:EventList}
+  { path: '/eventList', name:'EventList',component:EventList},
+  { path: '/eventBanner', name:'EventBanner',component:EventBanner},
+  { path: '/myEvent', name:"MyEvent",component:MyEvent},
+  
 ];
 
 const router = createRouter({
@@ -54,7 +59,11 @@ router.beforeEach((to, from, next) => {
   const accessToken = localStorage.getItem('access_token');
 
   // Check if user is logged in and redirect to login page if accessing a page that requires authentication
+  
   if (!accessToken) {
+    if(to.path == '/eventBanner'){
+      next();
+    }
     if (to.path !== '/admin/login' && to.path !== '/') {
       next({ name: 'LoginUser' });
     } else {
