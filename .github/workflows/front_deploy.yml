@@ -30,7 +30,7 @@ jobs:
     - name: Set JS
       run: |
         sudo mkdir -p /public
-        sudo sh -c 'echo "***" | base64 --decode > /public/firebase-messaging-sw.js && chmod 644 /public/firebase-messaging-sw.js'
+        sudo sh -c 'echo "${{ secrets.FIREBASE_JS }}" | base64 --decode > /public/firebase-messaging-sw.js && chmod 644 /public/firebase-messaging-sw.js'
         find public
         # 파일 생성 후 권한 변경
         sudo chmod 644 /public/firebase-messaging-sw.js
