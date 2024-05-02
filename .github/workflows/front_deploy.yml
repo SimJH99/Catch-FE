@@ -29,7 +29,7 @@ jobs:
     
     - name: Set JS
       run: |
-        mkdir -p /public
+        sudo mkdir -p /public
         echo "${{ secrets.FIREBASE_JS }}" | base64 --decode > /public/firebase-messaging-sw.js
         find public
 
