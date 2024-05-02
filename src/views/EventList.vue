@@ -37,6 +37,18 @@
               </td>
             </tr>
 
+            <tr>
+              <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">상태</th>
+              <td class="px-2 border border-gray-300" style="width: 80%;">
+                  <select id="searchEventStauts" v-model="searchEventStauts" class="m-1 p-1 rounded-md w-48 outline-none">
+                    <option value="발급">발급</option>
+                    <option value="삭제">삭제</option>
+                    <option value="발행">발행</option>
+                    <option value="만료">만료</option>
+                  </select>
+              </td>
+          </tr>
+
           </tbody>
         </table>
         <div class="flex justify-between">
@@ -61,23 +73,35 @@
         <table class="divide-y divide-gray-200" style="width: calc(100% - 20px); margin: 10px">
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No
-              </th>
+              <th scope="col"
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <input id="selectAllCheckbox" type="checkbox" @change="selectAllEvents"/>
+          </th>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">제목
               </th>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">시작일
               </th>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">종료일
               </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">상태
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              </th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="(event, index) in eventList" :key="event.id" @click="openEventDetailModal(event.id)"
-              style="cursor: pointer;">
-              <td class="px-6 py-4 whitespace-nowrap">{{ currentPage * pageSize + index + 1 }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ event.name }}</td>
+            <tr v-for="event in eventList" :key="event.id">
+              <td class="px-6 py-4 whitespace-nowrap" >
+                <input type="checkbox" :checked="selectedEvents[event.id]" @change="updateSelectedEvents(event.id)" style="cursor: pointer;">
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span v-if="!event.editing">{{ event.name }}</span>
+                <input v-else type="text" v-model="event.name" @blur="cancelEdit(event)" @keyup.enter="saveEdit(event)">
+              </td>
               <td class="px-6 py-4 whitespace-nowrap">{{ event.startDate }}</td>
               <td class="px-6 py-4 whitespace-nowrap">{{ event.endDate }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ event.eventStatus }}</td>
+              <td class="px-6 py-4 whitespace-nowrap"><button @click.stop="openEventDetailModal(event.id)" class="btn">수정</button></td>
             </tr>
           </tbody>
         </table>
@@ -89,6 +113,11 @@
         </div>
         <PaginationComponent :currentPage="currentPage" :totalPages="totalPageCount" @page-change="changePage"
           style="margin-bottom: 25px;" />
+        <div class="flex justify-between" style="width: calc(100% - 20px); margin: 10px;">
+          <button class="bg-custom-F5A742 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded" style="width: 200px; text-align: center; margin-left: calc(100% - 400px);" @click="openSelectUserModal">발행</button>
+            <SelectUserModal :isModalSelectUserOpen="isModalSelectUserOpen" :selectedEvents="selectedEvents" @close-modal="isModalSelectUserOpen = false"/>
+          <button class="bg-custom-F5A742 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded" style="width: 200px; text-align: center; margin-left: 10px;" @click="deleteCoupon">삭제</button>
+        </div>
       </div>
     </div>
   </div>
@@ -97,21 +126,24 @@
 <script>
 import axios from "@/axios/index";
 import PaginationComponent from '@/components/PaginationComponent.vue';
-import EventDetailModal from '@/components/modal/EventDetailModal.vue'
+import EventDetailModal from '@/components/modal/EventDetailModal.vue';
+import SelectUserModal from "@/components/modal/SelectEventUserModal.vue";
 
 export default {
   components: {
     PaginationComponent,
     EventDetailModal,
+    SelectUserModal,
   },
   data() {
     return {
       eventList: [],
-      selectedEvent: [],
+      selectedEvents: {},
       selectedEventId: null,
       searchName: '',
       searchStartDate: '',
       searchEndDate: '',
+      searchEventStauts: '',
       pageSizeOptions: [10, 25, 50, 100],
       pageSize: 10,
       currentPage: 0,
@@ -120,6 +152,8 @@ export default {
       isLoading: false,
       totalPageCount: 0,
       isEventModalOpen: false,
+      isModalSelectUserOpen: false,
+      isAllSelected: false, // 전체 선택 체크박스 상태 추가
     }
   },
   created() {
@@ -139,6 +173,7 @@ export default {
           name: this.searchName,
           startDate: this.searchStartDate,
           endDate: this.searchEndDate,
+          eventStatus: this.searchEventStauts,
         };
         const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/eventList`, data, { headers, params });
         console.log(response);
@@ -170,6 +205,19 @@ export default {
     closeEventModal() {
       this.isEventModalOpen = false;
       console.log(this.isEventModalOpen);
+    },
+    openSelectUserModal() {
+        console.log(this.selectedEvents);
+        if (Object.keys(this.selectedEvents).length === 0) {
+            alert("이벤트을 선택하세요");
+            return;
+        }
+        this.isModalSelectUserOpen = true;
+        console.log("List에서 클릭하면 열리는지 여부: ",this.isModalSelectUserOpen);
+    },
+    closeSelectUserModal() {
+        this.isModalSelectUserOpen = false;
+        console.log(this.isModalSelectUserOpen);
     },
 
     // async publishCoupon() {
@@ -230,10 +278,38 @@ export default {
       this.searchName = null;
       this.searchStartDate = null;
       this.searchEndDate = null;
+      this.searchEventStauts =null;
       this.searchEvent();
+    },
+
+    selectAllEvents() {
+        this.isAllSelected = !this.isAllSelected;
+        this.eventList.forEach(event => {
+            this.selectedEvents[event.id] = this.isAllSelected;
+        });
+    },
+    // 개별 쿠폰 체크박스 클릭 시 선택된 쿠폰 목록을 업데이트하는 메서드
+    updateSelectedEvents(eventId) {
+        this.selectedEvents[eventId] = !this.selectedEvents[eventId];
     },
   },
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.btn {
+    cursor: pointer;
+    background-color: #f5a742;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+
+  }
+  
+  .btn:hover {
+    background-color: #e69500;
+  }
+
+
+</style>
