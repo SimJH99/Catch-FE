@@ -126,7 +126,6 @@ export default {
         this.categoryInfo = categoriesRes.data.result.data;
         this.monthInfo = monthRes.data.result.data;
         this.yearInfo = yearRes.data.result.data;
-        console.log(this.yearInfo);
 
         if(this.statusInfo.length == 1){
           this.complaintStatus.push(this.formatRole(this.statusInfo[0][0]));
