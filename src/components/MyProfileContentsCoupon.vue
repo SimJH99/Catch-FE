@@ -89,9 +89,22 @@ export default {
         this.currentIndex++;
       }
     },
-    receiveCoupon(coupon) {
-      // Implement logic to receive coupon
-      return coupon;
+    async receiveCoupon(coupon) {
+      try {
+        console.log(coupon.code);
+        const access_token = localStorage.getItem('access_token');
+        const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
+        const data = {
+          code: coupon.code,
+        };
+        const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/coupon/receive`, data, { headers });
+        console.log(response);
+        alert(response.data.message.label);
+        window.location.reload();
+      } catch (error) {
+        alert(error.response.data.error.label);
+        console.log(error);
+      }
     },
     openMyCouponListModal() {
       this.isModalMyCouponListOpen = true;

@@ -92,8 +92,6 @@
                               <option value="삭제">삭제</option>
                               <option value="발행">발행</option>
                               <option value="만료">만료</option>
-                              <option value="수령">수령</option>
-                              <option value="사용된">사용된</option>
                             </select>
                         </td>
                     </tr>
@@ -119,7 +117,7 @@
                     <tr>
                         <th scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                <input id="selectAllCheckbox" type="checkbox" />
+                            <input id="selectAllCheckbox" type="checkbox" @change="selectAllCoupons"/>
                         </th>
                         <th scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -153,7 +151,7 @@
                 <tbody class="bg-white divide-y divide-gray-200" >
                     <tr v-for="coupon in couponList" :key="coupon.id">
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <input type="checkbox" v-model="selectedCoupons[coupon.id]">
+                            <input type="checkbox" :checked="selectedCoupons[coupon.id]" @change="updateSelectedCoupons(coupon.id)" style="cursor: pointer;">
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span v-if="!coupon.editing">{{ coupon.name }}</span>
@@ -164,11 +162,17 @@
                         <td class="px-6 py-4 whitespace-nowrap">{{coupon.quantity}}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{coupon.startDate}}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{coupon.endDate}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap"><button @click.stop="updateCoupon(coupon.id)" class="btn btn-success">수정</button></td>
+                        <td class="px-6 py-4 whitespace-nowrap"><button @click.stop="openCouponDetailModal(coupon.id)" class="btn">수정</button></td>
                     </tr>
                 </tbody>
             </table>
 
+        </div>
+        <div class="modal-content" @click.stop>
+            <div class="modal-inner">
+                <CouponDetailModal :isModalCouponDetailOpen="isModalCouponDetailOpen" :selectedCouponDetailsId="selectedCouponDetailsId"
+                    @close-modal="isModalCouponDetailOpen = false" />
+            </div>
         </div>
         
         <!-- 페이지네이션 컴포넌트 추가 -->
@@ -186,16 +190,19 @@
 <script>
 import axios from "@/axios/index";
 import PaginationComponent from '@/components/PaginationComponent.vue';
-import SelectUserModal from "@/components/modal/SelectUserModal.vue";
+import SelectUserModal from "@/components/modal/SelectCouponUserModal.vue";
+import CouponDetailModal from '@/components/modal/CouponDetailModal.vue';
 export default {
     components: {
         PaginationComponent,
-        SelectUserModal
+        SelectUserModal,
+        CouponDetailModal,
     },
     data(){
         return{
             couponList: [],
-            selectedCoupons: [],
+            selectedCoupons: {},
+            selectedCouponDetailsId: '',
             searchName: '',
             searchCode: '',
             searchStartDate: '',
@@ -209,6 +216,8 @@ export default {
             isLoading: false,
             totalPageCount: 0,
             isModalSelectUserOpen: false,
+            isModalCouponDetailOpen: false,
+            isAllSelected: false, // 전체 선택 체크박스 상태 추가
         }
     },
     created(){
@@ -266,32 +275,16 @@ export default {
             console.log(this.isModalSelectUserOpen);
         },
 
-
-        // async updateCoupon(couponId){
-        //     if(confirm("수정된 내용을 저장하시겠습니까?")){
-        //         try{
-        //             const access_token = localStorage.getItem('access_token');
-        //             const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
-        //             const startIsoDateTime = `${this.startDate}T${this.startTime}:00`;
-        //             const endIsoDateTime = `${this.startDate}T${this.startTime}:00`;
-        //             const data = {
-        //                 name: this.name,
-        //                 quantity: this.quantity,
-        //                 startDate: startIsoDateTime,
-        //                 endDate: endIsoDateTime
-        //                 // 다른 필드들...
-        //             };
-        //             console.log(couponId);
-        //             console.log(data);
-        //             await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/coupon/${couponId}/update`, data , {headers})
-        //             alert("쿠폰 수정 완료");
-        //             window.location.reload();
-        //         }catch(error){
-        //             console(error);
-        //             alert("쿠폰 수정 실패");
-        //         }
-        //     }
-        // },
+        openCouponDetailModal(id) {
+            this.selectedCouponDetailsId = id;
+            console.log("넘기는 id 값 : " + id);
+            this.isModalCouponDetailOpen = true;
+            console.log("List에서 클릭하면 열리는지 여부: ", this.isModalCouponDetailOpen);
+        },
+        closeCouponDetailModal() {
+            this.isModalCouponDetailOpen = false;
+            console.log(this.isModalCouponDetailOpen);
+        },
         async publishCoupon() {
             console.log(this.selectedCoupons);
             if (Object.keys(this.selectedCoupons).length === 0) {
@@ -354,10 +347,34 @@ export default {
             this.searchCouponStatus = null;
             this.searchCoupons();
         },
+        selectAllCoupons() {
+            this.isAllSelected = !this.isAllSelected;
+            this.couponList.forEach(coupon => {
+                this.selectedCoupons[coupon.id] = this.isAllSelected;
+            });
+        },
+        // 개별 쿠폰 체크박스 클릭 시 선택된 쿠폰 목록을 업데이트하는 메서드
+        updateSelectedCoupons(couponId) {
+            this.selectedCoupons[couponId] = !this.selectedCoupons[couponId];
+        },
     },
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+.btn {
+    cursor: pointer;
+    background-color: #f5a742;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+
+  }
+  
+  .btn:hover {
+    background-color: #e69500;
+  }
+
 
 </style>

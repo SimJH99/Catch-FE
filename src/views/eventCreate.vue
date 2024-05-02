@@ -81,6 +81,7 @@ import axios from "@/axios/index";
         }, { headers });
 
         alert('이벤트가 성공적으로 저장되었습니다.');
+        this.$router.push("/eventList");
       } catch (error) {
         console.error(error);
         alert('이벤트 저장 중 오류가 발생했습니다.');

@@ -70,7 +70,8 @@ export default {
                     this.$router.push("/couponList");
                 }
             }catch(error){
-                console.log(error);
+              alert(error.response.data.error.label)
+              console.log(error);
             }
         },
     },
