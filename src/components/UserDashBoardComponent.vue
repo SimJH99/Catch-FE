@@ -1,8 +1,8 @@
 <template>
-  <div class="m-3 grid grid-cols-5">
-    <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md border">
+  <div class="m-3 flex">
+    <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md border w-1/4">
       <div class="flex">
-        <div class="text-xl font-bold text-gray-500 mr-2">총 방문 수</div>
+        <div class="text-xl font-bold text-gray-500 mr-2">오늘 방문자 수</div>
         <div>
           <svg @click="toggleHelp" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
@@ -12,63 +12,62 @@
           </div>
         </div>
       </div>
-      <a href="/userList">
-        <div class="m-5 text-4xl font-bold text-center"> {{ visitTotal }}번</div>
-      </a>
+        <div class="mt-[52px] mb-5 text-4xl font-bold text-center h-auto"> {{ visitUser}}명</div>
     </div>
     
-    
-    <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md border">
+    <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md border w-3/4">
       <div class="flex">
-        <div class="text-xl font-bold text-gray-500 mr-2">미 답변 게시글</div>
+        <div class="text-xl font-bold text-gray-500 mr-2">신규 회원 가입</div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
-        </svg>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+        </svg>        
       </div>
-      <a href="/complaintList">
-        <div class="m-5 text-4xl font-bold text-center"> {{ statusCount }}개</div>
-      </a>
-    </div>
-    
-    <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md border">
-      <div class="flex">
-        <div class="text-xl font-bold text-gray-500 mr-2">발행 중인 쿠폰</div>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
-        </svg>
+      <div class="grid grid-cols-3 divide-x-2 divide-gray-300">
+        <div>
+          <div class="font-semibold text-[17px] mt-2 ml-2 text-gray-500">일간</div>
+          <div class="flex items-end place-content-center">
+            <div class="ml-5 mr-2 my-5 text-4xl font-bold"> {{ this.signUpUser.dayUser }}명 </div>
+            <div :class="getCountBackground( this.signUpUser.lastDayUser)"> {{ this.lastDayUser }} </div>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 my-5 text-red-500" v-if="dayColorCheck">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 my-5 text-blue-500" v-if="!dayColorCheck">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
+            </svg>  
+          </div>
+        </div>
+        <div>
+          <div class="font-semibold text-[17px] mt-2 ml-2 text-gray-500">주간</div>
+          <div class="flex items-end place-content-center">
+            <div class="ml-5 mr-2 my-5 text-4xl font-bold"> {{ this.signUpUser.weekUser }}명 </div>
+            <div :class="getCountBackground( this.signUpUser.lastWeekUser)"> {{ this.lastWeekUser }} </div>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 my-5 text-red-500" v-if="weekColorCheck">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 my-5 text-blue-500" v-if="!weekColorCheck">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
+            </svg>
+          </div>
+        </div>
+        <div>
+          <div class="font-semibold text-[17px] mt-2 ml-2 text-gray-500">월간</div>
+          <div class="flex items-end place-content-center">
+            <div class="ml-5 mr-2 my-5 text-4xl font-bold"> {{ this.signUpUser.monthUser }}명 </div>
+            <div :class="getCountBackground( this.signUpUser.lastMonthUser)"> {{ this.lastMonthUser }} </div>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 my-5 text-red-500" v-if="monthColorCheck">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 my-5 text-blue-500" v-if="!monthColorCheck">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
+            </svg>
+          </div>
+        </div>
       </div>
-      <a href="/couponList">
-        <div class="m-5 text-4xl font-bold text-center"> {{ publishCoupon }}개</div>
-      </a>
-    </div>
-    
-    <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md border">
-      <div class="flex">
-        <div class="text-xl font-bold text-gray-500 mr-2">총 발송 건수</div>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-        </svg>
-      </div>
-      <a href="">
-        <div class="m-5 text-4xl font-bold text-center"> {{ emailTotal }}건 </div>
-      </a>
-    </div>
-    
-    <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md border">
-      <div class="flex">
-        <div class="text-xl font-bold text-gray-500 mr-2">총 알림 건수</div>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5" />
-        </svg>
-      </div>
-      <a href="">
-        <div class="m-5 text-4xl font-bold text-center"> 30건 </div>
-      </a>
     </div>
   </div>
   
   
-  <div class="m-3 grid grid-cols-2">
+  <div class="m-3 grid grid-cols-3">
     <div class="bg-white m-2 p-2 rounded-md shadow-md border">
       <div class="m-2 text-2xl font-bold">등급 별 고객 수</div>
       <div class="m-2 p-4">
@@ -82,18 +81,42 @@
       </div>
     </div>
     <div class="bg-white m-2 p-2 rounded-md shadow-md border">
-      <div class="m-2 text-2xl font-bold">요일별 로그인 수</div>
-      <div class="m-2 p-4">
-        <canvas id="loginChart"></canvas>
-      </div>
-    </div>
-    <div class="bg-white m-2 p-2 rounded-md shadow-md border">
       <div class="m-2 text-2xl font-bold">연령 대 별 고객 수</div>
       <div class="m-2 p-4">
         <canvas id="ageChart"></canvas>
       </div>
     </div>
-  </div> 
+  </div>
+
+  <div class="m-3 grid grid-cols-2">
+    <div class="bg-white m-2 p-2 rounded-md shadow-md border">
+      <div class="flex">
+        <div class="m-2 text-2xl font-bold">일별 회원가입 수</div>
+        <input type="month" class="ml-3 outline-none" v-model="defaultMonth" :max="maxMonth">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 self-center cursor-pointer" @click="findMonth()">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 15.75-2.489-2.489m0 0a3.375 3.375 0 1 0-4.773-4.773 3.375 3.375 0 0 0 4.774 4.774ZM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>    
+      </div>
+      <div class="m-2 p-4">
+        <canvas id="monthChart"></canvas>
+      </div>
+    </div>
+    <div class="bg-white m-2 p-2 rounded-md shadow-md border">
+      <div class="flex">
+        <div class="m-2 text-2xl font-bold">월별 회원가입 수</div>
+        <select id="year" v-model="defaultYear" class="ml-3 outline-none">
+          <option v-for="(year, index) in years" :key="index" :value="year">{{year}}</option>
+        </select>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 self-center cursor-pointer" @click="findYear()">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 15.75-2.489-2.489m0 0a3.375 3.375 0 1 0-4.773-4.773 3.375 3.375 0 0 0 4.774 4.774ZM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>       
+      </div>
+      <div class="m-2 p-4">
+        <canvas id="yearChart"></canvas>
+      </div>
+    </div>
+  </div>
+  
 </template>
   
 <script>
@@ -111,35 +134,60 @@ import Chart from 'chart.js/auto';
         ageInfo: {},
         ages: [],
         ageCount: [],
-        dayInfo: {},
-        days:[],
-        dayCount: [],
         showHelp: false,
         statusCount: [],
-        publishCoupon: '',
         visitTotal: '',
-        emailTotal: '',
+        visitUser: '',
+        defaultMonth: '',
+        maxMonth: '',
+        monthInfo: {},
+        monthSignUp: [],
+        years: [],
+        defaultYear: '',
+        yearInfo: {},
+        yearSignUp: [],
+        signUpUser: {},
+        lastDayUser:"",
+        lastWeekUser:'',
+        lastMonthUser:'',
+        dayColorCheck: false,
+        weekColorCheck: false,
+        monthColorCheck: false,
       };
     },
     created() {
       this.fetchData();
-    },
-    mounted() {
       this.fetchGradeInfo();
+      this.createYearOptions();
     },
     methods: {
       async fetchData(){
       try {
         const token = localStorage.getItem('access_token');
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
-        const statusCountRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/complaints/countStatus`, { headers });
-        const publishCouponRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/coupon/publish/count`, { headers });
-        const visitTotalRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/log/visit/total`, { headers });
-        const emailTotalRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/log/email/total`, { headers });
-        this.statusCount = statusCountRes.data.result.data[0][1];
-        this.publishCoupon = publishCouponRes.data.result.data;
+        const visitUserRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/log/visit/today/user`, { headers });
+        const visitTotalRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/log/visit/today`, { headers });
+        const signUpUserRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/signUp/user`, { headers });
+        this.visitUser = visitUserRes.data.result.data;
         this.visitTotal = visitTotalRes.data.result.data;
-        this.emailTotal = emailTotalRes.data.result.data;
+        this.signUpUser = signUpUserRes.data.result.data;
+
+        if(this.signUpUser.lastDayUser >= 0){
+          this.dayColorCheck = true;
+        }
+
+        if(this.signUpUser.lastWeekUser >= 0){
+          this.weekColorCheck = true;
+        }
+
+        if(this.signUpUser.lastMonthUser >= 0){
+          this.monthColorCheck = true;
+        }
+
+        this.lastDayUser = this.signUpUser.lastDayUser >= 0 ? '+' + this.signUpUser.lastDayUser : this.signUpUser.lastDayUser.toString();
+        this.lastWeekUser = this.signUpUser.lastWeekUser >= 0 ? '+' + this.signUpUser.lastWeekUser : this.signUpUser.lastWeekUser.toString();
+        this.lastMonthUser = this.signUpUser.lastMonthUser >= 0 ? '+' + this.signUpUser.lastMonthUser : this.signUpUser.lastMonthUser.toString();
+
       } catch (error) {
         console.log(error);
       }
@@ -148,48 +196,163 @@ import Chart from 'chart.js/auto';
             this.showHelp = !this.showHelp; // showHelp 값을 토글
       },
       async fetchGradeInfo() {
-            try {
-                const token = localStorage.getItem('access_token');
-                const headers = { Authorization: `Bearer ${token}`} ;
-                const gradeResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/grade`, { headers });
-                const genderResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/gender`, { headers });
-                const ageResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/age`, { headers });
-                const dayResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/log/visit/week/user`, { headers });
-                this.gradeInfo = gradeResponse.data.result.data;
-                this.genderInfo = genderResponse.data.result.data;
-                this.ageInfo = ageResponse.data.result.data;
-                this.dayInfo = dayResponse.data.result.data;
+        try {
+          this.defaultMonth = this.getCurrentYearMonth();
+          this.maxMonth = this.defaultMonth;
+          this.defaultYear = this.getCurrentYear();
 
-            for(var i = 0; i < this.gradeInfo.length; i++){
-                this.grades.push(this.gradeInfo[i].grade);
-                this.gradeCount.push(this.gradeInfo[i].count);
-            }
+          const token = localStorage.getItem('access_token');
+          const headers = { Authorization: `Bearer ${token}`} ;
+          const gradeResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/grade`, { headers });
+          const genderResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/gender`, { headers });
+          const ageResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/user/age`, { headers });
+          const monthData = {month: this.defaultMonth};
+          const monthRes = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/user/signUp/month`, monthData, { headers });
+          const yearData = {year: this.defaultYear};
+          const yearRes = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/user/signUp/year`, yearData, { headers });
+          this.gradeInfo = gradeResponse.data.result.data;
+          this.genderInfo = genderResponse.data.result.data;
+          this.ageInfo = ageResponse.data.result.data;
+          this.monthInfo = monthRes.data.result.data;
+          this.yearInfo = yearRes.data.result.data;
 
-            for(var j = 0; j < this.genderInfo.length; j++){
-                this.genders.push(this.genderInfo[j].gender);
-                this.genderCount.push(this.genderInfo[j].count);
-            }
+          for(var i = 0; i < this.gradeInfo.length; i++){
+              this.grades.push(this.gradeInfo[i].grade);
+              this.gradeCount.push(this.gradeInfo[i].count);
+          }
 
-            for(var k = 0; k < this.ageInfo.length; k++){
-                this.ages.push(this.ageInfo[k].ageGroup);
-                this.ageCount.push(this.ageInfo[k].count);
-            }
+          for(var j = 0; j < this.genderInfo.length; j++){
+              this.genders.push(this.genderInfo[j].gender);
+              this.genderCount.push(this.genderInfo[j].count);
+          }
 
-            for(var x = 0; x < this.dayInfo.length; x++){
-                this.days.push(this.dayInfo[x].day);
-                this.dayCount.push(this.dayInfo[x].count);
-            }
+          for(var k = 0; k < this.ageInfo.length; k++){
+              this.ages.push(this.ageInfo[k].ageGroup);
+              this.ageCount.push(this.ageInfo[k].count);
+          }
 
-            this.gradeChart();
-            this.genderChart();
-            this.ageChart();
-            this.loginChart();
+          this.monthSignUp = this.groupDataByMonth(this.monthInfo);
+
+          const currentDate = new Date();
+
+          let lastMonth = new Date(currentDate);
+          lastMonth.setMonth(lastMonth.getMonth() - 1);
+
+          let lastDayOfLastMonth = new Date(lastMonth.getFullYear(), lastMonth.getMonth() + 1, 0);
+          let lastDayOfMonth = lastDayOfLastMonth.getDate();
+
+          for (let day = 1; day <= lastDayOfMonth; day++) {
+              if (!(day in this.monthSignUp)) {
+                this.monthSignUp[day] = 0;
+              }
+          }
+
+          this.yearSignUp = this.groupYearByCategory(this.yearInfo);
+
+          for (let month = 1; month <= 12; month++) {
+              if (!(month in this.yearSignUp)) {
+                this.yearSignUp[month] = 0;
+              }
+          }
+
+          this.monthChart();
+          this.gradeChart();
+          this.genderChart();
+          this.ageChart();
+          this.yearChart();
         } catch (error) {
-            console.log(error);
+          console.log(error);
         }
+    },
+    getCurrentYearMonth() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = (now.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 만듭니다.
+      return `${year}-${month}`;
+    },
+    getCurrentYear() {
+      return new Date().getFullYear();
+    },
+    groupDataByMonth(data) {
+      const groupedData = {};
+      data.forEach(item => {
+          const day = item.day;
+          groupedData[day] = item.count;
+      });
+      return groupedData;
+    },
+    async findMonth(){
+      this.monthInfo = {},
+      this.monthSignUp = {};
+      const token = localStorage.getItem('access_token');
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      const registerData = {month: this.defaultMonth};
+      const monthRes = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/user/signUp/month`, registerData, { headers });
+      this.monthInfo = monthRes.data.result.data;
+      this.monthSignUp = this.groupDataByMonth(this.monthInfo);
+      
+      const currentDate = new Date();
+
+      let lastMonth = new Date(currentDate);
+      lastMonth.setMonth(lastMonth.getMonth() - 1);
+
+      let lastDayOfLastMonth = new Date(lastMonth.getFullYear(), lastMonth.getMonth() + 1, 0);
+      let lastDayOfMonth = lastDayOfLastMonth.getDate();
+
+      for (let day = 1; day <= lastDayOfMonth; day++) {
+        if (!(day in this.monthSignUp)) {
+          this.monthSignUp[day] = 0;
+        }
+      }
+      this.monthChart();
+    },
+    createYearOptions() {
+      var currentYear = this.getCurrentYear();
+
+      for (var year = 1970; year <= currentYear; year++) {
+          this.years.push(year);
+      }
+    },
+    groupYearByCategory(data) {
+      const groupedData = {};
+      data.forEach(item => {
+          const month = item.month;
+          groupedData[month] = item.count;
+      });
+      return groupedData;
+    },
+    async findYear(){
+      this.yearInfo = {},
+      this.yearSignUp = {};
+      const token = localStorage.getItem('access_token');
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      const registerData = {year: this.defaultYear};
+      const yearRes = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/user/signUp/year`, registerData, { headers });
+      this.yearInfo = yearRes.data.result.data;
+      this.yearSignUp = this.groupYearByCategory(this.yearInfo);
+
+      for (let month = 1; month <= 12; month++) {
+        if (!(month in this.yearSignUp)) {
+          this.yearSignUp[month] = 0;
+        }
+      }
+
+      this.yearChart();
+    },
+    getCountBackground(count){
+      return {
+        'my-5 text-xl text-red-500': count >= 0, 
+        'my-5 text-xl text-blue-500': count < 0 // REPLY 상태일 때 글자색을 초록색으로 설정
+      };
     },
     gradeChart() {
     const ctx = document.getElementById('gradeChart').getContext('2d');
+    if (Chart.getChart(ctx)) {
+        Chart.getChart(ctx)?.destroy();
+    }
+    if (!ctx) {
+      return;
+    }
     new Chart(ctx, {
       type: 'bar',
       data: {
@@ -240,6 +403,12 @@ import Chart from 'chart.js/auto';
   },
   genderChart() {
     const ctx = document.getElementById('genderChart').getContext('2d');
+    if (Chart.getChart(ctx)) {
+        Chart.getChart(ctx)?.destroy();
+    }
+    if (!ctx) {
+      return;
+    }
     new Chart(ctx, {
       type: 'doughnut',
       data: {
@@ -278,6 +447,12 @@ import Chart from 'chart.js/auto';
   },
   ageChart() {
     const ctx = document.getElementById('ageChart').getContext('2d');
+    if (Chart.getChart(ctx)) {
+        Chart.getChart(ctx)?.destroy();
+    }
+    if (!ctx) {
+      return;
+    }
     new Chart(ctx, {
       type: 'bar',
       data: {
@@ -332,31 +507,38 @@ import Chart from 'chart.js/auto';
       }
     });
   },
-  loginChart() {
-    const ctx = document.getElementById('loginChart').getContext('2d');
+  monthChart() {
+    const ctx = document.getElementById('monthChart').getContext('2d');
+      if (Chart.getChart(ctx)) {
+        Chart.getChart(ctx)?.destroy();
+      }
+      if (!ctx) {
+        return;
+      }
     new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'],
-        datasets: [{
-          label: ' 접속 수 ',
-          // data: [this.dayCount[1], this.dayCount[2], this.dayCount[3], this.dayCount[4], this.dayCount[5], this.dayCount[6], this.dayCount[0]],
-          data: [1324, 1534, 1223, 3231, 2435, 4323, 1132],
+        labels: '',
+        datasets: [
+          {
+          label: '가입 수',
+          data: this.monthSignUp,
+          lineTension: 0.5,
           backgroundColor: [
-            'rgba(245, 124, 0, 0.2)',
+            'rgba(255, 159, 64, 1)'
           ],
           borderColor: [
-            'rgba(245, 124, 0, 1)',
+            'rgba(255, 159, 64, 1)'
           ],
           borderWidth: 1
-        }]
+        },
+        ]
       },
       options: {
         maintainAspectRatio: false,
         aspectRatio: 1,
         scales: {
-            y: { // y축에 대한 설정
-                beginAtZero: true,
+            y: {
                 ticks: {
                   stepSize: 1
                 }
@@ -367,9 +549,54 @@ import Chart from 'chart.js/auto';
                 display: false,
             },
         }
-      },
+      }
     });
-  },
+  },  
+  yearChart() {
+    const ctx = document.getElementById('yearChart').getContext('2d');
+        if (Chart.getChart(ctx)) {
+        Chart.getChart(ctx)?.destroy();
+      }
+      if (!ctx) {
+        return;
+      }
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: '',
+        datasets: [
+          {
+          label: '가입 수',
+          data: this.yearSignUp,
+          lineTension: 0.5,
+          backgroundColor: [
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderColor: [
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        },
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        aspectRatio: 1,
+        scales: {
+            y: {
+                ticks: {
+                  stepSize: 1
+                }
+            },
+        },
+        plugins: {
+            legend: {
+                display: false,
+            },
+        }
+      }
+    });
+  },  
 
 }
 }
