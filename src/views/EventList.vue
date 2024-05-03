@@ -94,14 +94,14 @@
               <td class="px-6 py-4 whitespace-nowrap" >
                 <input type="checkbox" :checked="selectedEvents[event.id]" @change="updateSelectedEvents(event.id)" style="cursor: pointer;">
               </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span v-if="!event.editing">{{ event.name }}</span>
-                <input v-else type="text" v-model="event.name" @blur="cancelEdit(event)" @keyup.enter="saveEdit(event)">
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ event.startDate }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ event.endDate }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ event.eventStatus }}</td>
-              <td class="px-6 py-4 whitespace-nowrap"><button @click.stop="openEventDetailModal(event.id)" class="btn">수정</button></td>
+                <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openEventChartModal(event.id)">
+                  <span v-if="!event.editing">{{ event.name }}</span>
+                  <input v-else type="text" v-model="event.name" @blur="cancelEdit(event)" @keyup.enter="saveEdit(event)">
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openEventChartModal(event.id)">{{ event.startDate }}</td>
+                <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openEventChartModal(event.id)">{{ event.endDate }}</td>
+                <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openEventChartModal(event.id)">{{ event.eventStatus }}</td>
+                <td class="px-6 py-4 whitespace-nowrap cursor-pointer"><button @click.stop="openEventDetailModal(event.id)" class="btn">수정</button></td>
             </tr>
           </tbody>
         </table>
@@ -109,6 +109,11 @@
           <div class="modal-inner">
             <EventDetailModal :isEventModalOpen="isEventModalOpen" :selectedEventId="selectedEventId"
               @close-modal="isEventModalOpen = false" />
+          </div>
+        </div>
+        <div class="modal-content" @click.stop>
+          <div class="modal-inner">
+            <EventChartModal :isEventChartModalOpen="isEventChartModalOpen" :selectedEventId="selectedEventId" @close-modal="isEventChartModalOpen = false" />
           </div>
         </div>
         <PaginationComponent :currentPage="currentPage" :totalPages="totalPageCount" @page-change="changePage"
@@ -128,12 +133,14 @@ import axios from "@/axios/index";
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import EventDetailModal from '@/components/modal/EventDetailModal.vue';
 import SelectUserModal from "@/components/modal/SelectEventUserModal.vue";
+import EventChartModal from "@/components/modal/EventChartModal.vue";
 
 export default {
   components: {
     PaginationComponent,
     EventDetailModal,
     SelectUserModal,
+    EventChartModal,
   },
   data() {
     return {
@@ -152,6 +159,7 @@ export default {
       isLoading: false,
       totalPageCount: 0,
       isEventModalOpen: false,
+      isEventChartModalOpen: false,
       isModalSelectUserOpen: false,
       isAllSelected: false, // 전체 선택 체크박스 상태 추가
     }
@@ -218,6 +226,15 @@ export default {
     closeSelectUserModal() {
         this.isModalSelectUserOpen = false;
         console.log(this.isModalSelectUserOpen);
+    },
+        // 모달 열기
+    openEventChartModal(id) {
+      this.selectedEventId = id;
+      this.isEventChartModalOpen = true;
+    },
+    closeEventChartModal() {
+      this.isEventChartModalOpen = false;
+      console.log(this.isModaleventChartOpen);
     },
 
     // async publishCoupon() {
