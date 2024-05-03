@@ -55,7 +55,7 @@ export default {
       storageBucket: "catch-push.appspot.com",
       messagingSenderId: "786691079751",
       appId: "1:786691079751:web:f827e022f550c46bb93b62",
-      measurementId: "G-5X30Z4MRCE"
+      measurementId: "G-5X30Z4MRCE"  
     }
     
 
