@@ -49,20 +49,13 @@ export default {
     this.updateLayout(this.$route);
 
     const firebaseConfig = {
-      apiKey: "AIzaSyCCvpmI_b0r4wz5jaxiB4d9JEmc2MCaIYQ",
-      authDomain: "catch-push.firebaseapp.com",
-      projectId: "catch-push",
-      storageBucket: "catch-push.appspot.com",
-      messagingSenderId: "786691079751",
-      appId: "1:786691079751:web:f827e022f550c46bb93b62",
-      measurementId: "G-5X30Z4MRCE"
-      // apiKey: `${process.env.VUE_APP_FIREBASE_API_KEY}`,
-      // authDomain: `${process.env.VUE_APP_FIREBASE_AUTH_DOMAIN}`,
-      // projectId: `${process.env.VUE_APP_FIREBASE_PROJECT_ID}`,
-      // storageBucket: `${process.env.VUE_APP_FIREBASE_STORAGE_BUCKET}`,
-      // messagingSenderId: `${process.env.VUE_APP_FIREBASE_MESSAGING_SENDER_ID}`,
-      // appId: `${process.env.VUE_APP_FIREBASE_APP_ID}`,
-      // measurementId: `${process.env.VUE_APP_FIREBASE_MEASUREMENTID}`
+        apiKey: "AIzaSyCCvpmI_b0r4wz5jaxiB4d9JEmc2MCaIYQ",
+        authDomain: "catch-push.firebaseapp.com",
+        projectId: "catch-push",
+        storageBucket: "catch-push.appspot.com",
+        messagingSenderId: "786691079751",
+        appId: "1:786691079751:web:f827e022f550c46bb93b62",
+        measurementId: "G-5X30Z4MRCE"
     }
     
 
