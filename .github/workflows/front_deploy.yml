@@ -27,18 +27,6 @@ jobs:
         echo "VUE_APP_FIREBASE_VAP_ID=${{secrets.VAP_ID}}" >> .env
     - run: cat .env
     
-    - name: Set JS
-      run: |
-        sudo mkdir -p /public
-        sudo sh -c 'echo "${{ secrets.FIREBASE_JS }}" | base64 --decode > /public/firebase-messaging-sw.js && chmod 644 /public/firebase-messaging-sw.js'
-        find public
-        # 파일 생성 후 권한 변경
-        sudo chmod 644 /public/firebase-messaging-sw.js
-
-
-    - run: cat /public/firebase-messaging-sw.js
-
-        
     - name: npm install
       working-directory: ./
       run: npm install
