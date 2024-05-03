@@ -53,24 +53,11 @@
                             </select>
                         </td>
                     </tr>
-                    <tr>
-                      <th class="py-2 border border-gray-300" style="background-color: #F5A742; width: 20%; color: white;">알람 전송</th>
-                      <td class="px-4 border border-gray-300" style="width: 80%;">
-                        <div style="display: inline-block; margin-bottom: 8px;">
-                          <input type="checkbox" id="emailCheckbox" class="mr-2" style="vertical-align: middle;">
-                          <label for="emailCheckbox" style="vertical-align: middle;">이메일</label>
-                        </div>
-                        <div style="display: inline-block; margin-bottom: 8px; margin-left: 10px;">
-                          <input type="checkbox" id="pushCheckbox" class="mr-2" style="vertical-align: middle;">
-                          <label for="pushCheckbox" style="vertical-align: middle;">푸시 알람</label>
-                        </div>
-                      </td>
-                    </tr>
                 </tbody>
             </table>
             <div class="flex justify-between">
               <div style="margin-left: 10px; margin-bottom: 15px">
-
+                <span> 검색 수 : {{this.userList.length}}</span>
               </div>
               <div style="text-align: right; margin-bottom: 10px; margin-right: 10px;">
                   <button @click="resetInputs" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded w-[120px] mr-3"> 입력값 초기화 </button>
@@ -129,7 +116,15 @@
         </div>
       </div>
       <div class="flex justify-between" style="width: calc(100% - 20px); margin: 15px;">
-        <button class="bg-custom-F5A742 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded" style="width: 100px; text-align: center; margin-left:calc(100% - 120px) " @click="publishEvent">발행</button>
+        <div style="display: inline-block; ">
+          <input type="checkbox" id="emailCheckbox" class="mr-2" style="vertical-align: middle; margin-left:650px">
+          <label for="emailCheckbox" style="vertical-align: middle;">이메일</label>
+        </div>
+        <div style="display: inline-block; ">
+          <input type="checkbox" id="pushCheckbox" class="mr-2" style="vertical-align: middle;">
+          <label for="pushCheckbox" style="vertical-align: middle;">푸시 알람</label>
+        </div>
+        <button class="bg-custom-F5A742 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded" style="width: 100px; text-align: center; margin-right:50px" @click="publishEvent">발행</button>
       </div>
         </div>
       </div>
@@ -200,8 +195,13 @@ export default {
     }
     },
     closeSelectUserModal() {
-      this.isEditing = false; // 수정 상태를 해제
+      this.searchName = '';
+      this.searchEmail = '';
+      this.searchBirthDate = '';
+      this.searchGender = '';
+      this.searchGrade = '';
       this.selectedUsers = []; // 선택된 사용자를 초기화
+      this.resetInputs();
       this.$emit('close-modal');
     },
     toggleEdit() {
@@ -218,7 +218,7 @@ export default {
       this.searchGrade = '';
       this.loadMarketingUser();
     },
-    publishEvent() {
+    async publishEvent() {
       try {
         const selectedEmails = this.userList
         .filter(user => this.selectedUsers.includes(user.id))
@@ -235,26 +235,35 @@ export default {
       const pushCheckbox = document.getElementById('pushCheckbox');
       const isEmailChecked = emailCheckbox.checked;
       const isPushChecked = pushCheckbox.checked;
-      
-      // 이메일 체크박스와 푸시 알람 체크 여부에 따라 API 호출
-      if (isEmailChecked && isPushChecked) {
-        // 두 체크박스가 모두 선택된 경우
-        this.sendEmails();
-        this.sendNotifications();
-        // 발행 완료 메시지 등의 처리
-        console.log('선택한 이벤트가 성공적으로 발행되었습니다.');
-        alert("이벤트 발행 성공")
-      } else if (!isEmailChecked && !isPushChecked) {
-        // 두 체크박스가 모두 선택되지 않은 경우
-        alert('적어도 하나의 옵션을 선택해주세요.');
-      } else {
-        // 하나만 선택된 경우
-        if (!isEmailChecked) {
-          this.sendNotifications();
-        } else {
-          this.sendEmails();
+
+      if (!isEmailChecked && !isPushChecked) {
+          // 두 체크박스가 모두 선택되지 않은 경우
+          alert('적어도 하나의 옵션을 선택해주세요.');
+          return;
         }
-      }
+      
+      const access_token = localStorage.getItem('access_token');
+      const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
+
+        // 이메일 및 푸시 알람 보내기
+        let emailPromise = Promise.resolve();
+        if (isEmailChecked) {
+          emailPromise = this.sendEmails();
+        }
+        let pushPromise = Promise.resolve();
+        if (isPushChecked) {
+          pushPromise = this.sendNotifications();
+        }
+        await Promise.all([emailPromise, pushPromise]);
+
+        for (const eventId of Object.keys(this.selectedEvents)) {
+          // API 호출
+          await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/event/${eventId}/publish`, {}, { headers });
+        }
+        // 발행 완료 메시지 등의 처리
+        console.log('선택한 이벤트가 성공적으로 배포되었습니다.');
+        alert('이벤트 배포 성공');
+        window.location.reload();
   } catch (error) {
     console.error('Error publishing event:', error);
     // 에러 처리
@@ -274,8 +283,6 @@ async sendEmails() {
       try {
         await axios.post(`${process.env.VUE_APP_API_BASE_URL}/event/${eventId}/mailSend`, data, { headers });
         console.log('선택한 이벤트가 이메일로 성공적으로 발행되었습니다.');
-        alert("이벤트 이메일 발행 성공")
-        window.location.reload();
       } catch (error) {
         console.error(`이벤트 이메일 발행 중 오류 발생 (쿠폰 ID: ${eventId})`, error);
         throw new Error('이벤트 이메일 발행 중 오류 발생');
@@ -299,7 +306,6 @@ async sendNotifications() {
       try {
         await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/event/${eventId}/eventNotificationSend`, data, { headers });
         console.log('선택한 이벤트 알람이 성공적으로 발행되었습니다.');
-        alert("이벤트 알림 발행 성공")
         window.location.reload();
       } catch (error) {
         console.error(`이벤트 알림 발행 중 오류 발생 (쿠폰 ID: ${eventId})`, error);
@@ -393,7 +399,7 @@ async sendNotifications() {
 
 .table-container {
   overflow-y: auto;
-  height: 240px; /* 표의 높이에 맞게 조절하세요 */
+  height: 270px; /* 표의 높이에 맞게 조절하세요 */
 }
 
 th {
