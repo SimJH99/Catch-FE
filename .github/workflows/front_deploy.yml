@@ -31,6 +31,10 @@ jobs:
       working-directory: ./
       run: npm install
 
+    - name: npm firebase install
+      working-directory: ./
+      run: npm install firebase
+
     - name: npm run build
       working-directory: ./
       run: npm run build
