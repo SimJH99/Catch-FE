@@ -158,7 +158,14 @@
                             <input v-else type="text" v-model="coupon.name" @blur="cancelEdit(coupon)" @keyup.enter="saveEdit(coupon)">
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{coupon.code}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{coupon.status}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span v-if="coupon.status === 'ISSUANCE'">생성</span>
+                            <span v-else-if="coupon.status === 'DELETE'">삭제</span>
+                            <span v-else-if="coupon.status === 'PUBLISH'">배포</span>
+                            <span v-else-if="coupon.status === 'EXPIRATION'">만료</span>
+                            <span v-else-if="coupon.status === 'RECEIVE'">수령</span>
+                            <span v-else-if="coupon.status === 'USED'">사용된</span>
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap">{{coupon.quantity}}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{coupon.startDate}}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{coupon.endDate}}</td>
@@ -263,10 +270,16 @@ export default {
         },
         openSelectUserModal() {
             console.log(this.selectedCoupons);
+
             if (Object.keys(this.selectedCoupons).length === 0) {
                 alert("쿠폰을 선택하세요");
                 return;
             }
+            
+            for (const couponId in this.selectedCoupons) {
+                console.log(couponId);
+            }
+            // 모달창 열기
             this.isModalSelectUserOpen = true;
             console.log("List에서 클릭하면 열리는지 여부: ",this.isModalSelectUserOpen);
         },
@@ -285,37 +298,37 @@ export default {
             this.isModalCouponDetailOpen = false;
             console.log(this.isModalCouponDetailOpen);
         },
-        async publishCoupon() {
-            console.log(this.selectedCoupons);
-            if (Object.keys(this.selectedCoupons).length === 0) {
-                alert("쿠폰을 선택하세요");
-                return;
-            }
-            try {
-                const access_token = localStorage.getItem('access_token');
-                const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
+        // async publishCoupon() {
+        //     console.log(this.selectedCoupons);
+        //     if (Object.keys(this.selectedCoupons).length === 0) {
+        //         alert("쿠폰을 선택하세요");
+        //         return;
+        //     }
+        //     try {
+        //         const access_token = localStorage.getItem('access_token');
+        //         const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
                 
-                for (const couponId of Object.keys(this.selectedCoupons)) {
-                    try {
-                        await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/coupon/${couponId}/publish`, {}, { headers });
-                        // 추후에는 쿠폰을 받을 사람들의 접속된 토큰을 가져와서 해당 기기에 알람 전송
-                        // 일단은 
-                        this.isModalOpen = false;
-                    } catch (error) {
-                        console.error(`쿠폰 발행 중 오류 발생 (쿠폰 ID: ${couponId})`, error);
-                        throw new Error('쿠폰 발행 중 오류 발생');
-                    }
-                }
-                console.log('선택한 쿠폰이 성공적으로 발행되었습니다.');
-                alert("쿠폰 발행 성공")
-                this.selectedCoupons = {};
-                window.location.reload();
-            } catch (error) {
-                this.selectedCoupons = {};
-                console.error('쿠폰 발행 중 오류 발생', error);
-                alert("발행 불가능한 쿠폰 입니다.")
-            }
-        },
+        //         for (const couponId of Object.keys(this.selectedCoupons)) {
+        //             try {
+        //                 await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/coupon/${couponId}/publish`, {}, { headers });
+        //                 // 추후에는 쿠폰을 받을 사람들의 접속된 토큰을 가져와서 해당 기기에 알람 전송
+        //                 // 일단은 
+        //                 this.isModalOpen = false;
+        //             } catch (error) {
+        //                 console.error(`쿠폰 발행 중 오류 발생 (쿠폰 ID: ${couponId})`, error);
+        //                 throw new Error('쿠폰 발행 중 오류 발생');
+        //             }
+        //         }
+        //         console.log('선택한 쿠폰이 성공적으로 발행되었습니다.');
+        //         alert("쿠폰 발행 성공")
+        //         this.selectedCoupons = {};
+        //         window.location.reload();
+        //     } catch (error) {
+        //         this.selectedCoupons = {};
+        //         console.error('쿠폰 발행 중 오류 발생', error);
+        //         alert("발행 불가능한 쿠폰 입니다.")
+        //     }
+        // },
         async deleteCoupon() {
             try {
                 const access_token = localStorage.getItem('access_token');

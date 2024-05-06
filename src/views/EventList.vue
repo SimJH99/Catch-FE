@@ -94,14 +94,21 @@
               <td class="px-6 py-4 whitespace-nowrap" >
                 <input type="checkbox" :checked="selectedEvents[event.id]" @change="updateSelectedEvents(event.id)" style="cursor: pointer;">
               </td>
-                <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openEventChartModal(event.id)">
-                  <span v-if="!event.editing">{{ event.name }}</span>
-                  <input v-else type="text" v-model="event.name" @blur="cancelEdit(event)" @keyup.enter="saveEdit(event)">
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openEventChartModal(event.id)">{{ event.startDate }}</td>
-                <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openEventChartModal(event.id)">{{ event.endDate }}</td>
-                <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openEventChartModal(event.id)">{{ event.eventStatus }}</td>
-                <td class="px-6 py-4 whitespace-nowrap cursor-pointer"><button @click.stop="openEventDetailModal(event.id)" class="btn">수정</button></td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span v-if="!event.editing">{{ event.name }}</span>
+                <input v-else type="text" v-model="event.name" @blur="cancelEdit(event)" @keyup.enter="saveEdit(event)">
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ event.startDate }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ event.endDate }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span v-if="event.eventStatus === 'ISSUANCE'">생성</span>
+                <span v-else-if="event.eventStatus === 'DELETE'">삭제</span>
+                <span v-else-if="event.eventStatus === 'PUBLISH'">배포</span>
+                <span v-else-if="event.eventStatus === 'EXPIRATION'">만료</span>
+                <span v-else-if="event.eventStatus === 'RECEIVE'">수령</span>
+                <span v-else-if="event.eventStatus === 'USED'">사용된</span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap"><button @click.stop="openEventDetailModal(event.id)" class="btn">수정</button></td>
             </tr>
           </tbody>
         </table>
