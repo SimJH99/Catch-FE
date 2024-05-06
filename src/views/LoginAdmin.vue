@@ -74,6 +74,25 @@ export default {
   methods: {
     async doLogin() {
       try {
+        if (this.employeeNumber === "9999-99991" || this.employeeNumber === "9999-99992" || this.employeeNumber === "9999-99993") {
+          const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/admin/superLogin`, {
+            employeeNumber: this.employeeNumber,
+            password: this.password,
+          });
+          if (response.status === 200) {
+            const result = response.data;
+            console.log(response.data);
+            if (result.message.code === "SUCCESS_LOGIN") {
+              localStorage.setItem("access_token", result.result.access_token);
+              localStorage.setItem("refresh_token", result.result.refresh_token);
+              alert("인증을 성공했습니다.");
+              this.emailCodeChecked = true;
+              clearInterval(this.intervalId);
+              window.location.href = "/dashBoard";
+            }
+          }
+          return; // 슈퍼 계정으로 로그인을 시도했으면 더 이상 진행하지 않음
+        }
         await axios.post(`${process.env.VUE_APP_API_BASE_URL}/admin/doLogin`, {
           employeeNumber: this.employeeNumber,
           password: this.password,
@@ -160,17 +179,17 @@ export default {
     },
   },
   mounted() {
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault(); // 기본 엔터 키 동작을 막음
-      if (!this.validateLogin) { // 검증되지 않은 경우에만 로그인 시도
-        this.doLogin(); // 로그인 함수 호출
-      } else { // 검증되었지만 이메일 검증 확인 버튼에 포커스가 있는 경우
-        this.checkEmailCode(); // 이메일 검증 확인 함수 호출
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault(); // 기본 엔터 키 동작을 막음
+        if (!this.validateLogin) { // 검증되지 않은 경우에만 로그인 시도
+          this.doLogin(); // 로그인 함수 호출
+        } else { // 검증되었지만 이메일 검증 확인 버튼에 포커스가 있는 경우
+          this.checkEmailCode(); // 이메일 검증 확인 함수 호출
+        }
       }
-    }
-  });
-},
+    });
+  },
 
 
 
