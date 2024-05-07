@@ -72,7 +72,12 @@ export default {
           this.userLoggedIn = false;
           // 로그아웃 성공 메시지 등을 처리할 수 있습니다.
           window.location.href = "/";
-        } else {
+        }else if(response.status === 409){
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          this.userLoggedIn = false;
+          window.location.href = "/";
+        }else {
           console.error('Failed to logout:', response.data.message);
         }
       } catch (error) {
