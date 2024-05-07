@@ -7,14 +7,10 @@
       <button @click="clickComplaint" class="button">
         1:1문의
       </button>
-      <button @click="clickEvent" class="button">
-        이벤트
-      </button>
     </div>
     <div class="w-full bg-white rounded-b-md h-full shadow-md">
         <UserDashBoardComponent v-if="page==1"/>
         <ComplaintDashBoardComponent v-if="page==2"/>
-        <EventDashBoardComponent v-if="page==3"/>
     </div>
   </div>
 </template>
@@ -22,12 +18,10 @@
 <script>
 import UserDashBoardComponent from '@/components/UserDashBoardComponent.vue';
 import ComplaintDashBoardComponent from '@/components/ComplaintDashBoardComponent.vue';
-import EventDashBoardComponent from '@/components/EventDashBoardComponent.vue';
 export default {
   components: {
     UserDashBoardComponent,
     ComplaintDashBoardComponent,
-    EventDashBoardComponent,
   },
   data() {
     return {
@@ -40,9 +34,6 @@ export default {
     },
     clickComplaint() {
       this.page = 2;
-    },
-    clickEvent() {
-      this.page = 3;
     }
   }
 };

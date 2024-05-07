@@ -1,45 +1,31 @@
 <template>
     <div class="">
         <div class="mx-3 mt-3 p-1 bg-white rounded-md shadow-md">
-            <div class="text-4xl font-bold p-3 border-gray-300"> 쿠폰 리스트 </div>
+            <div class="text-4xl font-bold p-3 border-gray-300"> 쿠폰 관리 </div>
         </div>
         
-        <div class="m-2 grid grid-cols-4">
+        <div class="m-2 grid grid-cols-3">
             <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
               <div class="flex">
-                <div class="text-xl font-bold text-gray-500 mr-2">총 쿠폰</div>
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
-                    </svg>
-                </div>
-              </div>
-                <div class="m-5 text-4xl font-bold text-center"> 30개</div>
-            </div>
-            
-            <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
-              <div class="flex">
-                <div class="text-xl font-bold text-gray-500 mr-2">발행 중인 쿠폰</div>
+                <div class="text-xl font-bold text-gray-500 mr-2">생성한 쿠폰</div>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
                 </svg>
               </div>
-                <div class="m-5 text-4xl font-bold text-center"> 30개</div>
+                <div class="m-5 text-4xl font-bold text-center">{{this.issuanceInfo}}장</div>
             </div>
-            
+
             <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
-              <div class="flex">
-                <div class="text-xl font-bold text-gray-500 mr-2">사용한 쿠폰 / 발급 쿠폰</div>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
-                </svg>
+                <div class="flex">
+                  <div class="text-xl font-bold text-gray-500 mr-2">배포 중인 쿠폰</div>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
+                  </svg>
+                </div>
+                  <div class="m-5 text-4xl font-bold text-center">{{this.publicInfo}}장</div>
               </div>
-              <div class="flex m-5 justify-center">
-                  <div class="text-4xl font-bold text-right"> 30</div>
-                  <div class="mt-3 text-xl font-bold text-center"> /120개</div>
-              </div>
-            </div>
       
             <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
               <div class="flex">
@@ -48,7 +34,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
               </div>
-                <div class="m-5 text-4xl font-bold text-center"> 30개</div>
+                <div class="m-5 text-4xl font-bold text-center">{{this.expirationInfo}}장</div>
             </div>
         </div>
 
@@ -157,8 +143,8 @@
                             <span v-if="!coupon.editing">{{ coupon.name }}</span>
                             <input v-else type="text" v-model="coupon.name" @blur="cancelEdit(coupon)" @keyup.enter="saveEdit(coupon)">
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{coupon.code}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                        <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openCouponChartModal(coupon.id)">{{coupon.code}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openCouponChartModal(coupon.id)">
                             <span v-if="coupon.status === 'ISSUANCE'">생성</span>
                             <span v-else-if="coupon.status === 'DELETE'">삭제</span>
                             <span v-else-if="coupon.status === 'PUBLISH'">배포</span>
@@ -166,10 +152,10 @@
                             <span v-else-if="coupon.status === 'RECEIVE'">수령</span>
                             <span v-else-if="coupon.status === 'USED'">사용된</span>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{coupon.quantity}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{coupon.startDate}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{coupon.endDate}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap"><button @click.stop="openCouponDetailModal(coupon.id)" class="btn">수정</button></td>
+                        <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openCouponChartModal(coupon.id)">{{coupon.quantity}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openCouponChartModal(coupon.id)">{{coupon.startDate}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openCouponChartModal(coupon.id)">{{coupon.endDate}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap" @click="openCouponChartModal(coupon.id)"><button @click.stop="openCouponDetailModal(coupon.id)" class="btn">수정</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -179,6 +165,12 @@
             <div class="modal-inner">
                 <CouponDetailModal :isModalCouponDetailOpen="isModalCouponDetailOpen" :selectedCouponDetailsId="selectedCouponDetailsId"
                     @close-modal="isModalCouponDetailOpen = false" />
+            </div>
+        </div>
+        
+        <div class="modal-content" @click.stop>
+            <div class="modal-inner">
+              <CouponChartModal :isCouponChartModalOpen="isCouponChartModalOpen" :selectedCouponId="selectedCouponId" @close-modal="isCouponChartModalOpen = false" />
             </div>
         </div>
         
@@ -199,17 +191,21 @@ import axios from "@/axios/index";
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import SelectUserModal from "@/components/modal/SelectCouponUserModal.vue";
 import CouponDetailModal from '@/components/modal/CouponDetailModal.vue';
+import CouponChartModal from '@/components/modal/CouponChartModal.vue';
 export default {
     components: {
         PaginationComponent,
         SelectUserModal,
         CouponDetailModal,
+        CouponChartModal,
     },
     data(){
         return{
             couponList: [],
             selectedCoupons: {},
             selectedCouponDetailsId: '',
+            isCouponChartModalOpen: false,
+            selectedCouponId: '',
             searchName: '',
             searchCode: '',
             searchStartDate: '',
@@ -225,12 +221,30 @@ export default {
             isModalSelectUserOpen: false,
             isModalCouponDetailOpen: false,
             isAllSelected: false, // 전체 선택 체크박스 상태 추가
+            publicInfo: {},
+            issuanceInfo: {},
+            expirationInfo: {},
         }
     },
     created(){
         this.loadCoupons();
+        this.featchCoupon();
     },
     methods:{
+        async featchCoupon(){
+            try{
+                const access_token = localStorage.getItem('access_token');
+                const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
+                const publishResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/coupon/publish/count`, {headers});
+                const issuanceResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/coupon/issuance/count`, {headers});
+                const expirationResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/coupon/expiration/count`, {headers});
+                this.publicInfo = publishResponse.data.result.data;
+                this.issuanceInfo = issuanceResponse.data.result.data;
+                this.expirationInfo = expirationResponse.data.result.data;
+            }catch(error){
+                console.log(error);
+            }
+        },
         async loadCoupons(){
             try{
                 const params = {
@@ -287,7 +301,6 @@ export default {
             this.isModalSelectUserOpen = false;
             console.log(this.isModalSelectUserOpen);
         },
-
         openCouponDetailModal(id) {
             this.selectedCouponDetailsId = id;
             console.log("넘기는 id 값 : " + id);
@@ -298,37 +311,45 @@ export default {
             this.isModalCouponDetailOpen = false;
             console.log(this.isModalCouponDetailOpen);
         },
-        // async publishCoupon() {
-        //     console.log(this.selectedCoupons);
-        //     if (Object.keys(this.selectedCoupons).length === 0) {
-        //         alert("쿠폰을 선택하세요");
-        //         return;
-        //     }
-        //     try {
-        //         const access_token = localStorage.getItem('access_token');
-        //         const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
-                
-        //         for (const couponId of Object.keys(this.selectedCoupons)) {
-        //             try {
-        //                 await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/coupon/${couponId}/publish`, {}, { headers });
-        //                 // 추후에는 쿠폰을 받을 사람들의 접속된 토큰을 가져와서 해당 기기에 알람 전송
-        //                 // 일단은 
-        //                 this.isModalOpen = false;
-        //             } catch (error) {
-        //                 console.error(`쿠폰 발행 중 오류 발생 (쿠폰 ID: ${couponId})`, error);
-        //                 throw new Error('쿠폰 발행 중 오류 발생');
-        //             }
-        //         }
-        //         console.log('선택한 쿠폰이 성공적으로 발행되었습니다.');
-        //         alert("쿠폰 발행 성공")
-        //         this.selectedCoupons = {};
-        //         window.location.reload();
-        //     } catch (error) {
-        //         this.selectedCoupons = {};
-        //         console.error('쿠폰 발행 중 오류 발생', error);
-        //         alert("발행 불가능한 쿠폰 입니다.")
-        //     }
-        // },
+        openCouponChartModal(id) {
+            this.selectedCouponId = id;
+            this.isCouponChartModalOpen = true;
+        },
+        closeCouponChartModal() {
+            this.isCouponChartModalOpen = false;
+            console.log(this.isCouponChartModalOpen);
+        },
+        async publishCoupon() {
+            console.log(this.selectedCoupons);
+            if (Object.keys(this.selectedCoupons).length === 0) {
+                alert("쿠폰을 선택하세요");
+                return;
+            }
+            try {
+                const access_token = localStorage.getItem('access_token');
+                const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
+              
+                for (const couponId of Object.keys(this.selectedCoupons)) {
+                    try {
+                        await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/coupon/${couponId}/publish`, {}, { headers });
+                        // 추후에는 쿠폰을 받을 사람들의 접속된 토큰을 가져와서 해당 기기에 알람 전송
+                        // 일단은 
+                        this.isModalOpen = false;
+                    } catch (error) {
+                        console.error(`쿠폰 발행 중 오류 발생 (쿠폰 ID: ${couponId})`, error);
+                        throw new Error('쿠폰 발행 중 오류 발생');
+                    }
+                }
+                console.log('선택한 쿠폰이 성공적으로 발행되었습니다.');
+                alert("쿠폰 발행 성공")
+                this.selectedCoupons = {};
+                window.location.reload();
+            } catch (error) {
+                this.selectedCoupons = {};
+                console.error('쿠폰 발행 중 오류 발생', error);
+                alert("발행 불가능한 쿠폰 입니다.")
+            }
+        },
         async deleteCoupon() {
             try {
                 const access_token = localStorage.getItem('access_token');

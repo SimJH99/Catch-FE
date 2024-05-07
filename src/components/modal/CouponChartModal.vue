@@ -1,8 +1,8 @@
 <template>
-  <div v-if="isEventChartModalOpen" class="modal">
+  <div v-if="isCouponChartModalOpen" class="modal">
     <div class="modal-content-large" @click.stop>
       <div class="modal-header">
-        <h2 style="font-size: 24px; font-weight: bold; color:#EFEFEF">캠페인 통계</h2>
+        <h2 style="font-size: 24px; font-weight: bold; color:#EFEFEF">쿠폰 배포 정보</h2>
         <span class="close" @click="closeDetailModal">&times;</span>
       </div>
       <div class="modal-body">
@@ -12,19 +12,19 @@
         <div v-else>
           <div v-if="!isEditing">
             <div class="user-info">
-              <div class="m-2 text-xl font-bold">제목 : {{ this.eventInfo.name }}</div>
+              <div class="m-2 text-[24px] font-bold">쿠폰명 : {{this.couponInfo.name}}</div>
               <div class="grid grid-cols-2">
-                <div class="m-2 text-md text-[16px]">시작일 : {{this.eventInfo.startDate}}</div>
-                <div class="m-2 text-md text-[16px]">종료일 : {{this.eventInfo.endDate}}</div>
+                <div class="m-2 text-md text-[16px]">시작일 : {{this.couponInfo.startDate}}</div>
+                <div class="m-2 text-md text-[16px]">종료일 : {{this.couponInfo.endDate}}</div>
               </div>
               <div class="grid grid-cols-2">
-                <div class="m-2 text-md text-[16px]">캠페인 배포 건수 : {{this.sendInfo}}건</div>
-                <div class="m-2 text-md text-[16px]">캠페인 확인 건수 : {{this.receiveInfo}}건</div>
+                <div class="m-2 text-md text-[16px]">쿠폰 배포 수량 : {{this.couponCountInfo}}개</div>
+                <div class="m-2 text-md text-[16px]">쿠폰 등록 수량 : {{this.receiveInfo}}개</div>
               </div>
               <div class="bg-white m-2 p-2 rounded-md shadow-md border h-[400px]">
-                <div class="m-2 text-2xl font-bold">캠페인 참여 현황</div>
+                <div class="m-2 text-2xl font-bold">쿠폰 사용 현황</div>
                 <div class="m-2 p-4" style="height: 350px; overflow-y: auto;">
-                  <canvas id="gradeChart" ></canvas>
+                  <canvas id="gradeChart" class="doughnut-chart"></canvas>
                 </div>
               </div>
             </div>
@@ -39,7 +39,7 @@
 import axios from "@/axios/index";
 import Chart from 'chart.js/auto';
 export default {
-  props: ['selectedEventId', 'isEventChartModalOpen'],
+  props: ['selectedCouponId', 'isCouponChartModalOpen'],
   data() {
     return {
       accountDetails: {},
@@ -48,45 +48,43 @@ export default {
       gradeInfo: {},
       grades: [],
       gradeCount: [],
-      eventInfo: {},
-      sendInfo: {},
+      couponInfo: {},
+      couponCountInfo: {},
       receiveInfo: {},
     };
   },
   watch: {
-    selectedEventId: {
+    selectedCouponId: {
       immediate: true,
       handler(newVal) {
-        if (newVal && this.isEventChartModalOpen) {
+        if (newVal && this.isCouponChartModalOpen) {
           this.loadAccountDetails(newVal);
         }
       }
     },
-    isEventChartModalOpen: {
+    isCouponChartModalOpen: {
       immediate: true,
       handler(newVal) {
         if (newVal) {
           setTimeout(() => {
-            this.gradeChart(this.sendInfo, this.receiveInfo);
+            this.gradeChart(this.couponCountInfo, this.receiveInfo);
         }, 500);
         }
       }
     },
   },
   methods: {
-    async loadAccountDetails(selectedEventId) {
+    async loadAccountDetails(selectedCouponId) {
       try {
         this.loading = true;
         const access_token = localStorage.getItem('access_token');
         const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
-        const eventResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/event/${selectedEventId}/detail`, { headers });
-        const eventSendResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/log/event/${selectedEventId}/send/count`, { headers });
-        const eventReceiveResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/log/event/${selectedEventId}/receive/count`, { headers });
-
-        this.eventInfo = eventResponse.data.result;
-        this.sendInfo = eventSendResponse.data.result.data;
-        this.receiveInfo = eventReceiveResponse.data.result.data;
-        
+        const couponResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/coupon/${selectedCouponId}`, { headers });
+        const couponCountResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/log/coupon/${selectedCouponId}/send/count`, { headers });
+        const couponReceiveResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/log/coupon/${selectedCouponId}/receive/count`, { headers });
+        this.couponInfo = couponResponse.data.result.data;
+        this.couponCountInfo = couponCountResponse.data.result.data;
+        this.receiveInfo = couponReceiveResponse.data.result.data;
       } catch (error) {
         console.error("Error fetching account details:", error);
       } finally {
@@ -120,12 +118,12 @@ export default {
     cancelEdit() {
       this.isEditing = false;
     },
-    gradeChart(sendInfo, receiveInfo) {
-      if (sendInfo !== null && receiveInfo!== null) {
+    gradeChart(couponCountInfo, receiveInfo) {
+      if (couponCountInfo !== null && receiveInfo!== null) {
         const canvas = document.getElementById('gradeChart');
         if (canvas && canvas.getContext) {
           const ctx = canvas.getContext('2d');
-          const value = sendInfo;
+          const value = couponCountInfo;
           // 이전 차트 파괴
           if (Chart.getChart(ctx)) {
             Chart.getChart(ctx)?.destroy();
@@ -135,7 +133,7 @@ export default {
             type: 'doughnut',
 
             data: {
-              labels: ['미확인 메일 수', '확인된 메일 수'],
+              labels: ['미등록 쿠폰 수', '등록된 쿠폰 수'],
               datasets: [{
                 label: ' ',
                 data: [value - receiveInfo, receiveInfo],
@@ -297,5 +295,14 @@ export default {
 
 .btn:hover {
   background-color: #e69500;
+}
+
+.doughnut-chart {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
 </style>

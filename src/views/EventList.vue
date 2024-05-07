@@ -1,8 +1,40 @@
 <template>
   <div>
     <div class="m-3 p-1 bg-white rounded-md shadow-md flex">
-      <div class="text-4xl font-bold p-3">이벤트 조회</div>
+      <div class="text-4xl font-bold p-3">캠페인 관리</div>
     </div>
+
+    <div class="m-2 grid grid-cols-3">
+      <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
+        <div class="flex">
+          <div class="text-xl font-bold text-gray-500 mr-2">생성한 캠페인</div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+          </svg>
+        </div>
+          <div class="m-5 text-4xl font-bold text-center">{{this.issuanceInfo}}건</div>
+      </div>
+
+      <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
+          <div class="flex">
+            <div class="text-xl font-bold text-gray-500 mr-2">배포 중인 캠페인</div>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 9v.906a2.25 2.25 0 0 1-1.183 1.981l-6.478 3.488M2.25 9v.906a2.25 2.25 0 0 0 1.183 1.981l6.478 3.488m8.839 2.51-4.66-2.51m0 0-1.023-.55a2.25 2.25 0 0 0-2.134 0l-1.022.55m0 0-4.661 2.51m16.5 1.615a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V8.844a2.25 2.25 0 0 1 1.183-1.981l7.5-4.039a2.25 2.25 0 0 1 2.134 0l7.5 4.039a2.25 2.25 0 0 1 1.183 1.98V19.5Z" />
+            </svg>            
+          </div>
+            <div class="m-5 text-4xl font-bold text-center">{{this.publishInfo}}건</div>
+        </div>
+
+      <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
+        <div class="flex">
+          <div class="text-xl font-bold text-gray-500 mr-2">종료 임박 캠페인</div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-500">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
+        </div>
+          <div class="m-5 text-4xl font-bold text-center">{{this.expirationInfo}}건</div>
+      </div>
+  </div>
 
     <div class="m-3 p-1 bg-white rounded-md shadow-md">
       <div class="container mb-4 mx-[10px]" style="width: calc(100% - 40px);">
@@ -94,13 +126,13 @@
               <td class="px-6 py-4 whitespace-nowrap" >
                 <input type="checkbox" :checked="selectedEvents[event.id]" @change="updateSelectedEvents(event.id)" style="cursor: pointer;">
               </td>
-              <td class="px-6 py-4 whitespace-nowrap">
+              <td class="px-6 py-4 whitespace-nowrap" @click="openEventChartModal(event.id)">
                 <span v-if="!event.editing">{{ event.name }}</span>
                 <input v-else type="text" v-model="event.name" @blur="cancelEdit(event)" @keyup.enter="saveEdit(event)">
               </td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ event.startDate }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">{{ event.endDate }}</td>
-              <td class="px-6 py-4 whitespace-nowrap">
+              <td class="px-6 py-4 whitespace-nowrap" @click="openEventChartModal(event.id)">{{ event.startDate }}</td>
+              <td class="px-6 py-4 whitespace-nowrap" @click="openEventChartModal(event.id)">{{ event.endDate }}</td>
+              <td class="px-6 py-4 whitespace-nowrap" @click="openEventChartModal(event.id)">
                 <span v-if="event.eventStatus === 'ISSUANCE'">생성</span>
                 <span v-else-if="event.eventStatus === 'DELETE'">삭제</span>
                 <span v-else-if="event.eventStatus === 'PUBLISH'">배포</span>
@@ -169,19 +201,37 @@ export default {
       isEventChartModalOpen: false,
       isModalSelectUserOpen: false,
       isAllSelected: false, // 전체 선택 체크박스 상태 추가
+      issuanceInfo: {},
+      publishInfo: {},
+      expirationInfo: {},
     }
   },
   created() {
     this.loadEvent();
+    this.featchEvent();
   },
   methods: {
+    async featchEvent() {
+      try {
+        const access_token = localStorage.getItem('access_token');
+        const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
+        const issuanceResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/issuance/event`, {headers});
+        const publishResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/publish/event`, {headers});
+        const expirationResponse = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/expiration/event`, {headers});
+        
+        this.issuanceInfo = issuanceResponse.data.result.data;
+        this.publishInfo = publishResponse.data.result.data;
+        this.expirationInfo = expirationResponse.data.result.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async loadEvent() {
       try {
         const params = {
           page: this.currentPage,
           size: this.pageSize,
         }
-        console.log("search 호출");
         const access_token = localStorage.getItem('access_token');
         const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
         const data = {
@@ -213,9 +263,7 @@ export default {
     },
     openEventDetailModal(id) {
       this.selectedEventId = id;
-      console.log(id);
       this.isEventModalOpen = true;
-      console.log("List에서 클릭하면 열리는지 여부: ", this.isEventModalOpen);
     },
     closeEventModal() {
       this.isEventModalOpen = false;
@@ -228,20 +276,16 @@ export default {
             return;
         }
         this.isModalSelectUserOpen = true;
-        console.log("List에서 클릭하면 열리는지 여부: ",this.isModalSelectUserOpen);
     },
     closeSelectUserModal() {
         this.isModalSelectUserOpen = false;
-        console.log(this.isModalSelectUserOpen);
     },
-        // 모달 열기
     openEventChartModal(id) {
       this.selectedEventId = id;
       this.isEventChartModalOpen = true;
     },
     closeEventChartModal() {
       this.isEventChartModalOpen = false;
-      console.log(this.isModaleventChartOpen);
     },
 
     // async publishCoupon() {

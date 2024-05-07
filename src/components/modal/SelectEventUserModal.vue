@@ -258,7 +258,7 @@ export default {
 
         for (const eventId of Object.keys(this.selectedEvents)) {
           // API 호출
-          await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/event/${eventId}/publish`, {}, { headers });
+          await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/event/${eventId}/publish`, { headers });
         }
         // 발행 완료 메시지 등의 처리
         console.log('선택한 이벤트가 성공적으로 배포되었습니다.');
