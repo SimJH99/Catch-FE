@@ -119,12 +119,12 @@ export default {
           .catch((err) => {
             console.log(err);
           });
-
       } catch (error) {
         console.error(error);
         alert("입력하신 정보와 일치하는 정보가 없습니다.");
       }
     },
+    
 
   },
   mounted() {
