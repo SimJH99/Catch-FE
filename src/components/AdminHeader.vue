@@ -9,7 +9,7 @@
       <nav class="space-x-2 flex place-content-center items-center">
         <template v-if="userLoggedIn">
           <span class="text-gray-700 mr-2">
-            {{ greetingMessage }} 
+            {{ greetingMessage }}
           </span>
         </template>
         <button v-if="userLoggedIn" @click="logout"
@@ -61,7 +61,7 @@ export default {
       }
     },
     async logout() {
-          try {
+      try {
         const access_token = localStorage.getItem("access_token");
         const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
         const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/admin/doLogout`, {}, { headers });
@@ -72,16 +72,22 @@ export default {
           this.userLoggedIn = false;
           // 로그아웃 성공 메시지 등을 처리할 수 있습니다.
           window.location.href = "/";
-        }else if(response.status === 409){
-          localStorage.removeItem("access_token");
-          localStorage.removeItem("refresh_token");
-          this.userLoggedIn = false;
-          window.location.href = "/";
-        }else {
+        } else {
           console.error('Failed to logout:', response.data.message);
         }
       } catch (error) {
-        console.error('An error occurred while logging out:', error);
+        if (error.response && error.response.status === 409) {
+          // 409 오류는 충돌이 발생했음을 나타냅니다.
+          // 이 경우, 사용자에게 적절한 메시지를 표시하고 다른 대응을 취할 수 있습니다.
+          console.error('Conflict occurred during logout. Please refresh the page or try again later.');
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          this.userLoggedIn = false;
+          // 로그아웃 성공 메시지 등을 처리할 수 있습니다.
+          window.location.href = "/";
+        } else {
+          console.error('An error occurred while logging out:', error);
+        }
       }
     }
   },
@@ -92,6 +98,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
