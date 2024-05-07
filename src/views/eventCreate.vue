@@ -1,7 +1,7 @@
 <template>
 <div class="container">
   <div class="m-3 p-1 rounded-md shadow-md flex bg bg-white">
-    <div class="text-4xl font-bold p-3">이벤트 등록 </div>  
+    <div class="text-4xl font-bold p-3">캠페인 등록 </div>  
   </div>
 
   <div class="m-3 p-1 bg-white rounded-md shadow-md">

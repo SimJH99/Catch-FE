@@ -57,7 +57,6 @@ export default {
         appId: "1:786691079751:web:f827e022f550c46bb93b62",
         measurementId: "G-5X30Z4MRCE"
     }
-    
 
     const firebase = initializeApp(firebaseConfig);
     const messaging = getMessaging(firebase);

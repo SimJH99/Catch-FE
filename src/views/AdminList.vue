@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="m-3 p-1 bg-white rounded-md shadow-md flex">
-      <div class="text-4xl font-bold p-3">관리자 계정 조회</div>  
+      <div class="text-4xl font-bold p-3">관리자 계정 관리</div>  
     </div>
 
     <div class="m-3 p-1 bg-white rounded-md shadow-md">
