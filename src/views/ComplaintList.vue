@@ -43,7 +43,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
           </svg>
         </div>
-          <div class="m-5 text-4xl font-bold text-center"> {{statusCount[1]}}개</div>
+          <div class="m-5 text-4xl font-bold text-center"> {{todayInfo}}개</div>
       </div>
     </div>
 
@@ -160,6 +160,7 @@ export default {
       statusCount: [],
       selectedComplaintId: '',
       isModalComplaintDetailOpen: false,
+      todayInfo: {},
     };
   },
   created() {
@@ -174,7 +175,9 @@ export default {
         const allCountRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/complaints/countAll`, { headers });
         this.allCount = allCountRes.data.result.data;
         const statusRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/complaints/countStatus`, { headers });
+        const todayRes = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/complaints/countToday`, { headers });
         this.statusInfo = statusRes.data.result.data;
+        this.todayInfo = todayRes.data.result.data
 
         for(var i = 0; i < this.statusInfo.length; i++){
           this.complaintStatus.push(this.statusInfo[i][0]);

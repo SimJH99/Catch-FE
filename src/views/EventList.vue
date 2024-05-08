@@ -227,6 +227,8 @@ export default {
         this.issuanceInfo = issuanceResponse.data.result.data;
         this.publishInfo = publishResponse.data.result.data;
         this.expirationInfo = expirationResponse.data.result.data;
+
+        console.log(this.issuanceInfo);
       } catch (error) {
         console.log(error);
       }
