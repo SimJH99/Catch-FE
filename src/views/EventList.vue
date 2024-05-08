@@ -301,7 +301,7 @@ export default {
                 
                 for (const eventId of Object.keys(this.selectedEvents)) {
                     try {
-                        await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/event/${eventId}/delete`, {}, { headers });
+                        await axios.post(`${process.env.VUE_APP_API_BASE_URL}/event/${eventId}/delete`, {}, { headers });
                     } catch (error) {
                         console.error(`캠페인 삭제 중 오류 발생 (캠페인 ID: ${eventId})`, error);
                         alert(`캠페인 삭제 중 오류 발생 (쿠폰 ID: ${eventId})`)
