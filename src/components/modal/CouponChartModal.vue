@@ -22,7 +22,7 @@
                 <div class="m-2 text-md text-[16px]">쿠폰 등록 수량 : {{this.receiveInfo}}개</div>
               </div>
               <div class="bg-white m-2 p-2 rounded-md shadow-md border h-[400px]">
-                <div class="m-2 text-2xl font-bold">쿠폰 사용 현황</div>
+                <div class="m-2 text-2xl font-bold">쿠폰 등록 현황</div>
                 <div class="m-2 p-4" style="height: 350px; overflow-y: auto;">
                   <canvas id="gradeChart" class="doughnut-chart"></canvas>
                 </div>

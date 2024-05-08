@@ -172,13 +172,13 @@ export default {
       this.isEditing = false;
     },
     resetInputs() {
-            this.searchName = '';
-            this.searchEmail = '';
-            this.searchBirthDate = '';
-            this.searchGender = '';
-            this.searchGrade = '';
-            this.loadMarketingUser();
-        },
+        this.searchName = '';
+        this.searchEmail = '';
+        this.searchBirthDate = '';
+        this.searchGender = '';
+        this.searchGrade = '';
+        this.loadMarketingUser();
+    },
     async loadMarketingUser() {
       try {
         console.log("data 호출");
