@@ -12,7 +12,10 @@
       <!-- 쿠폰 -->
       <div class="section">
         <div class="title">쿠폰</div>
-        <a class="item">쿠폰 리스트</a>
+        <a class="item" @click="openMyCouponListModal()">
+          내쿠폰 보기
+          <MyCouponListModal :isModalMyCouponListOpen="isModalMyCouponListOpen" @close-modal="isModalMyCouponListOpen = false" />
+        </a>
         <a class="item" @click="openCouponReceiveModal">
             쿠폰 등록
           <CouponReceiveModal :isModalCouponReceiveOpen="isModalCouponReceiveOpen" :selectedAdminId="selectedAdminId" @close-modal="isModalCouponReceiveOpen = false" />
@@ -49,13 +52,16 @@
   
   <script>
   import CouponReceiveModal from "@/components/modal/CouponReceiveModal.vue";
+  import MyCouponListModal from "@/components/modal/MyCouponListModal.vue";
   export default {
     components: {
       CouponReceiveModal,
+      MyCouponListModal
     },
     data() {
       return {
         isModalCouponReceiveOpen: false,
+        isModalMyCouponListOpen: false,
       };
     },
     methods: {
@@ -66,6 +72,14 @@
       closeCouponReceiveModal() {
         this.isModalCouponReceiveOpen = false;
         console.log(this.isModalCouponReceiveOpen);
+      },
+      openMyCouponListModal() {
+        this.isModalMyCouponListOpen = true;
+        console.log("List에서 클릭하면 열리는지 여부: ",this.isModalMyCouponListOpen);
+      },
+      closeMyCouponListModal() {
+        this.isModalMyCouponListOpen = false;
+        console.log(this.isModalMyCouponListOpen);
       },
     }
 

@@ -316,10 +316,14 @@ export default {
             console.log(this.isModalSelectUserOpen);
         },
         openCouponDetailModal(id) {
-            this.selectedCouponDetailsId = id;
-            console.log("넘기는 id 값 : " + id);
-            this.isModalCouponDetailOpen = true;
-            console.log("List에서 클릭하면 열리는지 여부: ", this.isModalCouponDetailOpen);
+            if (this.couponList.find(coupon => coupon.id === parseInt(id)).status !== 'ISSUANCE') {
+                alert("수정 불가능한 쿠폰입니다.")
+            }else{
+                this.selectedCouponDetailsId = id;
+                console.log("넘기는 id 값 : " + id);
+                this.isModalCouponDetailOpen = true;
+                console.log("List에서 클릭하면 열리는지 여부: ", this.isModalCouponDetailOpen);
+            }
         },
         closeCouponDetailModal() {
             this.isModalCouponDetailOpen = false;
