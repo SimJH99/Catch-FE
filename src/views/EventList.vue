@@ -269,8 +269,12 @@ export default {
       this.loadEvent();
     },
     openEventDetailModal(id) {
-      this.selectedEventId = id;
-      this.isEventModalOpen = true;
+      if (this.eventList.find(event => event.id === parseInt(id)).eventStatus !== 'ISSUANCE') {
+          alert("수정 불가능한 캠페인입니다.")
+      }else{
+        this.selectedEventId = id;
+        this.isEventModalOpen = true;
+      }
     },
     closeEventModal() {
       this.isEventModalOpen = false;
