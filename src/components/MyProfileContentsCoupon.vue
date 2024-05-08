@@ -72,13 +72,17 @@ export default {
   },
   computed: {
     visibleCoupons() {
-      const visibleCoupons = [];
       const numCoupons = this.coupons.length;
-      for (let i = 0; i < 4; i++) {
-        const index = (this.currentIndex + i) % numCoupons;
-        visibleCoupons.push(this.coupons[index]);
+      if (numCoupons <= 4) {
+        return this.coupons;
+      } else {
+        const visibleCoupons = [];
+        for (let i = 0; i < 4; i++) {
+          const index = (this.currentIndex + i) % numCoupons;
+          visibleCoupons.push(this.coupons[index]);
+        }
+        return visibleCoupons;
       }
-      return visibleCoupons;
     }
   },
   methods: {
@@ -159,7 +163,7 @@ export default {
 
 .coupon-image {
   width: 100%; /* 이미지를 쿠폰 박스 안에 꽉 차게 표시 */
-  height: 100%; /* 이미지를 쿠폰 박스 안에 꽉 차게 표시 */
+  height: 120px; /* 이미지를 쿠폰 박스 안에 꽉 차게 표시 */
   object-fit: cover; /* 이미지가 박스에 꽉 차도록 설정 */
   border-radius: 5px; /* 쿠폰 박스와 이미지의 모서리를 일치시킴 */
   background-color: #FFFFFF; /* 배경색 변경 */
