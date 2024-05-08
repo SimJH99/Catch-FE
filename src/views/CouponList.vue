@@ -368,26 +368,17 @@ export default {
             }
         },
         async deleteCoupon() {
-            try {
-                const access_token = localStorage.getItem('access_token');
-                const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
-                
-                for (const couponId of Object.keys(this.selectedCoupons)) {
-                    try {
-                        await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/coupon/${couponId}/delete`, {}, { headers });
-                    } catch (error) {
-                        console.error(`쿠폰 삭재 중 오류 발생 (쿠폰 ID: ${couponId})`, error);
-                        alert(`쿠폰 삭재 중 오류 발생 (쿠폰 ID: ${couponId})`)
-                        throw new Error('쿠폰 발행 중 오류 발생');
-                    }
+            const access_token = localStorage.getItem('access_token');
+            const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
+            
+            for (const couponId of Object.keys(this.selectedCoupons)) {
+                try {
+                    await axios.post(`${process.env.VUE_APP_API_BASE_URL}/coupon/${couponId}/delete`, {}, { headers });
+                    alert("쿠폰 삭제 성공");
+                    window.location.reload();
+                } catch (error) {
+                    alert(`삭제 불가 쿠폰입니다. (쿠폰명 : ${this.couponList.find(coupon => coupon.id === parseInt(couponId)).name})`);
                 }
-
-                console.log('선택한 쿠폰이 성공적으로 삭제되었습니다.');
-                alert("쿠폰 삭제 성공")
-                window.location.reload();
-            } catch (error) {
-                console.error('쿠폰 삭제 중 오류 발생', error);
-                alert("삭제 불가능한 쿠폰 입니다.")
             }
         },
         resetInputs() {
