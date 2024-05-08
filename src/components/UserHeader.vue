@@ -32,22 +32,23 @@
             </div>
           </div>
         </transition>
+
         <template v-if="userLoggedIn">
           <span class="text-gray-700 mr-2" style="font-size: 1.2rem;">
-            {{ greetingMessage }} 
+            {{ greetingMessage }}
           </span>
         </template>
         <button v-if="userLoggedIn" @click="logout"
-            style="background-color: #f5a742; color: white; border: none; font-size: 0.9rem;"
-            class="px-3 py-1 rounded-md hover:bg-gray-400 hover:text-gray-800 focus:outline-none focus:border-gray-500 focus:shadow-outline-gray">
-            로그아웃
-          </button>
+          style="background-color: #f5a742; color: white; border: none; font-size: 0.9rem;"
+          class="px-3 py-1 rounded-md hover:bg-gray-400 hover:text-gray-800 focus:outline-none focus:border-gray-500 focus:shadow-outline-gray">
+          로그아웃
+        </button>
       </nav>
     </div>
   </header>
 </template>
-  
-  <script>
+
+<script>
 import axios from "@/axios/index";
 // import NotificationListModal from '@/components/modal/NotificationListModal.vue';
   export default {
@@ -234,3 +235,4 @@ import axios from "@/axios/index";
 }
 
   </style>
+

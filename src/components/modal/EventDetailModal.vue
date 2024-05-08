@@ -2,7 +2,7 @@
   <div v-if="isEventModalOpen" class="modal">
     <div class="modal-content-large" @click.stop>
       <div class="modal-header">
-        <h2 style="font-size: 24px; font-weight: bold; color:#EFEFEF">이벤트 상세 정보</h2>
+        <h2 style="font-size: 24px; font-weight: bold; color:#EFEFEF">캠페인 상세 정보</h2>
         <span class="close" @click="closeDetailModal">&times;</span>
       </div>
       <div class="modal-body-large">

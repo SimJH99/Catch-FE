@@ -1,11 +1,11 @@
 <template>
     <div>
       <div class="m-3 p-1 bg-yellow-gradient rounded-md shadow-md text-white text-center">
-        <div class="text-4xl font-bold p-3"> 진행 중인 이벤트 </div>
+        <div class="text-4xl font-bold p-3"> 진행 중인 캠페인 </div>
       </div>
   
       <div v-if="eventList.length === 0" class="m-3 p-1 bg-white rounded-md shadow-md">
-        <div style="min-height:700px" class="text-center2 p-2">진행 중인 이벤트가 없습니다.</div>
+        <div style="min-height:700px" class="text-center2 p-2">진행 중인 캠페인이 없습니다.</div>
       </div>
   
       <div v-else class="m-3 p-1 bg-white rounded-md shadow-md">

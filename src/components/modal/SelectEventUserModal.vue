@@ -258,11 +258,11 @@ export default {
 
         for (const eventId of Object.keys(this.selectedEvents)) {
           // API 호출
-          await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/event/${eventId}/publish`, {}, { headers });
+          await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/event/${eventId}/publish`, { headers });
         }
         // 발행 완료 메시지 등의 처리
-        console.log('선택한 이벤트가 성공적으로 배포되었습니다.');
-        alert('이벤트 배포 성공');
+        console.log('선택한 캠페인이 성공적으로 배포되었습니다.');
+        alert('캠페인 배포 성공');
         window.location.reload();
   } catch (error) {
     console.error('Error publishing event:', error);
@@ -282,14 +282,14 @@ async sendEmails() {
     for (const eventId of Object.keys(this.selectedEvents)) {
       try {
         await axios.post(`${process.env.VUE_APP_API_BASE_URL}/event/${eventId}/mailSend`, data, { headers });
-        console.log('선택한 이벤트가 이메일로 성공적으로 발행되었습니다.');
+        console.log('선택한 캠페인이 이메일로 성공적으로 발행되었습니다.');
       } catch (error) {
-        console.error(`이벤트 이메일 발행 중 오류 발생 (쿠폰 ID: ${eventId})`, error);
-        throw new Error('이벤트 이메일 발행 중 오류 발생');
+        console.error(`캠페인 이메일 발행 중 오류 발생 (쿠폰 ID: ${eventId})`, error);
+        throw new Error('캠페인 이메일 발행 중 오류 발생');
       }
     }
     } catch (error) {
-      console.error('이벤트 이메일 발행 중 오류 발생', error);
+      console.error('캠페인 이메일 발행 중 오류 발생', error);
       alert("발행 불가능한 이메일 입니다.")
     }
 },
@@ -305,15 +305,15 @@ async sendNotifications() {
     for (const eventId of Object.keys(this.selectedEvents)) {
       try {
         await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/event/${eventId}/eventNotificationSend`, data, { headers });
-        console.log('선택한 이벤트 알람이 성공적으로 발행되었습니다.');
+        console.log('선택한 캠페인 알람이 성공적으로 발행되었습니다.');
         window.location.reload();
       } catch (error) {
-        console.error(`이벤트 알림 발행 중 오류 발생 (쿠폰 ID: ${eventId})`, error);
-        throw new Error('이벤트 알림 발행 중 오류 발생');
+        console.error(`캠페인 알림 발행 중 오류 발생 (쿠폰 ID: ${eventId})`, error);
+        throw new Error('캠페인 알림 발행 중 오류 발생');
       }
     }
     } catch (error) {
-      console.error('이벤트 알림 발행 중 오류 발생', error);
+      console.error('캠페인 알림 발행 중 오류 발생', error);
       alert("발행 불가능한 알림 입니다.")
     }
 },

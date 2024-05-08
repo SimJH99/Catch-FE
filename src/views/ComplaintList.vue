@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="m-3 p-1 bg-white rounded-md shadow-md flex">
-      <div class="text-4xl font-bold p-3">문의 게시글 리스트 </div>  
+      <div class="text-4xl font-bold p-3">1:1 문의글 관리</div>  
     </div>
     <div class="m-2 grid grid-cols-4">
       <div class="bg-white m-2 p-2 rounded-md py-5 px-4 shadow-md">
