@@ -66,7 +66,8 @@ export default {
         this.code = '';
         this.$router.push("/mypage"); // 페이지 이동
       } catch (error) {
-        alert(error.response.request.responseText.r);
+        // alert(error.response.request.responseText.r);
+        alert(error.response.data.error.label);
         console.log(error);
       }
     },
