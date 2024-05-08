@@ -165,7 +165,7 @@
         <div class="flex justify-between" style="width: calc(100% - 20px); margin: 10px;">
           <button class="bg-custom-F5A742 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded" style="width: 200px; text-align: center; margin-left: calc(100% - 400px);" @click="openSelectUserModal">발행</button>
             <SelectUserModal :isModalSelectUserOpen="isModalSelectUserOpen" :selectedEvents="selectedEvents" @close-modal="isModalSelectUserOpen = false"/>
-          <button class="bg-custom-F5A742 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded" style="width: 200px; text-align: center; margin-left: 10px;" @click="deleteCoupon">삭제</button>
+          <button class="bg-custom-F5A742 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded" style="width: 200px; text-align: center; margin-left: 10px;" @click="deleteEvent">삭제</button>
         </div>
       </div>
     </div>
@@ -294,61 +294,29 @@ export default {
     closeEventChartModal() {
       this.isEventChartModalOpen = false;
     },
+    async deleteEvent() {
+            try {
+                const access_token = localStorage.getItem('access_token');
+                const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
+                
+                for (const eventId of Object.keys(this.selectedEvents)) {
+                    try {
+                        await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/event/${eventId}/delete`, {}, { headers });
+                    } catch (error) {
+                        console.error(`캠페인 삭제 중 오류 발생 (캠페인 ID: ${eventId})`, error);
+                        alert(`캠페인 삭제 중 오류 발생 (쿠폰 ID: ${eventId})`)
+                        throw new Error('캠페인 삭제 중 오류 발생');
+                    }
+                }
 
-    // async publishCoupon() {
-    //     console.log(this.selectedCoupons);
-    //     if (Object.keys(this.selectedCoupons).length === 0) {
-    //         alert("쿠폰을 선택하세요");
-    //         return;
-    //     }
-    //     try {
-    //         const access_token = localStorage.getItem('access_token');
-    //         const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
-
-    //         for (const couponId of Object.keys(this.selectedCoupons)) {
-    //             try {
-    //                 await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/coupon/${couponId}/publish`, {}, { headers });
-    //                 // 추후에는 쿠폰을 받을 사람들의 접속된 토큰을 가져와서 해당 기기에 알람 전송
-    //                 // 일단은 
-    //                 this.isModalOpen = false;
-    //             } catch (error) {
-    //                 console.error(`쿠폰 발행 중 오류 발생 (쿠폰 ID: ${couponId})`, error);
-    //                 throw new Error('쿠폰 발행 중 오류 발생');
-    //             }
-    //         }
-    //         console.log('선택한 쿠폰이 성공적으로 발행되었습니다.');
-    //         alert("쿠폰 발행 성공")
-    //         this.selectedEvent = {};
-    //         window.location.reload();
-    //     } catch (error) {
-    //         this.selectedCoupons = {};
-    //         console.error('쿠폰 발행 중 오류 발생', error);
-    //         alert("발행 불가능한 쿠폰 입니다.")
-    //     }
-    // },
-    // async deleteCoupon() {
-    //     try {
-    //         const access_token = localStorage.getItem('access_token');
-    //         const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
-
-    //         for (const couponId of Object.keys(this.selectedCoupons)) {
-    //             try {
-    //                 await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/coupon/${couponId}/delete`, {}, { headers });
-    //             } catch (error) {
-    //                 console.error(`쿠폰 삭재 중 오류 발생 (쿠폰 ID: ${couponId})`, error);
-    //                 alert(`쿠폰 삭재 중 오류 발생 (쿠폰 ID: ${couponId})`)
-    //                 throw new Error('쿠폰 발행 중 오류 발생');
-    //             }
-    //         }
-
-    //         console.log('선택한 쿠폰이 성공적으로 삭제되었습니다.');
-    //         alert("쿠폰 삭제 성공")
-    //         window.location.reload();
-    //     } catch (error) {
-    //         console.error('쿠폰 삭제 중 오류 발생', error);
-    //         alert("삭제 불가능한 쿠폰 입니다.")
-    //     }
-    // },
+                console.log('선택한 캠페인가 성공적으로 삭제되었습니다.');
+                alert("캠페인 삭제 성공")
+                window.location.reload();
+            } catch (error) {
+                console.error('쿠폰 삭제 중 오류 발생', error);
+                alert("삭제 불가능한 쿠폰 입니다.")
+            }
+        },
     resetInputs() {
       this.searchName = null;
       this.searchStartDate = null;
