@@ -10,7 +10,7 @@
           <tr>
             <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">캠페인 제목</th>
             <td class="px-2 border-2 border-gray-300" style="width: 80%;">
-              <input type="text" v-model="eventTitle" class="w-full text-base outline-none hover:bg-gray-100 active:bg-gray-200">
+              <input type="text" v-model="eventTitle" class="w-full text-base outline-none hover:bg-gray-100 active:bg-gray-200" maxlength="40">
             </td>
           </tr>
           <tr>

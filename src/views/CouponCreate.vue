@@ -9,7 +9,7 @@
         <div style="width: 100m; margin-bottom: 50px">
           <div class="mb-4">
             <label for="name" class="block text-sm font-semibold text-gray-800 mb-1">쿠폰명</label>
-            <input type="text" id="name" name="name" v-model="name" class="mt-1 p-2 w-full border rounded-md" placeholder="쿠폰명을 입력하세요">
+            <input type="text" id="name" name="name" v-model="name" class="mt-1 p-2 w-full border rounded-md" maxlength="25" placeholder="쿠폰명을 입력하세요">
           </div>
           <div class="mb-6">
             <label for="employeeNumber" class="block text-sm font-semibold texts-gray-800 mb-1">수량</label>
@@ -27,7 +27,6 @@
             <label for="email" class="block text-sm font-semibold text-gray-800 mb-1">시작일</label>
             <input type="date" id="startDate" v-model="startDate" class="m-1 p-1 rounded-md w-48 outline-none">
           </div>
-          <!-- 비밀번호 입력 -->
           <div class="mb-4">
             <label for="password" class="block text-sm font-semibold text-gray-800 mb-1">마감일</label>
             <input type="date" id="endDate" v-model="endDate" class="m-1 p-1 rounded-md w-48 outline-none">

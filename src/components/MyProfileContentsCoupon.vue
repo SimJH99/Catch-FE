@@ -19,7 +19,7 @@
               <div class="coupon-wrapper">
                 <img src="@/assets/coupon_image.png" alt="Coupon Image" class="coupon-image">
                 <div class="coupon-content">
-                  <p class="coupon-name">{{ coupon.name }}</p>
+                  <p class="coupon-name">{{ truncateText(coupon.name, 10) }}</p>
                   <p class="coupon-price">{{ coupon.price }}원</p>
                 </div>
               </div> 
@@ -134,6 +134,13 @@ export default {
     closeMyCouponListModal() {
       this.isModalMyCouponListOpen = false;
       console.log(this.isModalMyCouponListOpen);
+    },
+    truncateText(text, maxLength) {
+      if (text.length > maxLength) {
+        return text.substring(0, maxLength) + '...';
+      } else {
+        return text;
+      }
     },
   },
 };
