@@ -1,5 +1,4 @@
 <!-- App.vue -->
-
 <template>
   <div>
     <div class="bg-gray-100">
@@ -12,19 +11,17 @@
     <component :is="footerComponent"></component>
   </div>
 </template>
-
 <script>
 import AppSideBar from "@/components/AppSideBar.vue";
 import UserHeader from "@/components/UserHeader.vue"
 import UserFooter from "./components/UserFooter.vue";
 import AdminHeader from "./components/AdminHeader.vue";
 import AdminFooter from "./components/AdminFooter.vue";
-
 // import firebase from 'firebase/app';
 import 'firebase/messaging';
 import { initializeApp } from 'firebase/app';
-import { getMessaging, onMessage } from 'firebase/messaging';
-
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+import axios from "axios";
 export default {
   data() {
     return {
@@ -45,10 +42,13 @@ export default {
       this.updateLayout(to);
     }
   },
-  mounted() {
+  async mounted() {
+    await this.initializeFCM();
     this.updateLayout(this.$route);
-
-    const firebaseConfig = {
+  },
+  methods: {
+    async initializeFCM() {
+      const firebaseConfig = {
         apiKey: "AIzaSyCCvpmI_b0r4wz5jaxiB4d9JEmc2MCaIYQ",
         authDomain: "catch-push.firebaseapp.com",
         projectId: "catch-push",
@@ -56,39 +56,49 @@ export default {
         messagingSenderId: "786691079751",
         appId: "1:786691079751:web:f827e022f550c46bb93b62",
         measurementId: "G-5X30Z4MRCE"
-    }
-    
-
-    const firebase = initializeApp(firebaseConfig);
-    const messaging = getMessaging(firebase);
-    
-
-    onMessage(messaging, (payload) => {
-      console.log("Message received. ", payload);
-      if (Notification.permission === "granted") {
-        const { title, body } = payload.notification;
-        navigator.serviceWorker.ready
-          .then((registration) => {
-            registration
-              .showNotification(title, {
-                body: body + "그냥",
-                icon: "favicon.ico",
-                vibrate: [200, 100, 200, 100, 200, 100, 200],
-                // tag: "vibration-sample",
-              })
-              .finally((arg) => console.log(arg));
-          })
-          .catch((err) => {
-            console.log(err);
+      };
+      // Initialize Firebase
+      const firebase = initializeApp(firebaseConfig);
+      const messaging = getMessaging(firebase);
+      if (!localStorage.getItem("fcmToken")) {
+        try {
+          // Await the FCM token
+          const token = await getToken(messaging, {
+            vapidKey: `${process.env.VUE_APP_FIREBASE_VAP_ID}`
           });
+          const access_token = localStorage.getItem('access_token');
+          const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
+          // Send the FCM token to the server
+          await axios.post(
+            `${process.env.VUE_APP_API_BASE_URL}/user/pushToken`,
+            {
+              pushToken: token,
+            },
+            { headers }
+          );
+          // Store the token in local storage
+          localStorage.setItem("fcmToken", token);
+          console.log('fcmToken: ', token);
+        } catch (err) {
+          console.log(err);
+        }
       }
-    })
-  },
-  methods: {
+      onMessage(messaging, (payload) => {
+        console.log("Received message ", payload);
+        const notificationTitle = payload.notification.title;
+        const notificationOptions = {
+            body: payload.notification.body,
+            icon: "favicon.ico"
+        };
+
+        if (Notification.permission === "granted") {
+            new Notification(notificationTitle, notificationOptions);
+        }
+    });
+    },
     updateLayout(route) {
       const meta = route.meta || {};
       const hideHeaderFooter = meta.hideHeaderFooter || false;
-      
       if (hideHeaderFooter) {
         this.headerComponent = null; // 헤더 숨기기
         this.footerComponent = null; // 푸터 숨기기
@@ -114,6 +124,5 @@ export default {
   }
 };
 </script>
-
 <style>
 </style>
