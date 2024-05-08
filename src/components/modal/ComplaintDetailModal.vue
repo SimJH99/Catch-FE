@@ -224,6 +224,7 @@ export default {
         await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/comments/${selectedComplaintId}/delete`, {headers});
         this.loadComplaint(selectedComplaintId);
         alert("삭제되었습니다.");
+        window.location.reload();
       }
       else{
         alert("취소되었습니다.");

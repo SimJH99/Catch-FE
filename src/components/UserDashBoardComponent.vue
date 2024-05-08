@@ -369,10 +369,10 @@ import Chart from 'chart.js/auto';
           label: '고객 수 ',
           data: [this.gradeCount[1], this.gradeCount[0], this.gradeCount[2], this.gradeCount[3]],
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(255, 159, 64, 0.7)'
           ],
           borderColor: [
             'rgba(255, 99, 132, 1)',
@@ -425,14 +425,14 @@ import Chart from 'chart.js/auto';
           label: '고객 수 ',
           data: this.genderCount,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.5)',
-            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
           ],
           borderColor: [
             'rgba(255, 99, 132, 1)',
             'rgba(54, 162, 235, 1)',
           ],
-          borderWidth: 1
+          borderWidth: 0
         }]
       },
       options: {
@@ -470,13 +470,13 @@ import Chart from 'chart.js/auto';
           label: ' 연령 대 ',
           data: this.ageCount,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(245, 124, 0, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(0, 0, 128, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(245, 124, 0, 0.7)',
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(0, 0, 128, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
           ],
           borderColor: [
             'rgba(255, 99, 132, 1)',

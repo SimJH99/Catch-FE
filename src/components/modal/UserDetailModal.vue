@@ -244,9 +244,9 @@ export default {
     formatGender(gender) {
       switch (gender) {
         case "MALE":
-          return "남";
+          return "남성";
         case "FEMALE":
-          return "여";
+          return "여성";
         default:
           return gender;
       }

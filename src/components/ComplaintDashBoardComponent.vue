@@ -311,14 +311,14 @@ export default {
             label: '문의글 수 ',
             data: this.statusCount,
             backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
+              'rgba(255, 99, 132, 0.7)',
+              'rgba(75, 192, 192, 0.7)',
             ],
             borderColor: [
               'rgba(255, 99, 132, 1)',
-              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
             ],
-            borderWidth: 1
+            borderWidth: 0
           }]
         },
         options: {
@@ -347,15 +347,15 @@ export default {
       data: {
         labels: this.categories,
         datasets: [{
-          label: '고객 수 ',
+          label: '문의 수 ',
           data: this.categoryCount,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(255, 159, 64, 0.7)',
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
           ],
           borderColor: [
             'rgba(255, 99, 132, 1)',
@@ -412,7 +412,7 @@ export default {
           label: '취소/교환/환불',
           data: this.monthCategory['CANCEL/EXCHANGE/REFUND'],
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.4)',
           ],
           borderColor: [
             'rgba(255, 99, 132, 1)',
@@ -423,7 +423,7 @@ export default {
           label: '상품확인',
           data: this.monthCategory['CONFIRMATION'],
           backgroundColor: [
-            'rgba(245, 124, 0, 0.2)',
+            'rgba(245, 124, 0, 0.4)',
           ],
           borderColor: [
             'rgba(245, 124, 0, 1)',
@@ -434,7 +434,7 @@ export default {
           label: '배송',
           data: this.monthCategory['DELIVERY'],
           backgroundColor: [
-            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.4)',
           ],
           borderColor: [
             'rgba(255, 206, 86, 1)',
@@ -445,7 +445,7 @@ export default {
           label: '회원정보',
           data: this.monthCategory['MYINFO'],
           backgroundColor: [
-            'rgba(75, 192, 192, 0.2)',
+            'rgba(75, 192, 192, 0.4)',
           ],
           borderColor: [
             'rgba(75, 192, 192, 1)',
@@ -456,7 +456,7 @@ export default {
           label: '주문/결제',
           data: this.monthCategory['ORDER'],
           backgroundColor: [
-            'rgba(54, 162, 235, 0.2)',
+            'rgba(54, 162, 235, 0.4)',
           ],
           borderColor: [
             'rgba(54, 162, 235, 1)',
@@ -467,7 +467,7 @@ export default {
           label: '서비스',
           data: this.monthCategory['SERVICE'],
           backgroundColor: [
-            'rgba(153, 102, 255, 0.2)',
+            'rgba(153, 102, 255, 0.4)',
           ],
           borderColor: [
             'rgba(153, 102, 255, 1)',
@@ -521,7 +521,7 @@ export default {
           label: '취소/교환/환불',
           data: this.yearCategory['CANCEL/EXCHANGE/REFUND'],
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 99, 132, 0.4)',
           ],
           borderColor: [
             'rgba(255, 99, 132, 1)',
@@ -532,7 +532,7 @@ export default {
           label: '상품확인',
           data: this.yearCategory['CONFIRMATION'],
           backgroundColor: [
-            'rgba(245, 124, 0, 0.2)',
+            'rgba(245, 124, 0, 0.4)',
           ],
           borderColor: [
             'rgba(245, 124, 0, 1)',
@@ -543,7 +543,7 @@ export default {
           label: '배송',
           data: this.yearCategory['DELIVERY'],
           backgroundColor: [
-            'rgba(255, 206, 86, 0.2)',
+            'rgba(255, 206, 86, 0.4)',
           ],
           borderColor: [
             'rgba(255, 206, 86, 1)',
@@ -554,7 +554,7 @@ export default {
           label: '회원정보',
           data: this.yearCategory['MYINFO'],
           backgroundColor: [
-            'rgba(75, 192, 192, 0.2)',
+            'rgba(75, 192, 192, 0.4)',
           ],
           borderColor: [
             'rgba(75, 192, 192, 1)',
@@ -565,7 +565,7 @@ export default {
           label: '주문/결제',
           data: this.yearCategory['ORDER'],
           backgroundColor: [
-            'rgba(54, 162, 235, 0.2)',
+            'rgba(54, 162, 235, 0.4)',
           ],
           borderColor: [
             'rgba(54, 162, 235, 1)',
@@ -576,7 +576,7 @@ export default {
           label: '서비스',
           data: this.yearCategory['SERVICE'],
           backgroundColor: [
-            'rgba(153, 102, 255, 0.2)',
+            'rgba(153, 102, 255, 0.4)',
           ],
           borderColor: [
             'rgba(153, 102, 255, 1)',

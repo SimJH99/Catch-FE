@@ -99,8 +99,8 @@
                             <th class="p-2 border border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">성별</th>
                             <td class="px-4 border border-gray-400" style="width: 80%;">
                                 <select id="searchRole" v-model="searchGender" class="m-1 p-1 rounded-md w-48 outline-none">
-                                    <option value="남자">남자</option>
-                                    <option value="여자">여자</option>
+                                    <option value="남성">남성</option>
+                                    <option value="여성">여성</option>
                                 </select>
                             </td>
                         </tr>
@@ -287,9 +287,9 @@ export default {
                 if (this.searchEmail.trim() !== '') {
                     data.email = this.searchEmail;
                 }
-                if (this.searchGender === "남자") {
+                if (this.searchGender === "남성") {
                     data.gender = "MALE";
-                } else if (this.searchGender === "여자") {
+                } else if (this.searchGender === "여성") {
                     data.gender = "FEMALE";
                 } else if (this.searchGender.trim() !== '') {
                     data.gender = this.searchGender;

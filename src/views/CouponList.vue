@@ -74,9 +74,8 @@
                         <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">쿠폰 상태</th>
                         <td class="px-2 border border-gray-300" style="width: 80%;">
                             <select id="searchCouponStatus" v-model="searchCouponStatus" class="m-1 p-1 rounded-md w-48 outline-none">
-                              <option value="발급">발급</option>
-                              <option value="삭제">삭제</option>
-                              <option value="발행">발행</option>
+                              <option value="생성">생성</option>
+                              <option value="배포">배포</option>
                               <option value="만료">만료</option>
                             </select>
                         </td>
