@@ -117,10 +117,6 @@
       </div>
       <div class="flex justify-between" style="width: calc(100% - 20px); margin: 20px;">
         <div style="display: inline-block; ">
-          <input type="checkbox" id="emailCheckbox" class="mr-2" style="vertical-align: middle; margin-left:650px">
-          <label for="emailCheckbox" style="vertical-align: middle;">이메일</label>
-        </div>
-        <div style="display: inline-block; ">
           <input type="checkbox" id="pushCheckbox" class="mr-2" style="vertical-align: middle;">
           <label for="pushCheckbox" style="vertical-align: middle;">푸시 알람</label>
         </div>
@@ -230,25 +226,17 @@ export default {
         }
 
         // 이메일 체크박스와 푸시 알람 체크박스 상태 확인
-        const emailCheckbox = document.getElementById('emailCheckbox');
         const pushCheckbox = document.getElementById('pushCheckbox');
-        const isEmailChecked = emailCheckbox.checked;
         const isPushChecked = pushCheckbox.checked;
 
-        if (!isEmailChecked && !isPushChecked) {
-          // 두 체크박스가 모두 선택되지 않은 경우
-          alert('적어도 하나의 옵션을 선택해주세요.');
-          return;
-        }
 
         const access_token = localStorage.getItem('access_token');
         const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
 
         // 이메일 및 푸시 알람 보내기
         let emailPromise = Promise.resolve();
-        if (isEmailChecked) {
-          emailPromise = this.sendEmails();
-        }
+        emailPromise = this.sendEmails();
+  
         let pushPromise = Promise.resolve();
         if (isPushChecked) {
           pushPromise = this.sendNotifications();
