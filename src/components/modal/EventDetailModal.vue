@@ -26,7 +26,7 @@
                   <div class="table-value">{{ accountDetails.endDate }}</div>
                 </div>
               </div>
-                <iframe :srcdoc="accountDetails.contents" class="preview"></iframe>
+              <iframe :srcdoc="accountDetails.contents" class="preview"></iframe>
             </div>
             <div class="btn-container">
               <button @click="toggleEdit" class="btn">수정</button>
@@ -47,7 +47,7 @@
               <input v-model="endDate" type="date" id="endDate" class="mt-1 p-2 w-full border rounded-md">
             </div>
             <div class="mb-4">
-              <label for="eventContent"  class="block text-sm font-semibold text-gray-800 mb-1">내용</label>
+              <label for="eventContent" class="block text-sm font-semibold text-gray-800 mb-1">내용</label>
               <textarea v-model="eventContent" id="eventContent" class="mt-1 p-2 w-full border rounded-md" rows="12"
                 placeholder="내용을 입력하세요"></textarea>
             </div>
@@ -121,15 +121,30 @@ export default {
       this.isEditing = false;
     },
     async saveChanges() {
-      try {
-        // Perform save changes operation here
-        this.isEditing = false;
-        // You can emit an event to notify parent component about changes saved if needed
-        this.$emit('changes-saved');
-      } catch (error) {
-        console.error("Error saving changes:", error);
+      if (confirm("캠페인을 수정 하시겠습니까?")) {
+        try {
+          const access_token = localStorage.getItem('access_token');
+          const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
+          const data = {
+            name: this.editName,
+            contents: this.eventContent,
+            startDate: this.startDate,
+            endDate: this.endDate
+          };
+
+          await axios.post(`${process.env.VUE_APP_API_BASE_URL}/event/${this.selectedEventId}/update`, data, { headers });
+          this.isEditing = false;
+          this.loadAccountDetails(this.selectedEventId);
+          alert("수정이 완료 되었습니다.");
+          // 페이지를 새로고침하여 변경 사항을 반영합니다.
+          window.location.reload();
+        } catch (error) {
+          console.error("Error saving changes:", error);
+          alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
+        }
       }
     },
+
   }
 };
 </script>
@@ -213,9 +228,10 @@ export default {
   height: 300px;
 }
 
-.fix_preview{
+.fix_preview {
   width: 100%;
-  height: 300px; /* 수정: 내용 입력창의 높이에 따라 조정하세요 */
+  height: 300px;
+  /* 수정: 내용 입력창의 높이에 따라 조정하세요 */
 }
 
 .table-label,
