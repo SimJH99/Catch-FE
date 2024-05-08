@@ -8,7 +8,7 @@
     <table style="width: calc(100% - 20px); margin: 10px"> 
       <tbody>
           <tr>
-            <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">이벤트 제목</th>
+            <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">캠페인 제목</th>
             <td class="px-2 border-2 border-gray-300" style="width: 80%;">
               <input type="text" v-model="eventTitle" class="w-full text-base outline-none hover:bg-gray-100 active:bg-gray-200">
             </td>
@@ -29,7 +29,7 @@
   </table>
 
     <div class="mb-4 bg-white w-full p-3">
-      <!-- 이벤트 제목 입력 -->
+      <!-- 캠페인 제목 입력 -->
 
       <!-- HTML 코드 입력과 미리보기 -->
       <div class="flex mt-4">
@@ -80,11 +80,11 @@ import axios from "@/axios/index";
           endDate: this.endDate,
         }, { headers });
 
-        alert('이벤트가 성공적으로 저장되었습니다.');
+        alert('캠페인을 성공적으로 저장되었습니다.');
         this.$router.push("/eventList");
       } catch (error) {
         console.error(error);
-        alert('이벤트 저장 중 오류가 발생했습니다.');
+        alert('캠페인 저장 중 오류가 발생했습니다.');
       }
     }
     }

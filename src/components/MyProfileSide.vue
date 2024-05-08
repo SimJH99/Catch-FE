@@ -21,25 +21,25 @@
   
       <!-- 관심 목록 -->
       <div class="section">
-        <div class="title">관심목록</div>
+        <div class="title">관심 목록</div>
         <a class="item">위시리스트</a>
-        <a class="item">재입고알림</a>
+        <a class="item">재입고 알림</a>
       </div>
   
       <!-- 쇼핑 활동 -->
       <div class="section">
         <div class="title">쇼핑활동</div>
-        <a class="item">상품리뷰</a>
-        <a class="item">상품문의</a>
-        <a class="item">1:1문의내역</a>
-        <a class="item">이벤트참여내역</a>
+        <a class="item">상품 리뷰</a>
+        <a class="item">상품 문의</a>
+        <a class="item">1:1문의 내역</a>
+        <a class="item">캠페인 참여내역</a>
       </div>
   
       <!-- 회원 정보 -->
       <div class="section">
         <div class="title">회원정보</div>
         <a class="item">개인정보관리</a>
-        <a class="item">비밀번호변경</a>
+        <a class="item">비밀번호 변경</a>
         <a class="item">배송지관리</a>
         <a class="item">회원탈퇴</a>
       </div>

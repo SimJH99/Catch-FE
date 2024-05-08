@@ -22,7 +22,7 @@
                 <div class="m-2 text-md text-[16px]">캠페인 확인 건수 : {{this.receiveInfo}}건</div>
               </div>
               <div class="bg-white m-2 p-2 rounded-md shadow-md border h-[400px]">
-                <div class="m-2 text-2xl font-bold">캠페인 참여 현황</div>
+                <div class="m-2 text-2xl font-bold">캠페인 유입 현황</div>
                 <div class="m-2 p-4" style="height: 350px; overflow-y: auto;">
                   <canvas id="gradeChart" ></canvas>
                 </div>

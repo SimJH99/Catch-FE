@@ -131,6 +131,7 @@
                         </th>
                         <th scope="col"
                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            통계 / 수정
                         </th>
                     </tr>
                 </thead>
@@ -143,8 +144,8 @@
                             <span v-if="!coupon.editing">{{ coupon.name }}</span>
                             <input v-else type="text" v-model="coupon.name" @blur="cancelEdit(coupon)" @keyup.enter="saveEdit(coupon)">
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openCouponChartModal(coupon.id)">{{coupon.code}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openCouponChartModal(coupon.id)">
+                        <td class="px-6 py-4 whitespace-nowrap">{{coupon.code}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
                             <span v-if="coupon.status === 'ISSUANCE'">생성</span>
                             <span v-else-if="coupon.status === 'DELETE'">삭제</span>
                             <span v-else-if="coupon.status === 'PUBLISH'">배포</span>
@@ -152,10 +153,15 @@
                             <span v-else-if="coupon.status === 'RECEIVE'">수령</span>
                             <span v-else-if="coupon.status === 'USED'">사용된</span>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openCouponChartModal(coupon.id)">{{coupon.quantity}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openCouponChartModal(coupon.id)">{{coupon.startDate}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap cursor-pointer" @click="openCouponChartModal(coupon.id)">{{coupon.endDate}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap" @click="openCouponChartModal(coupon.id)"><button @click.stop="openCouponDetailModal(coupon.id)" class="btn">수정</button></td>
+                        <td class="px-6 py-4 whitespace-nowrap" >{{coupon.quantity}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap" >{{coupon.startDate}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap" >{{coupon.endDate}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <!-- 통계 버튼 -->
+                            <button @click.stop="openCouponChartModal(coupon.id)" class="btn mr-2">통계</button>
+                            <!-- 수정 버튼 -->
+                            <button @click.stop="openCouponDetailModal(coupon.id)" class="btn">수정</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>

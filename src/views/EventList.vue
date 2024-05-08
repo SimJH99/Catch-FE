@@ -117,7 +117,7 @@
               </th>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">상태
               </th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">통계 / 수정
               </th>
             </tr>
           </thead>
@@ -126,13 +126,13 @@
               <td class="px-6 py-4 whitespace-nowrap" >
                 <input type="checkbox" :checked="selectedEvents[event.id]" @change="updateSelectedEvents(event.id)" style="cursor: pointer;">
               </td>
-              <td class="px-6 py-4 whitespace-nowrap" @click="openEventChartModal(event.id)">
+              <td class="px-6 py-4 whitespace-nowrap">
                 <span v-if="!event.editing">{{ event.name }}</span>
                 <input v-else type="text" v-model="event.name" @blur="cancelEdit(event)" @keyup.enter="saveEdit(event)">
               </td>
-              <td class="px-6 py-4 whitespace-nowrap" @click="openEventChartModal(event.id)">{{ event.startDate }}</td>
-              <td class="px-6 py-4 whitespace-nowrap" @click="openEventChartModal(event.id)">{{ event.endDate }}</td>
-              <td class="px-6 py-4 whitespace-nowrap" @click="openEventChartModal(event.id)">
+              <td class="px-6 py-4 whitespace-nowrap">{{ event.startDate }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ event.endDate }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">
                 <span v-if="event.eventStatus === 'ISSUANCE'">생성</span>
                 <span v-else-if="event.eventStatus === 'DELETE'">삭제</span>
                 <span v-else-if="event.eventStatus === 'PUBLISH'">배포</span>
@@ -140,7 +140,12 @@
                 <span v-else-if="event.eventStatus === 'RECEIVE'">수령</span>
                 <span v-else-if="event.eventStatus === 'USED'">사용된</span>
               </td>
-              <td class="px-6 py-4 whitespace-nowrap"><button @click.stop="openEventDetailModal(event.id)" class="btn">수정</button></td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <!-- 통계 버튼 -->
+                <button @click.stop="openEventChartModal(event.id)" class="btn mr-2">통계</button>
+                <!-- 수정 버튼 -->
+                <button @click.stop="openEventDetailModal(event.id)" class="btn">수정</button>
+            </td>
             </tr>
           </tbody>
         </table>
@@ -272,7 +277,7 @@ export default {
     openSelectUserModal() {
         console.log(this.selectedEvents);
         if (Object.keys(this.selectedEvents).length === 0) {
-            alert("이벤트을 선택하세요");
+            alert("캠페인을 선택하세요");
             return;
         }
         this.isModalSelectUserOpen = true;

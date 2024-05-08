@@ -71,7 +71,7 @@
                 </dd>
             </dl>
             <dl>
-                <dt><span class="dt">이벤트참여내역</span></dt>
+                <dt><span class="dt">캠페인 참여내역</span></dt>
                 <dd>
                     <span class="dd">응모<a href="#">0</a></span>
                     <span class="dd">당첨<a href="#">0</a></span>
