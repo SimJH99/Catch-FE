@@ -314,28 +314,19 @@ export default {
       this.isEventChartModalOpen = false;
     },
     async deleteEvent() {
-            try {
-                const access_token = localStorage.getItem('access_token');
-                const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
-                
-                for (const eventId of Object.keys(this.selectedEvents)) {
-                    try {
-                        await axios.post(`${process.env.VUE_APP_API_BASE_URL}/event/${eventId}/delete`, {}, { headers });
-                    } catch (error) {
-                        console.error(`캠페인 삭제 중 오류 발생 (캠페인 ID: ${eventId})`, error);
-                        alert(`캠페인 삭제 중 오류 발생 (쿠폰 ID: ${eventId})`)
-                        throw new Error('캠페인 삭제 중 오류 발생');
-                    }
-                }
-
-                console.log('선택한 캠페인가 성공적으로 삭제되었습니다.');
-                alert("캠페인 삭제 성공")
-                window.location.reload();
-            } catch (error) {
-                console.error('쿠폰 삭제 중 오류 발생', error);
-                alert("삭제 불가능한 쿠폰 입니다.")
-            }
-        },
+      const access_token = localStorage.getItem('access_token');
+      const headers = access_token ? {Authorization: `Bearer ${access_token}`} : {};
+      
+      for (const eventId of Object.keys(this.selectedEvents)) {
+          try {
+              await axios.post(`${process.env.VUE_APP_API_BASE_URL}/event/${eventId}/delete`, {}, { headers });
+              alert("캠페인 삭제 성공")
+              window.location.reload();
+          } catch (error) {
+            alert(`삭제 불가 캠페인입니다. (쿠폰명 : ${this.eventList.find(event => event.id === parseInt(eventId)).name})`);
+          }
+      }
+    },
     resetInputs() {
       this.searchName = null;
       this.searchStartDate = null;
