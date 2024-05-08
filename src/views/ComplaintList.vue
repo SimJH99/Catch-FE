@@ -109,8 +109,8 @@
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="(account) in displayedAccounts" :key="account.id" @click="openComplaintDetailModal(account.complaintId)" style="cursor: pointer;">
-                    <td :class="getStatusBackground(account.status)">{{ account.complaintId }}</td>
+                <tr v-for="(account, index) in displayedAccounts" :key="account.id" @click="openComplaintDetailModal(account.complaintId)" style="cursor: pointer;">
+                    <td :class="getStatusBackground(account.status)">{{ currentPage * pageSize + index + 1 }}</td>
                     <td :class="getStatusBackground(account.status)">{{ account.name }}</td>
                     <td :class="getStatusBackground(account.status)">{{ account.title }}</td>
                     <td :class="getStatusColor(account.status)">
