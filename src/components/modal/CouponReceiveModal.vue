@@ -1,15 +1,16 @@
 <template>
   <div v-if="isModalCouponReceiveOpen" class="modal">
     <div class="modal-content" @click.stop>
-      <div class="modal-header">
-        <h2>쿠폰 등록</h2>
-        <span class="close" @click="closeCouponReceiveModal()">&times;</span>
+      <div class="modal-header" style="margin-bottom: 20px;">
+        <h2 style="font-size: 40px;  text-align: center;">쿠폰 등록
+          <span class="close" @click="closeCouponReceiveModal()">&times;</span>
+        </h2>
       </div>
       
       <div class="mb-6">
         <label
           for="employeeNumber"
-          class="block text-sm font-medium text-gray-600"
+          class="block text-sm font-medium text-gray-600 margin-left:"
           >쿠폰 번호</label>
         <input
           v-model="code"
@@ -19,8 +20,6 @@
           class="mt-4 p-3 w-full border rounded-md focus:outline-none focus:border-indigo-500"
           placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
         />
-      </div>
-
       <form @submit.prevent="doLogin" class="w-full">
         <button
           @click="couponReceive"
@@ -35,6 +34,7 @@
           <p> 형식에 맞춰 쿠폰 코드를 입력해주세요.</p>
         </div>
       </form>
+    </div>
     </div>
   </div>
 </template>
@@ -60,7 +60,7 @@ export default {
         const data = {
           code: this.code,
         };
-        await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/coupon/receive`, data, { headers });
+        await axios.post(`${process.env.VUE_APP_API_BASE_URL}/coupon/receive`, data, { headers });
         alert("쿠폰이 정상적으로 등록되었습니다.");
         this.$emit('close-modal'); // 모달을 닫음
         this.code = '';
@@ -108,12 +108,12 @@ export default {
   width: 500px;
   height: 300px;
   min-width: 300px;
-  text-align: center;
+  text-align: left;
 }
 
 .close {
   float: right;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
   cursor: pointer;
 }
@@ -124,4 +124,5 @@ export default {
   text-decoration: none;
   cursor: pointer;
 }
+
 </style>
