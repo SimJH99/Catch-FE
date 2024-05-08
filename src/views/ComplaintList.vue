@@ -79,6 +79,20 @@
                         </select>
                         </td>
                     </tr>
+                    <tr>
+                      <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">카테고리</th>
+                      <td class="px-2 border-2 border-gray-300" style="width: 80%;">
+                      <select v-model="category" class="m-1 p-1 rounded-md w-48 outline-none">
+                          <option :value="null">--선택--</option>
+                          <option value="DELIVERY">배송</option>
+                          <option value="ORDER">주문/결제</option>
+                          <option value="CANCEL/EXCHANGE/REFUND">취소/교환/환불</option>
+                          <option value="MYINFO">회원정보</option>
+                          <option value="CONFIRMATION">상품확인</option>
+                          <option value="SERVICE">서비스</option>
+                      </select>
+                      </td>
+                  </tr>
                 </tbody>
             </table>
             <div class="flex justify-between">
@@ -105,6 +119,7 @@
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">이름</th>
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">제목</th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">카테고리</th>
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">답변 상태</th>
                 </tr>
               </thead>
@@ -113,6 +128,14 @@
                     <td :class="getStatusBackground(account.status)">{{ account.complaintId }}</td>
                     <td :class="getStatusBackground(account.status)">{{ account.name }}</td>
                     <td :class="getStatusBackground(account.status)">{{ account.title }}</td>
+                    <td :class="getStatusBackground(account.status)">
+                      <span v-if="account.category === 'DELIVERY'">배송</span>
+                      <span v-else-if="account.category === 'ORDER'">주문/결제</span>
+                      <span v-else-if="account.category === 'CANCEL/EXCHANGE/REFUND'">취소/교환/환불</span>
+                      <span v-else-if="account.category === 'MYINFO'">회원정보</span>
+                      <span v-else-if="account.category === 'CONFIRMATION'">상품확인</span>
+                      <span v-else-if="account.category === 'SERVICE'">서비스</span>
+                    </td>
                     <td :class="getStatusColor(account.status)">
                       {{ account.status }}
                     </td>
@@ -206,7 +229,7 @@ export default {
         if (this.cachedPages[this.currentPage]) {
           this.displayedAccounts = this.cachedPages[this.currentPage];
         } else {
-          const registerData = {complaintId: this.complaintId, name: this.name, title: this.title, status: this.status};
+          const registerData = {complaintId: this.complaintId, name: this.name, title: this.title, status: this.status, category:this.category};
           const token = localStorage.getItem('access_token');
           const headers = token ? { Authorization: `Bearer ${token}` } : {};
           const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/complaints/list`, registerData ,{ headers, params });
@@ -279,6 +302,7 @@ export default {
         this.name = null;
         this.title = null;
         this.status = null;
+        this.category = null;
         this.searchComplaint();
     },
   },

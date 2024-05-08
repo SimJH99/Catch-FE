@@ -289,19 +289,27 @@ export default {
             this.loadCoupons();
         },
         openSelectUserModal() {
-            console.log(this.selectedCoupons);
+            // 선택된 쿠폰들의 상태가 모두 "생성"인지 확인하는 변수
+            let allCreated = true;
+
+            for (const couponId of Object.keys(this.selectedCoupons)) {
+                // 선택된 쿠폰 중에 값이 true인 경우에만 상태를 확인하고, 해당 쿠폰이 "생성" 상태가 아닌 경우에만 allCreated를 false로 설정
+                if (this.couponList.find(coupon => coupon.id === parseInt(couponId)).status !== 'ISSUANCE') {
+                    allCreated = false;
+                    break; // 하나라도 "생성" 상태가 아닌 쿠폰이 있다면 반복문을 더 이상 진행할 필요가 없으므로 중단
+                }
+            }
 
             if (Object.keys(this.selectedCoupons).length === 0) {
                 alert("쿠폰을 선택하세요");
                 return;
+            } else if (allCreated) {
+                // 모달창 열기
+                this.isModalSelectUserOpen = true;
+                console.log("List에서 클릭하면 열리는지 여부: ",this.isModalSelectUserOpen);
+            } else {
+                alert("생성 상태인 쿠폰만 선택하세요");
             }
-            
-            for (const couponId in this.selectedCoupons) {
-                console.log(couponId);
-            }
-            // 모달창 열기
-            this.isModalSelectUserOpen = true;
-            console.log("List에서 클릭하면 열리는지 여부: ",this.isModalSelectUserOpen);
         },
         closeSelectUserModal() {
             this.isModalSelectUserOpen = false;
