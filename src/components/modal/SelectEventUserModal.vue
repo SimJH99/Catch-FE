@@ -14,19 +14,19 @@
             <table class="table border-gray-200 border-2" style="width: calc(100%); margin: 10px;"> 
                 <tbody>
                     <tr>
-                        <th class="py-2 border border-gray-300" style="background-color: #F5A742; width: 20%; color: white;" >고객명</th>
+                        <th class="py-2 border border-gray-300 text-center" style="background-color: #F5A742; width: 20%; color: white;" >고객명</th>
                         <td class="px-4 border border-gray-300" style="width: 80%;">
                             <input type="text" id="searchName" v-model="searchName" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-32 shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </td>
                     </tr>
                     <tr>
-                        <th class="py-2 border border-gray-300" style="background-color: #F5A742; width: 20%; color: white;">고객 E-Mail</th>
+                        <th class="py-2 border border-gray-300 text-center" style="background-color: #F5A742; width: 20%; color: white;">고객 E-Mail</th>
                         <td class="px-4 border border-gray-300" style="width: 80%;">
                             <input type="text" id="searchEmail" v-model="searchEmail" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-32 shadow-sm sm:text-sm border-gray-300 rounded-md">
                         </td>
                     </tr>
                     <tr>
-                        <th class="py-2 border border-gray-300" style="background-color: #F5A742; width: 20%; color: white;">생일</th>
+                        <th class="py-2 border border-gray-300 text-center" style="background-color: #F5A742; width: 20%; color: white;">생일</th>
                         <td class="px-4 border border-gray-300" style="width: 80%;">
                             <div class="flex">
                                 <input type="date" id="searchBirthDate" v-model="searchBirthDate" class="mt-1 mr-2 focus:ring-indigo-500 focus:border-indigo-500 block w-32 shadow-sm sm:text-sm border-gray-300 rounded-md">
@@ -34,7 +34,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="py-2 border border-gray-300" style="background-color: #F5A742; width: 20%; color: white;">성별</th>
+                        <th class="py-2 border border-gray-300 text-center" style="background-color: #F5A742; width: 20%; color: white;">성별</th>
                         <td class="px-4 border border-gray-300" style="width: 80%;">
                             <select id="searchGender" v-model="searchGender">
                               <option value="남자">남자</option>
@@ -43,7 +43,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="py-2 border border-gray-300" style="background-color: #F5A742; width: 20%; color: white;">등급</th>
+                        <th class="py-2 border border-gray-300 text-center" style="background-color: #F5A742; width: 20%; color: white;">등급</th>
                         <td class="px-4 border border-gray-300" style="width: 80%;">
                             <select id="searchGrade" v-model="searchGrade">
                                 <option value="VVIP">VVIP</option>
