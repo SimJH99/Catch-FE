@@ -182,7 +182,6 @@ export default {
   created() {
     this.fetchComplaint();
     this.searchComplaint();
-    this.status  = null;
   },
   methods: {
     async fetchComplaint(){
