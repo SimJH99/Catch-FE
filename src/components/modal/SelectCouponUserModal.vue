@@ -100,7 +100,7 @@
                 <tbody class="bg-white divide-y divide-gray-200" >
                     <tr v-for="user in userList" :key="user.id">
                       <td class="px-6 py-4 whitespace-nowrap">
-                        <input type="checkbox" :checked="selectedUsers.includes(user.id)" @change="toggleUserSelection(user.id)" />
+                        <input type="checkbox" :checked="selectedUsers.includes(user.id)" @change="toggleUserSelection(user.id)" style="cursor: pointer;" />
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span v-if="!user.editing">{{ user.name }}</span>
