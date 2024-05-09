@@ -72,17 +72,17 @@ export default {
           const currentDate = new Date();
 
           // 시작일이 현재 날짜 이전인지 검사
-          if (new Date(this.startDate) < currentDate) {
+          if (new Date(this.startDate) <= currentDate) {
             alert('시작일은 현재 날짜 이후여야 합니다.');
             return;
           }
           // 종료일이 현재 날짜 이전인지 검사
-          if (new Date(this.endDate) < currentDate) {
+          if (new Date(this.endDate) <= currentDate) {
             alert('종료일은 현재 날짜 이후여야 합니다.');
             return;
           }
           // 시작일이 종료일보다 이른지 검사
-          if (new Date(this.startDate) > new Date(this.endDate)) {
+          if (new Date(this.startDate) >= new Date(this.endDate)) {
             alert('시작일은 종료일보다 이전이어야 합니다.');
             return;
           }
