@@ -123,21 +123,50 @@ export default {
     async saveChanges() {
       if (confirm("캠페인을 수정 하시겠습니까?")) {
         try {
-          const access_token = localStorage.getItem('access_token');
-          const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
-          const data = {
-            name: this.editName,
-            contents: this.eventContent,
-            startDate: this.startDate,
-            endDate: this.endDate
-          };
+          if (!this.editName.trim()) {
+            alert("캠페인 제목을 입력하세요.");
+          } else if (!this.eventContent.trim()) {
+            alert("캠페인 내용을 입력하세요.");
+          } else if (!this.startDate.trim()) {
+            alert("시작일을 지정해주세요.");
+          } else if (!this.endDate.trim()) {
+            alert("종료일을 지정해주세요.");
+          } else if (!/\[광고\]/.test(this.editName)) {
+            alert('캠페인 제목에 "[광고]"를 포함해주세요.');
+          } else {
+            const currentDate = new Date();
 
-          await axios.post(`${process.env.VUE_APP_API_BASE_URL}/event/${this.selectedEventId}/update`, data, { headers });
-          this.isEditing = false;
-          this.loadAccountDetails(this.selectedEventId);
-          alert("수정이 완료 되었습니다.");
-          // 페이지를 새로고침하여 변경 사항을 반영합니다.
-          window.location.reload();
+            // 시작일이 현재 날짜 이전인지 검사
+            if (new Date(this.startDate) < currentDate) {
+              alert('시작일은 현재 날짜 이후여야 합니다.');
+              return;
+            }
+            // 종료일이 현재 날짜 이전인지 검사
+            if (new Date(this.endDate) < currentDate) {
+              alert('종료일은 현재 날짜 이후여야 합니다.');
+              return;
+            }
+            // 시작일이 종료일보다 이른지 검사
+            if (new Date(this.startDate) > new Date(this.endDate)) {
+              alert('시작일은 종료일보다 이전이어야 합니다.');
+              return;
+            }
+            const access_token = localStorage.getItem('access_token');
+            const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
+            const data = {
+              name: this.editName,
+              contents: this.eventContent,
+              startDate: this.startDate,
+              endDate: this.endDate
+            };
+
+            await axios.post(`${process.env.VUE_APP_API_BASE_URL}/event/${this.selectedEventId}/update`, data, { headers });
+            this.isEditing = false;
+            this.loadAccountDetails(this.selectedEventId);
+            alert("수정이 완료 되었습니다.");
+            // 페이지를 새로고침하여 변경 사항을 반영합니다.
+            window.location.reload();
+          }
         } catch (error) {
           console.error("Error saving changes:", error);
           alert("서버 오류가 발생했습니다. 다시 시도해주세요.");

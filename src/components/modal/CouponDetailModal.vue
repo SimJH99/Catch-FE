@@ -30,7 +30,7 @@
                   <div class="table-value">{{ couponDetails.endDate }}</div>
                 </div>
               </div>
-              
+
             </div>
             <div class="btn-container">
               <button @click="toggleEdit" class="btn">수정</button>
@@ -44,12 +44,13 @@
             </div>
             <div class="mb-4">
               <label for="editQuantity" class="block text-sm font-semibold text-gray-800 mb-1">쿠폰 수량</label>
-              <input v-model="editQuantity" type="text" id="editQuantity" class="mt-1 p-2 w-full border rounded-md"
-                placeholder="수량을 입력하세요">
+              <input v-model="editQuantity" type="number" id="editQuantity" class="mt-1 p-2 w-full border rounded-md"
+                placeholder="수량을 입력하세요" min="1" max="1000000000">
             </div>
             <div class="mb-4">
-              <label for="startDate" class="block text-sm font-semibold text-gray-800 mb-1">시작일</label>
-              <input v-model="startDate" type="date" id="startDate" class="mt-1 p-2 w-full border rounded-md">
+              <label for="editPrice" class="block text-sm font-semibold text-gray-800 mb-1">쿠폰 가격</label>
+              <input v-model="editPrice" type="number" id="editPrice" class="mt-1 p-2 w-full border rounded-md"
+                placeholder="가격을 입력하세요" min="1" max="10000000000">
             </div>
             <div class="mb-4">
               <label for="endDate" class="block text-sm font-semibold text-gray-800 mb-1">종료일</label>
@@ -129,20 +130,30 @@ export default {
     async saveChanges() {
       if (confirm("쿠폰을 수정 하시겠습니까?")) {
         try {
-          const access_token = localStorage.getItem('access_token');
-          const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
-          const data = {
-            name : this.editName,
-            startDate : this.startDate,
-            endDate : this.endDate,
-            quantity : this.editQuantity// 메모도 업데이트
-          };
-          console.log(data);
-          await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/coupon/${this.selectedCouponDetailsId}/update`, data, { headers });
-          this.isEditing = false;
-          alert("수정이 완료 되었습니다.");
-          this.closeCouponDetailModal();
-          window.location.href = "/couponList";
+          if (!this.editName) {
+            alert("쿠폰명을 입력하세요.");
+          } else if (this.editQuantity < 1 || this.editQuantity > 1000000000) {
+            alert("수량은 1에서 1000000000 사이의 값을 입력하세요.");
+          } else if (!this.startDate) {
+            alert("쿠폰 시작일을 선택하세요.");
+          } else if (!this.endDate) {
+            alert("쿠폰 종료일을 입력하세요.");
+          } else {
+            const access_token = localStorage.getItem('access_token');
+            const headers = access_token ? { Authorization: `Bearer ${access_token}` } : {};
+            const data = {
+              name: this.editName,
+              startDate: this.startDate,
+              endDate: this.endDate,
+              quantity: this.editQuantity
+            };
+            console.log(data);
+            await axios.patch(`${process.env.VUE_APP_API_BASE_URL}/coupon/${this.selectedCouponDetailsId}/update`, data, { headers });
+            this.isEditing = false;
+            alert("수정이 완료 되었습니다.");
+            this.closeCouponDetailModal();
+            window.location.href = "/couponList";
+          }
         } catch (error) {
           this.editName = this.couponDetails.name;
           this.startDate = this.couponDetails.startDate;
@@ -153,6 +164,7 @@ export default {
         }
       }
     },
+
   }
 };
 </script>
@@ -178,7 +190,8 @@ export default {
   max-height: 85vh;
   overflow-y: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  overflow-y: auto; /* 세로 스크롤 활성화 */
+  overflow-y: auto;
+  /* 세로 스크롤 활성화 */
 }
 
 .close {
@@ -279,13 +292,17 @@ export default {
   overflow: hidden;
   border: 1px solid #eae8e8;
   background-color: #ffffff;
-  height: 300px; /* 원하는 높이로 설정 */
-  max-height: 100%; /* 최대 높이 설정 */
+  height: 300px;
+  /* 원하는 높이로 설정 */
+  max-height: 100%;
+  /* 최대 높이 설정 */
 }
 
 .memo-info .table-row {
-  border-bottom: none; /* 중간 선 제거 */
+  border-bottom: none;
+  /* 중간 선 제거 */
 }
+
 .table-row {
   display: flex;
   background-color: #ffffff;
@@ -295,8 +312,7 @@ export default {
 .memo-info .table-value {
   padding: 12px;
   font-size: 16px;
-  white-space: pre-line; /* 수정 */
+  white-space: pre-line;
+  /* 수정 */
 }
-
-
 </style>
