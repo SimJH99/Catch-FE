@@ -67,7 +67,7 @@
                         <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">답변 여부</th>
                         <td class="px-2 border-2 border-gray-300" style="width: 80%;">
                         <select v-model="status" class="m-1 p-1 rounded-md w-48 outline-none">
-                            <option :value="null">--선택--</option>
+                            <!-- <option :value="null">--선택--</option> -->
                             <option value="BEFORE">답변 없음</option>
                             <option value="REPLY">답변 완료</option>
                         </select>
@@ -77,7 +77,6 @@
                       <th class="p-2 border-2 border-orange-400 text-xl text-center" style="background-color: #F5A742; width: 20%; color: white;">카테고리</th>
                       <td class="px-2 border-2 border-gray-300" style="width: 80%;">
                       <select v-model="category" class="m-1 p-1 rounded-md w-48 outline-none">
-                          <option :value="null">--선택--</option>
                           <option value="DELIVERY">배송</option>
                           <option value="ORDER">주문/결제</option>
                           <option value="CANCEL/EXCHANGE/REFUND">취소/교환/환불</option>
@@ -183,6 +182,7 @@ export default {
   created() {
     this.fetchComplaint();
     this.searchComplaint();
+    this.status  = null;
   },
   methods: {
     async fetchComplaint(){

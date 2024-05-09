@@ -24,7 +24,7 @@
                 <div v-for="notification in notificationList" :key="notification.id" class="notification-item" @click="readNotification(notification.id)">
                   <div class="notification-content">
                     <h3 class="notificationTitle">{{ notification.notificationTitle }}</h3>
-                    <p>{{ notification.notificationContent }}</p>
+                    <p> 지금 당장 이메일을 확인하세요!</p>
                   </div>
                   <p class="time">{{ formatTime(notification.createdTime) }}</p>
                 </div>
