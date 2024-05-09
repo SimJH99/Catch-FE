@@ -335,16 +335,35 @@ export default {
       this.searchEvent();
     },
 
-    selectAllEvents() {
-        this.isAllSelected = !this.isAllSelected;
-        this.eventList.forEach(event => {
-            this.selectedEvents[event.id] = this.isAllSelected;
-        });
-    },
-    // 개별 쿠폰 체크박스 클릭 시 선택된 쿠폰 목록을 업데이트하는 메서드
+    selectAllEvents(event) {
+    const isChecked = event.target.checked;
+    this.eventList.forEach(event => {
+        if (isChecked) {
+            // 모든 이벤트를 선택
+            this.selectedEvents[event.id] = true;
+        } else {
+            // 모든 이벤트 선택 해제
+            delete this.selectedEvents[event.id];
+        }
+    });
+},
     updateSelectedEvents(eventId) {
-        this.selectedEvents[eventId] = !this.selectedEvents[eventId];
-    },
+    // 이벤트 ID가 selectedEvents에 있는지 확인
+    if (this.selectedEvents[eventId]) {
+        // 선택된 이벤트가 이미 있는 경우, 해당 이벤트를 제거
+        delete this.selectedEvents[eventId];
+    } else {
+        // 선택된 이벤트가 없는 경우, 해당 이벤트를 추가
+        this.selectedEvents[eventId] = true;
+    }
+
+        // 개별 요소가 체크 해제될 때 전체 선택 체크 박스 상태를 업데이트
+        const allChecked = this.eventList.every(event => this.selectedEvents[event.id]);
+    const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+    if (selectAllCheckbox) {
+        selectAllCheckbox.checked = allChecked;
+    }
+},
   },
 }
 </script>

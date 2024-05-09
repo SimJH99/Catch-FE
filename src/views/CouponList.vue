@@ -389,15 +389,34 @@ export default {
             this.searchCouponStatus = null;
             this.searchCoupons();
         },
-        selectAllCoupons() {
-            this.isAllSelected = !this.isAllSelected;
+        selectAllCoupons(coupon) {
+            const isChecked = coupon.target.checked;
             this.couponList.forEach(coupon => {
-                this.selectedCoupons[coupon.id] = this.isAllSelected;
+                if (isChecked) {
+                    // 모든 이벤트를 선택
+                    this.selectedCoupons[coupon.id] = true;
+                } else {
+                    // 모든 이벤트 선택 해제
+                    delete this.selectedCoupons[coupon.id];
+                }
             });
         },
-        // 개별 쿠폰 체크박스 클릭 시 선택된 쿠폰 목록을 업데이트하는 메서드
         updateSelectedCoupons(couponId) {
-            this.selectedCoupons[couponId] = !this.selectedCoupons[couponId];
+            // 이벤트 ID가 selectedEvents에 있는지 확인
+            if (this.selectedCoupons[couponId]) {
+                // 선택된 이벤트가 이미 있는 경우, 해당 이벤트를 제거
+                delete this.selectedCoupons[couponId];
+            } else {
+                // 선택된 이벤트가 없는 경우, 해당 이벤트를 추가
+                this.selectedCoupons[couponId] = true;
+            }
+
+                // 개별 요소가 체크 해제될 때 전체 선택 체크 박스 상태를 업데이트
+                const allChecked = this.couponList.every(coupon => this.selectedCoupons[coupon.id]);
+            const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+            if (selectAllCheckbox) {
+                selectAllCheckbox.checked = allChecked;
+            }
         },
     },
 }
