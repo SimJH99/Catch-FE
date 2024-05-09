@@ -139,6 +139,7 @@ export default {
           } else if (!this.endDate) {
             alert("쿠폰 종료일을 입력하세요.");
           } else {
+            const currentDate = new Date();
             // 시작일이 현재 날짜 이전인지 검사
             if (new Date(this.startDate) <= currentDate) {
               alert('시작일은 현재 날짜 이후여야 합니다.');
