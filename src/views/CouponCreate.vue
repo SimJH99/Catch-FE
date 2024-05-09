@@ -70,19 +70,20 @@ export default {
           alert("쿠폰 종료일을 입력하세요.");
         } else {
           const currentDate = new Date();
+          currentDate.setDate(currentDate.getDate() - 1);
 
-          // 시작일이 현재 날짜 이전인지 검사
-          if (new Date(this.startDate) <= currentDate) {
+          // 시작일이 현재 날짜 이전이거나 같은 경우
+          if (new Date(this.startDate) < currentDate) {
             alert('시작일은 현재 날짜 이후여야 합니다.');
             return;
           }
-          // 종료일이 현재 날짜 이전인지 검사
-          if (new Date(this.endDate) <= currentDate) {
+          // 종료일이 현재 날짜 이전이거나 같은 경우
+          if (new Date(this.endDate) < currentDate) {
             alert('종료일은 현재 날짜 이후여야 합니다.');
             return;
           }
-          // 시작일이 종료일보다 이른지 검사
-          if (new Date(this.startDate) >= new Date(this.endDate)) {
+          // 시작일이 종료일보다 이른 경우
+          if (new Date(this.startDate) > new Date(this.endDate)) {
             alert('시작일은 종료일보다 이전이어야 합니다.');
             return;
           }
@@ -95,7 +96,6 @@ export default {
             startDate: this.startDate,
             endDate: this.endDate,
           };
-          console.log(data);
           await axios.post(`${process.env.VUE_APP_API_BASE_URL}/coupon/create`, data, { headers });
           this.$router.push("/couponList");
         }
@@ -104,6 +104,7 @@ export default {
         console.log(error);
       }
     },
+
 
 
   },

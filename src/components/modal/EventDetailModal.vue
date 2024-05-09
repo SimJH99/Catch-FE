@@ -135,6 +135,7 @@ export default {
             alert('캠페인 제목에 "[광고]"를 포함해주세요.');
           } else {
             const currentDate = new Date();
+            currentDate.setDate(currentDate.getDate() - 1);
 
             // 시작일이 현재 날짜 이전인지 검사
             if (new Date(this.startDate) < currentDate) {

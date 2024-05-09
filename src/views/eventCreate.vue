@@ -100,6 +100,7 @@ export default {
         }
         // 현재 날짜 가져오기
         const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() - 1);
 
         // 시작일이 현재 날짜 이전인지 검사
         if (new Date(this.startDate) < currentDate) {
