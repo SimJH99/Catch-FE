@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* App.vue or your custom CSS file */
+@font-face {
+    font-family: 'NanumSquare_acR';
+    src: url('@/assets/NanumSquare_acR.ttf') format('truetype');
+    /* 다른 형식의 폰트 파일도 지원할 수 있습니다. */
+  }
+  
+  body {
+    font-family: 'NanumSquare_acR';
+    /* 나머지 스타일 */
+  }
+  

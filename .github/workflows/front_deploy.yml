@@ -1,0 +1,63 @@
+name: Deploy to AWS S3
+
+on:
+  push:
+    branches:
+    - dev
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: setup node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+
+    - run: |
+        echo "VUE_APP_FIREBASE_API_KEY=${{secrets.API_KEY}}" >> .env
+        echo "VUE_APP_FIREBASE_AUTH_DOMAIN=${{secrets.DOMAIN}}" >> .env
+        echo "VUE_APP_FIREBASE_PROJECT_ID=${{secrets.PROJECT_ID}}" >> .env
+        echo "VUE_APP_FIREBASE_STORAGE_BUCKET=${{secrets.BUCKET}}" >> .env
+        echo "VUE_APP_FIREBASE_MESSAGING_SENDER_ID=${{secrets.SENDER_ID}}" >> .env
+        echo "VUE_APP_FIREBASE_APP_ID=${{secrets.APP_ID}}" >> .env
+        echo "VUE_APP_FIREBASE_MEASUREMENTID=${{secrets.MEASUREMENT_ID}}" >> .env
+        echo "VUE_APP_FIREBASE_VAP_ID=${{secrets.VAP_ID}}" >> .env
+    - run: cat .env
+    
+    - name: npm install
+      working-directory: ./
+      run: npm install
+
+    - name: npm firebase install
+      working-directory: ./
+      run: npm install firebase
+
+    - name: npm run build
+      working-directory: ./
+      run: npm run build
+
+    - name: setup aws cli
+      uses: aws-actions/configure-aws-credentials@v2
+      with: 
+        aws-access-key-id: ${{secrets.AWS_S3_ACCESS_KEY}}
+        aws-secret-access-key: ${{secrets.AWS_S3_SECRET_KEY}}
+        aws-region: "ap-northeast-2"
+
+    - name: deploy to s3
+      run: |
+        aws s3 cp ./dist s3://catchteam/ --recursive
+
+
+
+
+
+
+
+
+
+
+
+
